@@ -9,7 +9,6 @@ namespace RealEstateWebApp.Data.Models
         public int Id { get; init; }
 
         [Required]
-        [MaxLength(DataConstants.ImageUrlMaxLength)]
         public string ImageUrl { get; set; }
 
         [Required]
@@ -19,7 +18,7 @@ namespace RealEstateWebApp.Data.Models
         [Required]
         public int BuildingYear { get; set; }
 
-        public int? Floor { get; set; }
+        public int Floor { get; set; }
 
         [Required]
         [Column(TypeName = "decimal(18,4)")]

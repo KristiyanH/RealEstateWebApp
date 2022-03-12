@@ -4,6 +4,7 @@ using RealEstateWebApp.Data.Models;
 using RealEstateWebApp.ViewModels.Properties;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace RealEstateWebApp.Controllers
 {
@@ -53,18 +54,49 @@ namespace RealEstateWebApp.Controllers
             return RedirectToAction(nameof(All));
         }
 
-        public IActionResult All()
+        public IActionResult All(string type, string searchTerm)
         {
-            var properties = data.Properties.Select(x => new ListPropertyViewModel()
+            var propertiesQuery = data.Properties.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(type))
+            {
+                propertiesQuery = propertiesQuery.Where(x => x.PropertyType.Name == type);
+            }
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                propertiesQuery = propertiesQuery.Where(x =>
+                x.PropertyType.Name.ToLower().Contains(searchTerm.ToLower()) ||
+                x.BuildingYear.ToString().ToLower().Contains(searchTerm.ToLower()));
+            }
+
+            var properties = propertiesQuery
+                .OrderByDescending(x => x.Id)
+                .Select(x => new ListPropertyViewModel()
             {
                 Id = x.Id,
                 Description = x.Description,
                 ImageUrl = x.ImageUrl,
-                Price = x.Price
-            }).ToList();
+                Price = x.Price,
+                BuildingYear = x.BuildingYear,
+                Floor = x.Floor,
+                PropertyType = data.PropertyTypes.FirstOrDefault(pt => pt.Id == x.PropertyTypeId).Name
+            })
+              .ToList();
 
-            
-            return View(properties);
+            var propertyTypes = data
+                .PropertyTypes
+                .Select(x => x.Name)
+                .Distinct()
+                .OrderBy(x => x)
+                .ToList();
+
+            return View(new AllPropertiesQueryModel()
+            {
+                Types = propertyTypes,
+                Properties = properties,
+                SearchTerm = searchTerm
+            });
         }
 
         public IActionResult Remove(int Id)

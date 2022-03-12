@@ -1,10 +1,30 @@
-﻿@model List<ListPropertyViewModel>
+﻿@model AllPropertiesQueryModel
+
+
+<form method="get">
+    <div class="row mb-5">
+        <div class="form-group col-md-4">
+            <div class="form-group">
+                <label asp-for="Type"></label>
+                <select asp-for="Type" class="form-control">
+                    <option value="">All</option>
+                    @foreach (var type in Model.Types)
+                    {
+                        <option value="@type">@type</option>
+                    }
+                </select>
+            </div>
+            <input class="btn btn-primary" type="submit" value="Search" />
+        </div>
+    </div>
+</form>
+
 
 <div class="row">
-    @foreach (var property in Model)
+    @foreach (var property in Model.Properties)
     {
         <div class="col-md-4">
-            <div class="card" style = "width: 18rem;">
+            <div class="card" style="width: 18rem;">
                 <img class="card-img-top" src="@property.ImageUrl" alt="Card image cap">
                 <div class="card-body text-center">
                     <h5 class="card-title">@property.Price.ToString("f3")€</h5>

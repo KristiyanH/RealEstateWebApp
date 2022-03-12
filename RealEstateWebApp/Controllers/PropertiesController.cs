@@ -55,15 +55,12 @@ namespace RealEstateWebApp.Controllers
 
         public IActionResult All()
         {
-            var properties = data.Properties.Select(x => new AddPropertyViewModel()
+            var properties = data.Properties.Select(x => new ListPropertyViewModel()
             {
                 Id = x.Id,
-                BuildingYear = x.BuildingYear,
                 Description = x.Description,
-                Floor = x.Floor,
                 ImageUrl = x.ImageUrl,
-                Price = x.Price,
-                PropertyTypeId = x.PropertyTypeId
+                Price = x.Price
             }).ToList();
 
             

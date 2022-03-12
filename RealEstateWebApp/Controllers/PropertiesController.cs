@@ -50,7 +50,7 @@ namespace RealEstateWebApp.Controllers
 
             data.SaveChanges();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction(nameof(All));
         }
 
         public IActionResult All()
@@ -81,6 +81,10 @@ namespace RealEstateWebApp.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        //public IActionResult Details(int propertyId)
+        //{
+
+        //}
         private IEnumerable<PropertyTypeViewModel> GetPropertyTypes()
             => data
             .PropertyTypes

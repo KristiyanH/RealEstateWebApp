@@ -53,6 +53,36 @@ namespace RealEstateWebApp.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public IActionResult All()
+        {
+            var properties = data.Properties.Select(x => new AddPropertyViewModel()
+            {
+                BuildingYear = x.BuildingYear,
+                Description = x.Description,
+                Floor = x.Floor,
+                ImageUrl = x.ImageUrl,
+                Price = x.Price,
+                PropertyTypeId = x.PropertyTypeId
+            }).ToList();
+
+            
+            return View(properties);
+        }
+
+        public IActionResult Remove(int propertyId)
+        {
+            var property = data.Properties.FirstOrDefault(x => x.Id == propertyId);
+
+            if (property != null)
+            {
+                data.Properties.Remove(property);
+                data.SaveChanges();
+                return RedirectToAction("Properties", "All");
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
         private IEnumerable<PropertyTypeViewModel> GetPropertyTypes()
             => data
             .PropertyTypes
@@ -61,6 +91,6 @@ namespace RealEstateWebApp.Controllers
                 Id = t.Id,
                 Name = t.Name
             }).ToList();
-        
+
     }
 }

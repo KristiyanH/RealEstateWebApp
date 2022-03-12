@@ -1,0 +1,13 @@
+﻿@model List<AddPropertyViewModel>
+
+<div class="card" style="width: 18rem;">
+    @foreach(var property in Model)
+    {
+        <img class="card-img-top" src="@property.ImageUrl" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">@property.Price.ToString("f3")€</h5>
+    <p class="card-text">@property.Description</p>
+    <a href="#" class="btn btn-primary">Remove</a>
+  </div>
+    }
+</div>

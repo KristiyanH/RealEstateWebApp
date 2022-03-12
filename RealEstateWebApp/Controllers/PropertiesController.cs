@@ -67,9 +67,9 @@ namespace RealEstateWebApp.Controllers
             return View(properties);
         }
 
-        public IActionResult Remove(int propertyId)
+        public IActionResult Remove(int Id)
         {
-            var property = data.Properties.FirstOrDefault(x => x.Id == propertyId);
+            var property = data.Properties.FirstOrDefault(x => x.Id == Id);
 
             if (property != null)
             {

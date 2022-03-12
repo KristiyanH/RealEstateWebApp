@@ -7,7 +7,7 @@
         <div class="card-body">
             <h5 class="card-title">@property.Price.ToString("f3")€</h5>
     <p class="card-text">@property.Description</p>
-    <a href="#" class="btn btn-primary">Remove</a>
+    <a href="/Properties/Remove?propertyId=@property.Id" class="btn btn-block btn-primary">Remove</a>
   </div>
     }
 </div>

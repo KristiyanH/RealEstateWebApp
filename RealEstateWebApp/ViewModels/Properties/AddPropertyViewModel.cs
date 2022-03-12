@@ -6,6 +6,8 @@ namespace RealEstateWebApp.ViewModels.Properties
 
     public class AddPropertyViewModel
     {
+        public int Id { get; init; }
+
         [Required]
         [Url]
         [Display(Name = "Image URL")]

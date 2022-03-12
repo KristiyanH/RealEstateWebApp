@@ -57,6 +57,7 @@ namespace RealEstateWebApp.Controllers
         {
             var properties = data.Properties.Select(x => new AddPropertyViewModel()
             {
+                Id = x.Id,
                 BuildingYear = x.BuildingYear,
                 Description = x.Description,
                 Floor = x.Floor,
@@ -77,7 +78,7 @@ namespace RealEstateWebApp.Controllers
             {
                 data.Properties.Remove(property);
                 data.SaveChanges();
-                return RedirectToAction("Properties", "All");
+                return Redirect("/Properties/All");
             }
 
             return RedirectToAction("Index", "Home");

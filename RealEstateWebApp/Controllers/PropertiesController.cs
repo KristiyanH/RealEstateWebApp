@@ -54,24 +54,27 @@ namespace RealEstateWebApp.Controllers
             return RedirectToAction(nameof(All));
         }
 
-        public IActionResult All(string type, string searchTerm)
+        public IActionResult All([FromQuery]AllPropertiesQueryModel query)
         {
             var propertiesQuery = data.Properties.AsQueryable();
 
-            if (!string.IsNullOrWhiteSpace(type))
+            if (!string.IsNullOrWhiteSpace(query.Type))
             {
-                propertiesQuery = propertiesQuery.Where(x => x.PropertyType.Name == type);
+                propertiesQuery = propertiesQuery.Where(x => x.PropertyType.Name == query.Type);
             }
 
-            if (!string.IsNullOrWhiteSpace(searchTerm))
+            if (!string.IsNullOrWhiteSpace(query.SearchTerm))
             {
                 propertiesQuery = propertiesQuery.Where(x =>
-                x.PropertyType.Name.ToLower().Contains(searchTerm.ToLower()) ||
-                x.BuildingYear.ToString().ToLower().Contains(searchTerm.ToLower()));
+                x.PropertyType.Name.ToLower().Contains(query.SearchTerm.ToLower()) ||
+                x.BuildingYear.ToString().ToLower().Contains(query.SearchTerm.ToLower()));
             }
 
+            var totalProperties = data.Properties.Count();
+
             var properties = propertiesQuery
-                .OrderByDescending(x => x.Id)
+                .Skip((query.CurrentPage - 1) * AllPropertiesQueryModel.PropertiesPerPage)
+                .Take(AllPropertiesQueryModel.PropertiesPerPage)
                 .Select(x => new ListPropertyViewModel()
             {
                 Id = x.Id,
@@ -91,12 +94,11 @@ namespace RealEstateWebApp.Controllers
                 .OrderBy(x => x)
                 .ToList();
 
-            return View(new AllPropertiesQueryModel()
-            {
-                Types = propertyTypes,
-                Properties = properties,
-                SearchTerm = searchTerm
-            });
+            query.TotalProperties = totalProperties;
+            query.Properties = properties;
+            query.Types = propertyTypes;
+
+            return View(query);
         }
 
         public IActionResult Remove(int Id)

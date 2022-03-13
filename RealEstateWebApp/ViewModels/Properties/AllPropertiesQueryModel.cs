@@ -6,16 +6,22 @@ namespace RealEstateWebApp.ViewModels.Properties
 {
     public class AllPropertiesQueryModel
     {
+        public const int PropertiesPerPage = 3;
+
         [Display(Name = "Search Residence by Type")]
         public string Type { get; init; }
 
-        public IEnumerable<string> Types { get; init; }
+        public int CurrentPage { get; init; } = 1;
 
         [Display(Name = "Search")]
         public string SearchTerm { get; init; }
 
+        public int TotalProperties { get; set; }
+
         public PropertySorting Sorting { get; init; }
 
-        public IEnumerable<ListPropertyViewModel> Properties { get; init; }
+        public IEnumerable<string> Types { get; set; }
+
+        public IEnumerable<ListPropertyViewModel> Properties { get; set; }
     }
 }

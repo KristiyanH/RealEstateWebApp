@@ -36,5 +36,11 @@ namespace RealEstateWebApp.Data.Models
         public int PropertyTypeId { get; set; }
 
         public PropertyType PropertyType { get; init; }
+
+        [Required]
+        public int AddressId { get; set; }
+
+        [ForeignKey(nameof(AddressId))]
+        public Address Address { get; set; }
     }
 }

@@ -81,8 +81,6 @@ namespace RealEstateWebApp.Controllers
                 Description = x.Description,
                 ImageUrl = x.ImageUrl,
                 Price = x.Price,
-                BuildingYear = x.BuildingYear,
-                Floor = x.Floor,
                 PropertyType = data.PropertyTypes.FirstOrDefault(pt => pt.Id == x.PropertyTypeId).Name
             })
               .ToList();

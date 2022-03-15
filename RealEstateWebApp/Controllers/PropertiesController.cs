@@ -70,7 +70,7 @@ namespace RealEstateWebApp.Controllers
                 x.BuildingYear.ToString().ToLower().Contains(query.SearchTerm.ToLower()));
             }
 
-            var totalProperties = data.Properties.Count();
+            var totalProperties = propertiesQuery.Count();
 
             var properties = propertiesQuery
                 .Skip((query.CurrentPage - 1) * AllPropertiesQueryModel.PropertiesPerPage)

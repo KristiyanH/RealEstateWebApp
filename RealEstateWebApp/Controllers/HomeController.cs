@@ -30,7 +30,6 @@ namespace RealEstateWebApp.Controllers
                 ImageUrl = x.ImageUrl,
                 Price = x.Price
             })
-            .Take(3)
             .ToList();
 
 

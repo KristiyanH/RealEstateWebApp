@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RealEstateWebApp.Data;
 
 namespace RealEstateWebApp.Data.Migrations
 {
     [DbContext(typeof(RealEstateDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220318144320_Test")]
+    partial class Test
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -231,7 +233,13 @@ namespace RealEstateWebApp.Data.Migrations
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
+                    b.Property<int>("PropertyId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("PropertyId")
+                        .IsUnique();
 
                     b.ToTable("Addresses");
                 });
@@ -272,8 +280,6 @@ namespace RealEstateWebApp.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AddressId");
-
                     b.HasIndex("PropertyTypeId");
 
                     b.ToTable("Properties");
@@ -292,21 +298,6 @@ namespace RealEstateWebApp.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PropertyTypes");
-                });
-
-            modelBuilder.Entity("RealEstateWebApp.Data.Models.TestModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TestModels");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -360,28 +351,31 @@ namespace RealEstateWebApp.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("RealEstateWebApp.Data.Models.Property", b =>
+            modelBuilder.Entity("RealEstateWebApp.Data.Models.Address", b =>
                 {
-                    b.HasOne("RealEstateWebApp.Data.Models.Address", "Address")
-                        .WithMany("Properties")
-                        .HasForeignKey("AddressId")
+                    b.HasOne("RealEstateWebApp.Data.Models.Property", "Property")
+                        .WithOne("Address")
+                        .HasForeignKey("RealEstateWebApp.Data.Models.Address", "PropertyId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.Navigation("Property");
+                });
+
+            modelBuilder.Entity("RealEstateWebApp.Data.Models.Property", b =>
+                {
                     b.HasOne("RealEstateWebApp.Data.Models.PropertyType", "PropertyType")
                         .WithMany("Properties")
                         .HasForeignKey("PropertyTypeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Address");
-
                     b.Navigation("PropertyType");
                 });
 
-            modelBuilder.Entity("RealEstateWebApp.Data.Models.Address", b =>
+            modelBuilder.Entity("RealEstateWebApp.Data.Models.Property", b =>
                 {
-                    b.Navigation("Properties");
+                    b.Navigation("Address");
                 });
 
             modelBuilder.Entity("RealEstateWebApp.Data.Models.PropertyType", b =>

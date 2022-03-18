@@ -4,7 +4,6 @@ using RealEstateWebApp.Data.Models;
 using RealEstateWebApp.ViewModels.Properties;
 using System.Collections.Generic;
 using System.Linq;
-using System;
 
 namespace RealEstateWebApp.Controllers
 {
@@ -37,7 +36,21 @@ namespace RealEstateWebApp.Controllers
                 return View(property);
             }
 
-            data.Properties.Add(new Property()
+            var address = data.Addresses.FirstOrDefault(x => x.AddressText == property.AddressText);
+
+            if (address == null)
+            {
+                address = new Address()
+                {
+                    AddressText = property.AddressText
+                };
+
+
+                data.Addresses.Add(address);
+            }
+
+
+            var newProperty = new Property()
             {
                 BuildingYear = property.BuildingYear,
                 Description = property.Description,
@@ -46,15 +59,19 @@ namespace RealEstateWebApp.Controllers
                 Price = property.Price,
                 PropertyTypeId = property.PropertyTypeId,
                 SquareMeters = property.SquareMeters,
-                PropertyType = data.PropertyTypes.FirstOrDefault(x => x.Id == property.PropertyTypeId)
-            });
+                PropertyType = data.PropertyTypes.FirstOrDefault(x => x.Id == property.PropertyTypeId),
+                AddressId = address.Id,
+                Address = address
+            };
+
+            address.Properties.Add(newProperty);
 
             data.SaveChanges();
 
             return RedirectToAction(nameof(All));
         }
 
-        public IActionResult All([FromQuery]AllPropertiesQueryModel query)
+        public IActionResult All([FromQuery] AllPropertiesQueryModel query)
         {
             var propertiesQuery = data.Properties.AsQueryable();
 
@@ -76,13 +93,13 @@ namespace RealEstateWebApp.Controllers
                 .Skip((query.CurrentPage - 1) * AllPropertiesQueryModel.PropertiesPerPage)
                 .Take(AllPropertiesQueryModel.PropertiesPerPage)
                 .Select(x => new ListPropertyViewModel()
-            {
-                Id = x.Id,
-                Description = x.Description,
-                ImageUrl = x.ImageUrl,
-                Price = x.Price,
-                PropertyType = data.PropertyTypes.FirstOrDefault(pt => pt.Id == x.PropertyTypeId).Name
-            })
+                {
+                    Id = x.Id,
+                    Description = x.Description,
+                    ImageUrl = x.ImageUrl,
+                    Price = x.Price,
+                    PropertyType = data.PropertyTypes.FirstOrDefault(pt => pt.Id == x.PropertyTypeId).Name
+                })
               .ToList();
 
             var propertyTypes = data

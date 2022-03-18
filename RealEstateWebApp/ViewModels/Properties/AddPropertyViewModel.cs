@@ -34,6 +34,10 @@ namespace RealEstateWebApp.ViewModels.Properties
         public decimal Price { get; init; }
 
         [Required]
+        [Display(Name = "Address")]
+        public string AddressText { get; set; }
+
+        [Required]
         [Display(Name = "Property Type")]
         public int PropertyTypeId { get; init; }
 

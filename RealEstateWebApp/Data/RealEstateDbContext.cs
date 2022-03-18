@@ -17,10 +17,6 @@ namespace RealEstateWebApp.Data
 
         public DbSet<PropertyType> PropertyTypes { get; init; }
 
-        public DbSet<Country> Countries { get; init; }
-
-        public DbSet<City> Cities { get; init; }
-
         public DbSet<Address> Addresses { get; init; }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -32,7 +28,7 @@ namespace RealEstateWebApp.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<Address>()
-                .HasOne(x => x.Property)
+                .HasMany(x => x.Properties)
                 .WithOne(x => x.Address)
                 .OnDelete(DeleteBehavior.Restrict);
 

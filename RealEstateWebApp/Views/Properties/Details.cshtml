@@ -1,1 +1,11 @@
-﻿
+﻿@model DetailsPropertyViewModel
+
+ <div class="col-md-4">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="@Model.ImageUrl" alt="Card image cap">
+                <div class="card-body text-center">
+                    <h5 class="card-title">@Model.Price.ToString("f3")€</h5>
+                    <p class="card-text">@Model.Description</p>
+                </div>
+            </div>
+        </div>

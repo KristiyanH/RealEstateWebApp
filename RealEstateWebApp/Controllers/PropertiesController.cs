@@ -59,9 +59,16 @@ namespace RealEstateWebApp.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        //public IActionResult Details(int propertyId)
-        //{
+        public IActionResult Details(int id)
+        {
+            var property = propertyService.Details(id);
 
-        //}
+            if (property == null)
+            {
+                ModelState.AddModelError(nameof(property.Id), "Property type does not exist.");
+            }
+
+            return View(property);
+        }
     }
 }

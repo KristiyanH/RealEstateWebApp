@@ -48,8 +48,7 @@ namespace RealEstateWebApp.Services.Properties
                 PropertyTypeId = property.PropertyTypeId,
                 SquareMeters = property.SquareMeters,
                 PropertyType = data.PropertyTypes.FirstOrDefault(x => x.Id == property.PropertyTypeId),
-                AddressId = address.Id,
-                Address = address
+                AddressId = address.Id
             };
 
             address.Properties.Add(newProperty);
@@ -116,6 +115,29 @@ namespace RealEstateWebApp.Services.Properties
             }
 
             return isRemoved;
+        }
+
+        public DetailsPropertyViewModel Details(int id)
+        {
+            var property = data.Properties.FirstOrDefault(x => x.Id == id);
+
+            var address = data.Addresses.FirstOrDefault(x => x.Id == property.AddressId);
+            var propertyType = data.PropertyTypes.FirstOrDefault(x => x.Id == property.PropertyTypeId);
+
+            var detailsModel = new DetailsPropertyViewModel()
+            {
+                Id = property.Id,
+                Address = address.AddressText,
+                BuildingYear = property.BuildingYear,
+                Description = property.Description,
+                Floor = property.Floor,
+                ImageUrl = property.ImageUrl,
+                Price = property.Price,
+                PropertyType = propertyType.Name,
+                SquareMeters = property.SquareMeters
+            };
+
+            return detailsModel;
         }
     }
 }

@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RealEstateWebApp.Data;
 using RealEstateWebApp.Infrastructure;
+using RealEstateWebApp.Services.Properties;
 
 namespace RealEstateWebApp
 {
@@ -38,6 +39,8 @@ namespace RealEstateWebApp
 
             services
                 .AddControllersWithViews();
+
+            services.AddTransient<IPropertyService, PropertyService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

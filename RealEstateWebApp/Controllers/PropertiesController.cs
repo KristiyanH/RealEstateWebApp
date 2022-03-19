@@ -1,23 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RealEstateWebApp.Data;
-using RealEstateWebApp.Data.Models;
+using RealEstateWebApp.Services.Properties;
 using RealEstateWebApp.ViewModels.Properties;
-using System.Collections.Generic;
 using System.Linq;
-
 namespace RealEstateWebApp.Controllers
 {
     public class PropertiesController : Controller
     {
         private readonly RealEstateDbContext data;
+        private readonly IPropertyService propertyService;
 
-        public PropertiesController(RealEstateDbContext _data)
-            => data = _data;
-
+        public PropertiesController(RealEstateDbContext _data, IPropertyService _propertyService)
+        {
+            data = _data;
+            propertyService = _propertyService;
+        }
 
         public IActionResult Add() => View(new AddPropertyViewModel
         {
-            PropertyTypes = GetPropertyTypes()
+            PropertyTypes = propertyService.GetPropertyTypes()
         });
 
 
@@ -31,99 +32,27 @@ namespace RealEstateWebApp.Controllers
 
             if (!ModelState.IsValid)
             {
-                property.PropertyTypes = GetPropertyTypes();
+                property.PropertyTypes = propertyService.GetPropertyTypes();
 
                 return View(property);
             }
 
-            var address = data.Addresses.FirstOrDefault(x => x.AddressText == property.AddressText);
-
-            if (address == null)
-            {
-                address = new Address()
-                {
-                    AddressText = property.AddressText
-                };
-
-
-                data.Addresses.Add(address);
-            }
-
-
-            var newProperty = new Property()
-            {
-                BuildingYear = property.BuildingYear,
-                Description = property.Description,
-                Floor = property.Floor,
-                ImageUrl = property.ImageUrl,
-                Price = property.Price,
-                PropertyTypeId = property.PropertyTypeId,
-                SquareMeters = property.SquareMeters,
-                PropertyType = data.PropertyTypes.FirstOrDefault(x => x.Id == property.PropertyTypeId),
-                AddressId = address.Id,
-                Address = address
-            };
-
-            address.Properties.Add(newProperty);
-
-            data.SaveChanges();
+            propertyService.Add(property);
 
             return RedirectToAction(nameof(All));
         }
 
         public IActionResult All([FromQuery] AllPropertiesQueryModel query)
         {
-            var propertiesQuery = data.Properties.AsQueryable();
+            var resultQuery = propertyService.All(query);
 
-            if (!string.IsNullOrWhiteSpace(query.Type))
-            {
-                propertiesQuery = propertiesQuery.Where(x => x.PropertyType.Name == query.Type);
-            }
-
-            if (!string.IsNullOrWhiteSpace(query.SearchTerm))
-            {
-                propertiesQuery = propertiesQuery.Where(x =>
-                x.PropertyType.Name.ToLower().Contains(query.SearchTerm.ToLower()) ||
-                x.BuildingYear.ToString().ToLower().Contains(query.SearchTerm.ToLower()));
-            }
-
-            var totalProperties = propertiesQuery.Count();
-
-            var properties = propertiesQuery
-                .Skip((query.CurrentPage - 1) * AllPropertiesQueryModel.PropertiesPerPage)
-                .Take(AllPropertiesQueryModel.PropertiesPerPage)
-                .Select(x => new ListPropertyViewModel()
-                {
-                    Id = x.Id,
-                    Description = x.Description,
-                    ImageUrl = x.ImageUrl,
-                    Price = x.Price,
-                    PropertyType = data.PropertyTypes.FirstOrDefault(pt => pt.Id == x.PropertyTypeId).Name
-                })
-              .ToList();
-
-            var propertyTypes = data
-                .PropertyTypes
-                .Select(x => x.Name)
-                .Distinct()
-                .OrderBy(x => x)
-                .ToList();
-
-            query.TotalProperties = totalProperties;
-            query.Properties = properties;
-            query.Types = propertyTypes;
-
-            return View(query);
+            return View(resultQuery);
         }
 
         public IActionResult Remove(int Id)
         {
-            var property = data.Properties.FirstOrDefault(x => x.Id == Id);
-
-            if (property != null)
+            if (propertyService.Remove(Id))
             {
-                data.Properties.Remove(property);
-                data.SaveChanges();
                 return Redirect("/Properties/All");
             }
 
@@ -134,14 +63,5 @@ namespace RealEstateWebApp.Controllers
         //{
 
         //}
-        private IEnumerable<PropertyTypeViewModel> GetPropertyTypes()
-            => data
-            .PropertyTypes
-            .Select(t => new PropertyTypeViewModel
-            {
-                Id = t.Id,
-                Name = t.Name
-            }).ToList();
-
     }
 }

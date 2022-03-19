@@ -56,7 +56,7 @@ namespace RealEstateWebApp.Services.Properties
             data.SaveChanges();
         }
 
-        public AllPropertiesQueryModel All([FromQuery] AllPropertiesQueryModel query)
+        public AllPropertiesQueryModel All(AllPropertiesQueryModel query)
         {
             var propertiesQuery = data.Properties.AsQueryable();
 

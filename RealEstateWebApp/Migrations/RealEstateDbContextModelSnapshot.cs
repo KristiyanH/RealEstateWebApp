@@ -3,17 +3,15 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RealEstateWebApp.Data;
 
-namespace RealEstateWebApp.Data.Migrations
+namespace RealEstateWebApp.Migrations
 {
     [DbContext(typeof(RealEstateDbContext))]
-    [Migration("20220314163152_LocationRelatedTables")]
-    partial class LocationRelatedTables
+    partial class RealEstateDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -233,50 +231,46 @@ namespace RealEstateWebApp.Data.Migrations
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
-                    b.Property<int>("CityId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CountryId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PropertyId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("CityId");
-
-                    b.HasIndex("CountryId");
-
-                    b.HasIndex("PropertyId")
-                        .IsUnique();
 
                     b.ToTable("Addresses");
                 });
 
-            modelBuilder.Entity("RealEstateWebApp.Data.Models.City", b =>
+            modelBuilder.Entity("RealEstateWebApp.Data.Models.Employee", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CountryId")
+                    b.Property<int>("ManagerId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasMaxLength(70)
+                        .HasColumnType("nvarchar(70)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CountryId");
+                    b.HasIndex("ManagerId");
 
-                    b.ToTable("Cities");
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("RealEstateWebApp.Data.Models.Country", b =>
+            modelBuilder.Entity("RealEstateWebApp.Data.Models.Manager", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -285,12 +279,24 @@ namespace RealEstateWebApp.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasMaxLength(70)
+                        .HasColumnType("nvarchar(70)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Countries");
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Managers");
                 });
 
             modelBuilder.Entity("RealEstateWebApp.Data.Models.Property", b =>
@@ -306,13 +312,13 @@ namespace RealEstateWebApp.Data.Migrations
                     b.Property<int>("BuildingYear")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CityId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
+
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Floor")
                         .HasColumnType("int");
@@ -332,7 +338,9 @@ namespace RealEstateWebApp.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CityId");
+                    b.HasIndex("AddressId");
+
+                    b.HasIndex("EmployeeId");
 
                     b.HasIndex("PropertyTypeId");
 
@@ -347,7 +355,9 @@ namespace RealEstateWebApp.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 
@@ -405,45 +415,45 @@ namespace RealEstateWebApp.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("RealEstateWebApp.Data.Models.Address", b =>
+            modelBuilder.Entity("RealEstateWebApp.Data.Models.Employee", b =>
                 {
-                    b.HasOne("RealEstateWebApp.Data.Models.City", "City")
-                        .WithMany()
-                        .HasForeignKey("CityId")
+                    b.HasOne("RealEstateWebApp.Data.Models.Manager", "Manager")
+                        .WithMany("Employees")
+                        .HasForeignKey("ManagerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("RealEstateWebApp.Data.Models.Country", "Country")
-                        .WithMany()
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("RealEstateWebApp.Data.Models.Property", "Property")
-                        .WithOne("Address")
-                        .HasForeignKey("RealEstateWebApp.Data.Models.Address", "PropertyId")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithOne()
+                        .HasForeignKey("RealEstateWebApp.Data.Models.Employee", "UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("City");
-
-                    b.Navigation("Country");
-
-                    b.Navigation("Property");
+                    b.Navigation("Manager");
                 });
 
-            modelBuilder.Entity("RealEstateWebApp.Data.Models.City", b =>
+            modelBuilder.Entity("RealEstateWebApp.Data.Models.Manager", b =>
                 {
-                    b.HasOne("RealEstateWebApp.Data.Models.Country", null)
-                        .WithMany("Cities")
-                        .HasForeignKey("CountryId");
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithOne()
+                        .HasForeignKey("RealEstateWebApp.Data.Models.Manager", "UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("RealEstateWebApp.Data.Models.Property", b =>
                 {
-                    b.HasOne("RealEstateWebApp.Data.Models.City", null)
+                    b.HasOne("RealEstateWebApp.Data.Models.Address", "Address")
                         .WithMany("Properties")
-                        .HasForeignKey("CityId");
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("RealEstateWebApp.Data.Models.Employee", "Employee")
+                        .WithMany("Properties")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("RealEstateWebApp.Data.Models.PropertyType", "PropertyType")
                         .WithMany("Properties")
@@ -451,22 +461,26 @@ namespace RealEstateWebApp.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.Navigation("Address");
+
+                    b.Navigation("Employee");
+
                     b.Navigation("PropertyType");
                 });
 
-            modelBuilder.Entity("RealEstateWebApp.Data.Models.City", b =>
+            modelBuilder.Entity("RealEstateWebApp.Data.Models.Address", b =>
                 {
                     b.Navigation("Properties");
                 });
 
-            modelBuilder.Entity("RealEstateWebApp.Data.Models.Country", b =>
+            modelBuilder.Entity("RealEstateWebApp.Data.Models.Employee", b =>
                 {
-                    b.Navigation("Cities");
+                    b.Navigation("Properties");
                 });
 
-            modelBuilder.Entity("RealEstateWebApp.Data.Models.Property", b =>
+            modelBuilder.Entity("RealEstateWebApp.Data.Models.Manager", b =>
                 {
-                    b.Navigation("Address");
+                    b.Navigation("Employees");
                 });
 
             modelBuilder.Entity("RealEstateWebApp.Data.Models.PropertyType", b =>

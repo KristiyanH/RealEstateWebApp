@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using RealEstateWebApp.Data.Models;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using static RealEstateWebApp.Data.DataConstants.Property;
 namespace RealEstateWebApp.ViewModels.Properties
 {
     using static Data.DataConstants;
@@ -22,7 +24,7 @@ namespace RealEstateWebApp.ViewModels.Properties
         public int BuildingYear { get; init; }
 
         [Required]
-        [Range(PropertyFloorMinValue, PropertyFloorMaxValue, ErrorMessage = FloorErrorMessage)]
+        [Range(FloorMinValue, FloorMaxValue, ErrorMessage = FloorErrorMessage)]
         public int Floor { get; init; }
 
         [Required]
@@ -30,16 +32,22 @@ namespace RealEstateWebApp.ViewModels.Properties
         public decimal SquareMeters { get; init; }
 
         [Required]
-        [Range(PropertyPriceMinValue, PropertyPriceMaxValue, ErrorMessage = RequiredAndRangeErrorMessage)]
         public decimal Price { get; init; }
 
         [Required]
+        [StringLength(AddressTextMaxLength)]
         [Display(Name = "Address")]
         public string AddressText { get; set; }
 
         [Required]
         [Display(Name = "Property Type")]
         public int PropertyTypeId { get; init; }
+
+        [Required]
+        [Display(Name = "Your Badge ID")]
+        public int EmployeeId { get; set; }
+
+        public Employee Employee { get; set; }
 
         public IEnumerable<PropertyTypeViewModel> PropertyTypes { get; set; }
     }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RealEstateWebApp.Data;
 
-namespace RealEstateWebApp.Data.Migrations
+namespace RealEstateWebApp.Migrations
 {
     [DbContext(typeof(RealEstateDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220320125601_NewInitialMigration")]
+    partial class NewInitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -236,6 +238,69 @@ namespace RealEstateWebApp.Data.Migrations
                     b.ToTable("Addresses");
                 });
 
+            modelBuilder.Entity("RealEstateWebApp.Data.Models.Employee", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ManagerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(70)
+                        .HasColumnType("nvarchar(70)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ManagerId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Employees");
+                });
+
+            modelBuilder.Entity("RealEstateWebApp.Data.Models.Manager", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(70)
+                        .HasColumnType("nvarchar(70)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Managers");
+                });
+
             modelBuilder.Entity("RealEstateWebApp.Data.Models.Property", b =>
                 {
                     b.Property<int>("Id")
@@ -253,6 +318,9 @@ namespace RealEstateWebApp.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
+
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Floor")
                         .HasColumnType("int");
@@ -274,6 +342,8 @@ namespace RealEstateWebApp.Data.Migrations
 
                     b.HasIndex("AddressId");
 
+                    b.HasIndex("EmployeeId");
+
                     b.HasIndex("PropertyTypeId");
 
                     b.ToTable("Properties");
@@ -287,26 +357,13 @@ namespace RealEstateWebApp.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 
                     b.ToTable("PropertyTypes");
-                });
-
-            modelBuilder.Entity("RealEstateWebApp.Data.Models.TestModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TestModels");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -360,12 +417,44 @@ namespace RealEstateWebApp.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("RealEstateWebApp.Data.Models.Employee", b =>
+                {
+                    b.HasOne("RealEstateWebApp.Data.Models.Manager", "Manager")
+                        .WithMany("Employees")
+                        .HasForeignKey("ManagerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithOne()
+                        .HasForeignKey("RealEstateWebApp.Data.Models.Employee", "UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Manager");
+                });
+
+            modelBuilder.Entity("RealEstateWebApp.Data.Models.Manager", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithOne()
+                        .HasForeignKey("RealEstateWebApp.Data.Models.Manager", "UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("RealEstateWebApp.Data.Models.Property", b =>
                 {
                     b.HasOne("RealEstateWebApp.Data.Models.Address", "Address")
                         .WithMany("Properties")
                         .HasForeignKey("AddressId")
                         .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("RealEstateWebApp.Data.Models.Employee", "Employee")
+                        .WithMany("Properties")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("RealEstateWebApp.Data.Models.PropertyType", "PropertyType")
@@ -376,12 +465,24 @@ namespace RealEstateWebApp.Data.Migrations
 
                     b.Navigation("Address");
 
+                    b.Navigation("Employee");
+
                     b.Navigation("PropertyType");
                 });
 
             modelBuilder.Entity("RealEstateWebApp.Data.Models.Address", b =>
                 {
                     b.Navigation("Properties");
+                });
+
+            modelBuilder.Entity("RealEstateWebApp.Data.Models.Employee", b =>
+                {
+                    b.Navigation("Properties");
+                });
+
+            modelBuilder.Entity("RealEstateWebApp.Data.Models.Manager", b =>
+                {
+                    b.Navigation("Employees");
                 });
 
             modelBuilder.Entity("RealEstateWebApp.Data.Models.PropertyType", b =>

@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
+using static RealEstateWebApp.Data.DataConstants.Property;
 namespace RealEstateWebApp.Data.Models
 {
+
     public class Property
     {
         [Key]
@@ -12,15 +13,19 @@ namespace RealEstateWebApp.Data.Models
         public string ImageUrl { get; set; }
 
         [Required]
-        [MaxLength(DataConstants.DescriptionMaxLength)]
+        [StringLength(DescriptionMaxLength, MinimumLength = DescriptionMinLength)]
         public string Description { get; set; }
 
         [Required]
+        [Range(BuildingYearMinValue, BuildingYearMaxValue)]
         public int BuildingYear { get; set; }
 
+        [Required]
+        [Range(FloorMinValue, FloorMaxValue)]
         public int Floor { get; set; }
 
         [Required]
+        [Range(SquareMetersMinValue, SquareMetersMaxValue)]
         [Column(TypeName = "decimal(18,4)")]
         public decimal SquareMeters { get; set; }
 
@@ -33,14 +38,18 @@ namespace RealEstateWebApp.Data.Models
             => Price / SquareMeters;
 
         [Required]
-        public int PropertyTypeId { get; set; }
+        public int PropertyTypeId { get; init; }
 
         public PropertyType PropertyType { get; init; }
 
         [Required]
         public int AddressId { get; set; }
 
-        [ForeignKey(nameof(AddressId))]
         public Address Address { get; set; }
+
+        [Required]
+        public int EmployeeId { get; init; }
+
+        public Employee Employee { get; init; }
     }
 }

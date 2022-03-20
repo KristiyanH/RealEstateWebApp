@@ -13,7 +13,7 @@ namespace RealEstateWebApp.Data.Models
         public string ImageUrl { get; set; }
 
         [Required]
-        [StringLength(DescriptionMaxLength, MinimumLength = DescriptionMinLength)]
+        [MaxLength(DescriptionMaxLength)]
         public string Description { get; set; }
 
         [Required]

@@ -1,7 +1,7 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
-namespace RealEstateWebApp.Migrations
+namespace RealEstateWebApp.Data.Migrations
 {
     public partial class NewInitialMigration : Migration
     {

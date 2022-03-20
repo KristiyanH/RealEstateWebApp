@@ -1,6 +1,10 @@
-﻿namespace RealEstateWebApp.Infrastructure
+﻿using System.Security.Claims;
+
+namespace RealEstateWebApp.Infrastructure
 {
-    public class ClaimsPrincipleExtensions
+    public static class ClaimsPrincipleExtensions
     {
+        public static string GetId(this ClaimsPrincipal principal)
+            => principal.FindFirst(ClaimTypes.NameIdentifier).Value;
     }
 }

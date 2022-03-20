@@ -23,7 +23,7 @@ namespace RealEstateWebApp.Services.Properties
                 Name = t.Name
             }).ToList();
 
-        public void Add(AddPropertyViewModel property)
+        public void Add(AddPropertyFormModel property)
         {
             var address = data.Addresses.FirstOrDefault(x => x.AddressText == property.AddressText);
 
@@ -139,5 +139,6 @@ namespace RealEstateWebApp.Services.Properties
 
             return detailsModel;
         }
+
     }
 }

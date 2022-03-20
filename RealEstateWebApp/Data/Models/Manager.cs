@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using static RealEstateWebApp.Data.DataConstants.User;
+
 namespace RealEstateWebApp.Data.Models
 {
     public class Manager
@@ -14,12 +15,20 @@ namespace RealEstateWebApp.Data.Models
         public int Id { get; init; }
 
         [Required]
-        [StringLength(NameMaxValue, MinimumLength = NameMinValue)]
+        [MaxLength(NameMaxValue)]
         public string Name { get; set; }
 
         [Required]
-        [StringLength(PhoneNumberMaxValue, MinimumLength = PhoneNumberMinValue)]
+        [MaxLength(PhoneNumberMaxValue)]
         public string PhoneNumber { get; set; }
+
+        [Required]
+        [MaxLength(PhoneNumberMaxValue)]
+        public string EmergencyContactNumber { get; set; }
+
+        [Required]
+        [MaxLength(JobDescriptionMaxValue)]
+        public string JobDescription { get; set; }
 
         [Required]
         public string UserId { get; set; }

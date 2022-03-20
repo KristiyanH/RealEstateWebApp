@@ -15,7 +15,7 @@ namespace RealEstateWebApp.Data.Models
         public int Id { get; set; }
 
         [Required]
-        [StringLength(AddressTextMaxLength)]
+        [MaxLength(AddressTextMaxLength)]
         public string AddressText { get; set; }
 
         public ICollection<Property> Properties { get; set; }

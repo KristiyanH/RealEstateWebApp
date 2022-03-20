@@ -6,6 +6,7 @@
         public const string DescriptionErrorMessage = "Description should be between {2} and {1} characters long.";
         public const int AddressTextMaxLength = 300;
         public const int PropertyTypeNameMaxLength = 20;
+
         public class Property
         {
             public const int DescriptionMaxLength = 1000;
@@ -26,6 +27,8 @@
             public const int NameMaxValue = 70;
             public const int PhoneNumberMinValue = 6;
             public const int PhoneNumberMaxValue = 20;
+            public const int JobDescriptionMinValue = 10;
+            public const int JobDescriptionMaxValue = 200;
         }
         
     }

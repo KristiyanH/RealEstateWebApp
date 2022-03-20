@@ -24,6 +24,8 @@ namespace RealEstateWebApp.Data
 
         public DbSet<Manager> Managers { get; init; }
 
+        public DbSet<Task> Tasks { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Property>()
@@ -47,6 +49,11 @@ namespace RealEstateWebApp.Data
                 .HasOne<IdentityUser>()
                 .WithOne()
                 .HasForeignKey<Manager>(m => m.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Task>()
+                .HasOne(t => t.Employee)
+                .WithMany(e => e.Tasks)
                 .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(builder);

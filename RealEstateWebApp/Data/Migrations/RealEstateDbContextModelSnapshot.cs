@@ -3,17 +3,15 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RealEstateWebApp.Data;
 
-namespace RealEstateWebApp.Migrations
+namespace RealEstateWebApp.Data.Migrations
 {
     [DbContext(typeof(RealEstateDbContext))]
-    [Migration("20220320125601_NewInitialMigration")]
-    partial class NewInitialMigration
+    partial class RealEstateDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -279,6 +277,16 @@ namespace RealEstateWebApp.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("EmergencyContactNumber")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("JobDescription")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(70)
@@ -364,6 +372,28 @@ namespace RealEstateWebApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PropertyTypes");
+                });
+
+            modelBuilder.Entity("RealEstateWebApp.Data.Models.Task", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("Tasks");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -470,6 +500,17 @@ namespace RealEstateWebApp.Migrations
                     b.Navigation("PropertyType");
                 });
 
+            modelBuilder.Entity("RealEstateWebApp.Data.Models.Task", b =>
+                {
+                    b.HasOne("RealEstateWebApp.Data.Models.Employee", "Employee")
+                        .WithMany("Tasks")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+                });
+
             modelBuilder.Entity("RealEstateWebApp.Data.Models.Address", b =>
                 {
                     b.Navigation("Properties");
@@ -478,6 +519,8 @@ namespace RealEstateWebApp.Migrations
             modelBuilder.Entity("RealEstateWebApp.Data.Models.Employee", b =>
                 {
                     b.Navigation("Properties");
+
+                    b.Navigation("Tasks");
                 });
 
             modelBuilder.Entity("RealEstateWebApp.Data.Models.Manager", b =>

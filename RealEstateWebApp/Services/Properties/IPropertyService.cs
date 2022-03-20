@@ -8,7 +8,7 @@ namespace RealEstateWebApp.Services.Properties
     {
         public IEnumerable<PropertyTypeViewModel> GetPropertyTypes();
 
-        public void Add(AddPropertyViewModel property);
+        public void Add(AddPropertyFormModel property);
 
         public AllPropertiesQueryModel All([FromQuery] AllPropertiesQueryModel query);
 

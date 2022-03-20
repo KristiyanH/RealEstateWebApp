@@ -6,7 +6,7 @@ namespace RealEstateWebApp.ViewModels.Properties
 {
     using static Data.DataConstants;
 
-    public class AddPropertyViewModel
+    public class AddPropertyFormModel
     {
         public int Id { get; init; }
 

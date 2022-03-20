@@ -9,17 +9,18 @@ namespace RealEstateWebApp.Data.Models
         public Employee()
         {
             Properties = new List<Property>();
+            Tasks = new List<Task>();
         }
 
         [Key]
         public int Id { get; set; }
 
         [Required]
-        [StringLength(NameMaxValue, MinimumLength = NameMinValue)]
+        [MaxLength(NameMaxValue)]
         public string Name { get; set; }
 
         [Required]
-        [StringLength(PhoneNumberMaxValue, MinimumLength = PhoneNumberMinValue)]
+        [MaxLength(PhoneNumberMaxValue)]
         public string PhoneNumber { get; set; }
 
         [Required]
@@ -30,6 +31,8 @@ namespace RealEstateWebApp.Data.Models
 
         public Manager Manager { get; set; }
 
-        public ICollection<Property> Properties { get; init; }
+        public ICollection<Property> Properties { get; set; }
+
+        public ICollection<Task> Tasks { get; set; }
     }
 }

@@ -10,14 +10,11 @@ namespace RealEstateWebApp.Controllers
 {
     public class UsersController : Controller
     {
-        private readonly RealEstateDbContext data;
         private readonly IUserService userService;
 
         public UsersController(
-            RealEstateDbContext _data,
             IUserService _userService)
         {
-            data = _data;
             userService = _userService;
         }
 
@@ -35,9 +32,7 @@ namespace RealEstateWebApp.Controllers
                 return View(employee);
             }
 
-            var userId = User.GetId();
-
-            userService.CreateEmployee(employee, userId);
+            userService.CreateEmployee(employee, User.GetId());
             
             return RedirectToAction("All", "Properties");
         }
@@ -50,14 +45,12 @@ namespace RealEstateWebApp.Controllers
         [Authorize]
         public IActionResult CreateManager(BecomeManagerFormModel manager)
         {
-            var userId = User.GetId();
-
             if (!ModelState.IsValid)
             {
                 return View(manager);
             }
 
-            userService.CreateManager(manager, userId);
+            userService.CreateManager(manager, User.GetId());
 
             return RedirectToAction("All", "Properties");
         }

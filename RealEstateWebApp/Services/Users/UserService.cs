@@ -62,5 +62,30 @@ namespace RealEstateWebApp.Services.Users
             data.Managers.Add(managerData);
             data.SaveChanges();
         }
+
+        public void SetManagerToEmployee(SetManagerToEmployeeFormModel model)
+        {
+            var manager = data
+                .Managers
+                .FirstOrDefault(x => x.Id == model.ManagerId);
+
+            if (manager == null)
+            {
+                throw new ArgumentException("User is not manager or does not exist");
+            }
+
+            var employee = data
+                .Employees
+                .FirstOrDefault(x => x.Id == model.EmployeeId);
+
+            if (employee == null)
+            {
+                throw new ArgumentException("User is not employee or does not exist");
+            }
+
+            employee.ManagerId = model.ManagerId;
+            manager.Employees.Add(employee);
+            data.SaveChanges();
+        }
     }
 }

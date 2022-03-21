@@ -8,5 +8,7 @@ namespace RealEstateWebApp.Services.Users
         public void CreateEmployee(BecomeEmployeeFormModel model, string userId);
 
         public void CreateManager(BecomeManagerFormModel model, string userId);
+
+        public void SetManagerToEmployee(SetManagerToEmployeeFormModel model);
     }
 }

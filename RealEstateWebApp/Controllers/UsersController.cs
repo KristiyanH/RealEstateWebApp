@@ -61,5 +61,24 @@ namespace RealEstateWebApp.Controllers
 
             return RedirectToAction("All", "Properties");
         }
+
+        [Authorize]
+        public IActionResult SetManagerToEmployee()
+            => View();
+
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult SetManagerToEmployee(SetManagerToEmployeeFormModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            userService.SetManagerToEmployee(model);
+
+            return RedirectToAction("All", "Properties");
+        }
     }
 }

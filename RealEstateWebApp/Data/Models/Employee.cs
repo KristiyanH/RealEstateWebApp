@@ -26,8 +26,7 @@ namespace RealEstateWebApp.Data.Models
         [Required]
         public string UserId { get; set; }
 
-        [Required]
-        public int ManagerId { get; set; }
+        public int? ManagerId { get; set; }
 
         public Manager Manager { get; set; }
 

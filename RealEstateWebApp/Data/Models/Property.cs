@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 using static RealEstateWebApp.Data.DataConstants.Property;
 namespace RealEstateWebApp.Data.Models
 {
-
     public class Property
     {
         [Key]

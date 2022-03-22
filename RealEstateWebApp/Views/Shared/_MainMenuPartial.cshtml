@@ -1,0 +1,96 @@
+﻿@inject SignInManager<IdentityUser> SignInManager
+ 
+@if(!SignInManager.IsSignedIn(User))
+{
+    <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          <li class="nav-item menu-open">
+            <a href="#" class="nav-link active">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Starter Pages
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="Properties" asp-action="All">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>All Properties</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Home</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+    </nav>
+}
+else
+{
+    <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          <li class="nav-item menu-open">
+            <a href="#" class="nav-link active">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Starter Pages
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="Properties" asp-action="All">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>All Properties</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Home</p>
+                </a>
+              </li>
+               <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="Properties" asp-action="Add">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add Property</p>
+                </a>
+              </li>
+               <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="Users" asp-action="CreateManager">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Become a Manager</p>
+                </a>
+              </li>
+               <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="Users" asp-action="CreateEmployee">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Become an Employee</p>
+                </a>
+              </li>
+               <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="Tasks" asp-action="SetTask">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Set Task</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="Users" asp-action="SetManagerToEmployee">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Set Manager</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+    </nav>
+}

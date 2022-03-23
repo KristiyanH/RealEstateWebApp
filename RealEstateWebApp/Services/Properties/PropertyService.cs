@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using RealEstateWebApp.Data;
+﻿using RealEstateWebApp.Data;
 using RealEstateWebApp.Data.Models;
 using RealEstateWebApp.ViewModels.Properties;
 using System;
@@ -15,7 +14,7 @@ namespace RealEstateWebApp.Services.Properties
         public PropertyService(RealEstateDbContext _data)
             => data = _data;
 
-        public IEnumerable<PropertyTypeViewModel> GetPropertyTypes() 
+        public IEnumerable<PropertyTypeViewModel> GetPropertyTypes()
             => data
             .PropertyTypes
             .Select(t => new PropertyTypeViewModel
@@ -27,18 +26,6 @@ namespace RealEstateWebApp.Services.Properties
         public void Add(AddPropertyFormModel property)
         {
             var address = data.Addresses.FirstOrDefault(x => x.AddressText == property.AddressText);
-            var employee = data.
-                Employees
-                .FirstOrDefault(x => x.Id == 1); // change
-
-            var manager = data
-                .Managers
-                .FirstOrDefault(x => x.Id == 1);
-
-            if (employee == null && manager == null)
-            {
-                throw new ArgumentException("Only employees and managers can add properties");
-            }
 
             if (address == null)
             {
@@ -50,7 +37,6 @@ namespace RealEstateWebApp.Services.Properties
                 data.Addresses.Add(address);
             }
 
-
             var newProperty = new Property()
             {
                 BuildingYear = property.BuildingYear,
@@ -61,15 +47,10 @@ namespace RealEstateWebApp.Services.Properties
                 PropertyTypeId = property.PropertyTypeId,
                 SquareMeters = property.SquareMeters,
                 PropertyType = data.PropertyTypes.FirstOrDefault(x => x.Id == property.PropertyTypeId),
-                AddressId = address.Id,
-                EmployeeId = 1 // change to not hardcoded later
+                AddressId = address.Id
             };
 
-            if (employee != null)
-            {
-                employee.Properties.Add(newProperty);
-            }
-
+            data.Properties.Add(newProperty);
             address.Properties.Add(newProperty);
 
             data.SaveChanges();
@@ -158,6 +139,5 @@ namespace RealEstateWebApp.Services.Properties
 
             return detailsModel;
         }
-
     }
 }

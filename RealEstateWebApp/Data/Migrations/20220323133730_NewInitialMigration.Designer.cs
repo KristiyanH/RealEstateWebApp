@@ -10,8 +10,8 @@ using RealEstateWebApp.Data;
 namespace RealEstateWebApp.Data.Migrations
 {
     [DbContext(typeof(RealEstateDbContext))]
-    [Migration("20220320143457_TaskTable")]
-    partial class TaskTable
+    [Migration("20220323133730_NewInitialMigration")]
+    partial class NewInitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -245,7 +245,7 @@ namespace RealEstateWebApp.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ManagerId")
+                    b.Property<int?>("ManagerId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -329,7 +329,7 @@ namespace RealEstateWebApp.Data.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
-                    b.Property<int>("EmployeeId")
+                    b.Property<int?>("EmployeeId")
                         .HasColumnType("int");
 
                     b.Property<int>("Floor")
@@ -453,9 +453,7 @@ namespace RealEstateWebApp.Data.Migrations
                 {
                     b.HasOne("RealEstateWebApp.Data.Models.Manager", "Manager")
                         .WithMany("Employees")
-                        .HasForeignKey("ManagerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ManagerId");
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithOne()
@@ -483,11 +481,9 @@ namespace RealEstateWebApp.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("RealEstateWebApp.Data.Models.Employee", "Employee")
+                    b.HasOne("RealEstateWebApp.Data.Models.Employee", null)
                         .WithMany("Properties")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EmployeeId");
 
                     b.HasOne("RealEstateWebApp.Data.Models.PropertyType", "PropertyType")
                         .WithMany("Properties")
@@ -496,8 +492,6 @@ namespace RealEstateWebApp.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Address");
-
-                    b.Navigation("Employee");
 
                     b.Navigation("PropertyType");
                 });

@@ -43,12 +43,6 @@ namespace RealEstateWebApp.ViewModels.Properties
         [Display(Name = "Property Type")]
         public int PropertyTypeId { get; init; }
 
-        [Required]
-        [Display(Name = "Your Badge ID")]
-        public int EmployeeId { get; set; }
-
-        public Employee Employee { get; set; }
-
         public IEnumerable<PropertyTypeViewModel> PropertyTypes { get; set; }
     }
 }

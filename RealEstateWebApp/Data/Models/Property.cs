@@ -45,10 +45,5 @@ namespace RealEstateWebApp.Data.Models
         public int AddressId { get; set; }
 
         public Address Address { get; set; }
-
-        [Required]
-        public int EmployeeId { get; init; }
-
-        public Employee Employee { get; init; }
     }
 }

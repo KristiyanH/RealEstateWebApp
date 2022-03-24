@@ -1,14 +1,4 @@
-﻿@using RealEstateWebApp.Services.Employees
-@using RealEstateWebApp.Services.Managers
-
-@inject SignInManager<IdentityUser> SignInManager
-@inject IEmployeeService Employees
-@inject IManagerService Managers
-
-@if(!SignInManager.IsSignedIn(User))
-{
-    
-    <nav class="mt-2">
+﻿<nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
@@ -33,29 +23,19 @@
                   <p>Home</p>
                 </a>
               </li>
+               <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="Properties" asp-action="Add">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add Property</p>
+                </a>
+              </li>
+               <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="Managers" asp-action="CreateManager">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Become a Manager</p>
+                </a>
+              </li>
             </ul>
           </li>
         </ul>
     </nav>
-}
-else
-{
-    var userId = User.GetId();
-    var isUserEmployee = Employees.IsEmployee(userId);
-    var isUserManager = Managers.IsManager(userId);
-
-    @if (isUserEmployee)
-    {
-        <partial name="_EmployeeMenuPartial" />
-    }
-
-    @if (isUserManager)
-    {
-        <partial name="_ManagerMenuPartial" />
-    }
-
-    @if(!isUserEmployee && !isUserManager)
-    {
-        <partial name="_UserMenuPartial" />
-    }
-}

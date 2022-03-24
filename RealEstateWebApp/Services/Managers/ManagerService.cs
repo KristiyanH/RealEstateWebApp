@@ -1,43 +1,24 @@
 ﻿using RealEstateWebApp.Data;
 using RealEstateWebApp.Data.Models;
-using RealEstateWebApp.ViewModels.Employees;
 using RealEstateWebApp.ViewModels.Managers;
 using System;
 using System.Linq;
 
-namespace RealEstateWebApp.Services.Users
+namespace RealEstateWebApp.Services.Managers
 {
-    public class UserService : IUserService
+    public class ManagerService : IManagerService
     {
         private readonly RealEstateDbContext data;
 
-        public UserService(RealEstateDbContext _data)
+        public ManagerService(RealEstateDbContext _data)
         {
             data = _data;
         }
 
-        public void CreateEmployee(BecomeEmployeeFormModel employee, string userId)
-        {
-            var isUserAlreadyEmployee = data
-                .Employees
-                .Any(e => e.UserId == userId);
-
-            if (isUserAlreadyEmployee)
-            {
-                throw new ArgumentException("User is already an employee");
-            }
-
-            var employeeData = new Employee
-            {
-                Name = employee.Name,
-                PhoneNumber = employee.PhoneNumber,
-                UserId = userId
-            };
-
-            data.Employees.Add(employeeData);
-            data.SaveChanges();
-
-        }
+        public bool IsManager(string userId)
+            => data
+            .Managers
+            .Any(e => e.UserId == userId);
 
         public void CreateManager(BecomeManagerFormModel manager, string userId)
         {

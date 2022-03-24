@@ -1,40 +1,19 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using RealEstateWebApp.Data;
 using RealEstateWebApp.Infrastructure;
-using RealEstateWebApp.Services.Users;
-using RealEstateWebApp.ViewModels.Employees;
+using RealEstateWebApp.Services.Managers;
 using RealEstateWebApp.ViewModels.Managers;
 
 namespace RealEstateWebApp.Controllers
 {
-    public class UsersController : Controller
+    public class ManagersController : Controller
     {
-        private readonly IUserService userService;
+        private readonly IManagerService managerService;
 
-        public UsersController(
-            IUserService _userService)
+        public ManagersController(
+            IManagerService _managerService)
         {
-            userService = _userService;
-        }
-
-
-        [Authorize]
-        public IActionResult CreateEmployee()
-          => View();
-
-        [HttpPost]
-        [Authorize]
-        public IActionResult CreateEmployee(BecomeEmployeeFormModel employee)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(employee);
-            }
-
-            userService.CreateEmployee(employee, User.GetId());
-            
-            return RedirectToAction("All", "Properties");
+            managerService = _managerService;
         }
 
         [Authorize]
@@ -50,7 +29,7 @@ namespace RealEstateWebApp.Controllers
                 return View(manager);
             }
 
-            userService.CreateManager(manager, User.GetId());
+            managerService.CreateManager(manager, User.GetId());
 
             return RedirectToAction("All", "Properties");
         }
@@ -58,7 +37,6 @@ namespace RealEstateWebApp.Controllers
         [Authorize]
         public IActionResult SetManagerToEmployee()
             => View();
-
 
         [HttpPost]
         [Authorize]
@@ -69,7 +47,7 @@ namespace RealEstateWebApp.Controllers
                 return View(model);
             }
 
-            userService.SetManagerToEmployee(model);
+            managerService.SetManagerToEmployee(model);
 
             return RedirectToAction("All", "Properties");
         }

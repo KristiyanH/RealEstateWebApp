@@ -8,9 +8,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RealEstateWebApp.Data;
 using RealEstateWebApp.Infrastructure;
+using RealEstateWebApp.Services.Employees;
+using RealEstateWebApp.Services.Managers;
 using RealEstateWebApp.Services.Properties;
 using RealEstateWebApp.Services.Tasks;
-using RealEstateWebApp.Services.Users;
 
 namespace RealEstateWebApp
 {
@@ -47,7 +48,8 @@ namespace RealEstateWebApp
                 });
 
             services.AddTransient<IPropertyService, PropertyService>();
-            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IEmployeeService, EmployeeService>();
+            services.AddTransient<IManagerService, ManagerService>();
             services.AddTransient<ITaskService, TaskService>();
         }
 

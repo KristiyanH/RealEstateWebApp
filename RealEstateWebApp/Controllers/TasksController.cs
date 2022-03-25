@@ -22,37 +22,25 @@ namespace RealEstateWebApp.Controllers
             taskService = _taskService;
         }
 
-        [Authorize]
+        [Authorize(Roles = "Manager")]
         public IActionResult SetTask()
             => View();
 
-        [HttpPost]
-        [Authorize]
-        public IActionResult SetTask(SetTaskFormModel task)
-        {
-            if (!IsManager(User.GetId()))
-            {
-                return RedirectToAction("Index", "Home");
-            }
+        //[HttpPost]
+        //[Authorize(Roles = "Manager")]
+        //public IActionResult SetTask(SetTaskFormModel task)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return View(task);
+        //    }
 
-            if (!ModelState.IsValid)
-            {
-                return View(task);
-            }
+        //    taskService.SetTask(task);
 
-            taskService.SetTask(task);
+        //    return RedirectToAction("All", "Properties");
 
-            return RedirectToAction("All", "Properties");
+        //}
 
-        }
-
-        private bool IsManager(string userId)
-        {
-            var isUserManager = data
-                .Managers
-                .Any(m => m.UserId == userId);
-
-            return isUserManager;
-        }
+        
     }
 }

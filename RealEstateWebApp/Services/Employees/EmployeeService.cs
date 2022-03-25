@@ -1,4 +1,5 @@
-﻿using RealEstateWebApp.Data;
+﻿using Microsoft.AspNetCore.Identity;
+using RealEstateWebApp.Data;
 using RealEstateWebApp.Data.Models;
 using RealEstateWebApp.ViewModels.Employees;
 using System;
@@ -8,37 +9,48 @@ namespace RealEstateWebApp.Services.Employees
 {
     public class EmployeeService : IEmployeeService
     {
+        private readonly UserManager<User> userManager;
         private readonly RealEstateDbContext data;
 
-        public EmployeeService(RealEstateDbContext _data)
+        public EmployeeService(RealEstateDbContext _data, UserManager<User> _userManager)
         {
             data = _data;
+            userManager = _userManager;
         }
 
         public bool IsEmployee(string userId)
-            => data
-            .Employees
-            .Any(e => e.UserId == userId);
+        {
+            throw new NotImplementedException();
+        }
 
         public void CreateEmployee(BecomeEmployeeFormModel employee, string userId)
         {
+            var role = data
+               .Roles
+               .FirstOrDefault(x => x.Name == "Employee");
+
+            var user = data
+                .Users
+                .FirstOrDefault(x => x.Id == userId);
+
             var isUserAlreadyEmployee = data
-                .Employees
-                .Any(e => e.UserId == userId);
+           .UserRoles
+           .Any(e => e.UserId == user.Id && e.RoleId == role.Id);
 
             if (isUserAlreadyEmployee)
             {
-                throw new ArgumentException("User is already an employee");
+                throw new ArgumentException("User is already a manager");
             }
 
-            var employeeData = new Employee
+            System.Threading.Tasks.Task.Run(async () =>
             {
-                Name = employee.Name,
-                PhoneNumber = employee.PhoneNumber,
-                UserId = userId
-            };
+                await userManager.AddToRoleAsync(user, role.Name);
+            });
 
-            data.Employees.Add(employeeData);
+            var isdone = data
+                .UserRoles
+                .Any(x => x.UserId == user.Id && x.RoleId == role.Id);
+
             data.SaveChanges();
 
         }

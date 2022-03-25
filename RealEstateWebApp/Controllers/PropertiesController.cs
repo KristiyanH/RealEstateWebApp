@@ -18,14 +18,9 @@ namespace RealEstateWebApp.Controllers
             propertyService = _propertyService;
         }
 
-        [Authorize]
+        [Authorize(Roles = "Manager,Employee")]
         public IActionResult Add()
         {
-            if (!isUserAuthorized())
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
             return View(new AddPropertyFormModel
             {
                 PropertyTypes = propertyService.GetPropertyTypes()
@@ -35,13 +30,9 @@ namespace RealEstateWebApp.Controllers
 
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Manager,Employee")]
         public IActionResult Add(AddPropertyFormModel property)
         {
-            if (!isUserAuthorized())
-            {
-                return RedirectToAction("Index", "Home");
-            }
 
             if (!data.PropertyTypes.Any(x => x.Id == property.PropertyTypeId))
             {
@@ -67,14 +58,9 @@ namespace RealEstateWebApp.Controllers
             return View(resultQuery);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Manager,Employee")]
         public IActionResult Remove(int Id)
         {
-            if (!isUserAuthorized())
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
             if (propertyService.Remove(Id))
             {
                 return Redirect("/Properties/All");
@@ -86,7 +72,7 @@ namespace RealEstateWebApp.Controllers
         public IActionResult Details(int id)
         {
             var property = propertyService.Details(id);
-
+            
             if (property == null)
             {
                 ModelState.AddModelError(nameof(property.Id), "Property type does not exist.");
@@ -95,24 +81,6 @@ namespace RealEstateWebApp.Controllers
             return View(property);
         }
 
-        private bool isUserAuthorized()
-        {
-            bool isAuthorized = false;
-
-            var isUserEmployee = data
-                .Employees
-                .Any(e => e.UserId == User.GetId());
-
-            var isUserManager = data
-                .Managers
-                .Any(m => m.UserId == User.GetId());
-
-            if (isUserManager || isUserEmployee)
-            {
-                isAuthorized = true;
-            }
-
-            return isAuthorized;
-        }
+       
     }
 }

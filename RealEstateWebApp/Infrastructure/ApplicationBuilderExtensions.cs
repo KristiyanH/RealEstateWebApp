@@ -4,7 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using RealEstateWebApp.Data.Models;
-
+using System;
+using Microsoft.AspNetCore.Identity;
+using static RealEstateWebApp.WebConstants;
 namespace RealEstateWebApp.Infrastructure
 {
     public static class ApplicationBuilderExtensions
@@ -12,19 +14,29 @@ namespace RealEstateWebApp.Infrastructure
         public static IApplicationBuilder PrepareDatabase(
             this IApplicationBuilder app)
         {
-           using var scopedServices = app.ApplicationServices.CreateScope();
+            using var serviceScope = app.ApplicationServices.CreateScope();
+            var services = serviceScope.ServiceProvider;
 
-            var data = scopedServices.ServiceProvider.GetService<RealEstateDbContext>();
+            MigrateDatabase(services);
 
-            SeedPropertyTypes(data);
-
-            data.Database.Migrate();
+            SeedPropertyTypes(services);
+            SeedManager(services);
+            
 
             return app;
         }
 
-        private static void SeedPropertyTypes(RealEstateDbContext data)
+        private static void MigrateDatabase(IServiceProvider services)
         {
+            var data = services.GetRequiredService<RealEstateDbContext>();
+
+            data.Database.Migrate();
+        }
+
+        private static void SeedPropertyTypes(IServiceProvider services)
+        {
+            var data = services.GetRequiredService<RealEstateDbContext>();
+
             if (data.PropertyTypes.Any())
             {
                 return;
@@ -41,5 +53,56 @@ namespace RealEstateWebApp.Infrastructure
 
             data.SaveChanges();
         }
+
+        private static void SeedManager(IServiceProvider services)
+        {
+            var userManager = services.GetRequiredService<UserManager<User>>();
+            var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
+            System.Threading.Tasks.Task.Run(async () =>
+            {
+                if (await roleManager.RoleExistsAsync(ManagerRoleName))
+                {
+                    return;
+                }
+
+                var managerRole = new IdentityRole { Name = ManagerRoleName };
+                var employeeRole = new IdentityRole { Name = EmployeeRoleName };
+                await roleManager.CreateAsync(managerRole);
+                await roleManager.CreateAsync(employeeRole);
+
+                var managerEmail = "kristiyan.a.hristov@gmail.com";
+                var managerFullName = "Kristiyan Hristov";
+                const string managerPassword = "123456";
+
+                var manager = new User
+                {
+                    Email = managerEmail,
+                    UserName = managerEmail,
+                    FullName = managerFullName
+                };
+
+                await userManager.CreateAsync(manager, managerPassword);
+                await userManager.AddToRoleAsync(manager, managerRole.Name);
+
+                var employeeEmail = "cahristov@gmail.com";
+                var employeeFullName = "Pesho Petrov";
+
+                var employee = new User
+                {
+                    Email = employeeEmail,
+                    UserName = employeeEmail,
+                    FullName = employeeFullName
+                };
+
+                await userManager.CreateAsync(employee, managerPassword);
+                await userManager.AddToRoleAsync(employee, employeeRole.Name);
+
+            })
+                .GetAwaiter()
+                .GetResult();
+        }
+
+        
     }
 }

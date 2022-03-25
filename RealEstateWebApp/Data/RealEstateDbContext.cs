@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using RealEstateWebApp.Data.Models;
 
 namespace RealEstateWebApp.Data
 {
-    public class RealEstateDbContext : IdentityDbContext
+    public class RealEstateDbContext : IdentityDbContext<User>
     {
 
         public RealEstateDbContext(DbContextOptions<RealEstateDbContext> options)
@@ -20,10 +19,6 @@ namespace RealEstateWebApp.Data
 
         public DbSet<Address> Addresses { get; init; }
 
-        public DbSet<Employee> Employees { get; init; }
-
-        public DbSet<Manager> Managers { get; init; }
-
         public DbSet<Task> Tasks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -37,23 +32,6 @@ namespace RealEstateWebApp.Data
             builder.Entity<Address>()
                 .HasMany(a => a.Properties)
                 .WithOne(p => p.Address)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Entity<Employee>()
-                .HasOne<IdentityUser>()
-                .WithOne()
-                .HasForeignKey<Employee>(e => e.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Entity<Manager>()
-                .HasOne<IdentityUser>()
-                .WithOne()
-                .HasForeignKey<Manager>(m => m.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Entity<Task>()
-                .HasOne(t => t.Employee)
-                .WithMany(e => e.Tasks)
                 .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(builder);

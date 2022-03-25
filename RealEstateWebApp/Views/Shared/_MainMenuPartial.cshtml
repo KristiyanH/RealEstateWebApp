@@ -1,9 +1,8 @@
 ﻿@using RealEstateWebApp.Services.Employees
 @using RealEstateWebApp.Services.Managers
 
-@inject SignInManager<IdentityUser> SignInManager
-@inject IEmployeeService Employees
-@inject IManagerService Managers
+@using RealEstateWebApp.Data.Models
+@inject SignInManager<User> SignInManager
 
 @if(!SignInManager.IsSignedIn(User))
 {
@@ -40,21 +39,17 @@
 }
 else
 {
-    var userId = User.GetId();
-    var isUserEmployee = Employees.IsEmployee(userId);
-    var isUserManager = Managers.IsManager(userId);
-
-    @if (isUserEmployee)
+    @if (User.IsInRole("Employee"))
     {
         <partial name="_EmployeeMenuPartial" />
     }
 
-    @if (isUserManager)
+    @if (User.IsInRole("Manager"))
     {
         <partial name="_ManagerMenuPartial" />
     }
 
-    @if(!isUserEmployee && !isUserManager)
+    @if(!User.IsInRole("Employee") && !User.IsInRole("Manager"))
     {
         <partial name="_UserMenuPartial" />
     }

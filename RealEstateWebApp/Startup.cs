@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RealEstateWebApp.Data;
+using RealEstateWebApp.Data.Models;
 using RealEstateWebApp.Infrastructure;
 using RealEstateWebApp.Services.Employees;
 using RealEstateWebApp.Services.Managers;
@@ -31,7 +32,7 @@ namespace RealEstateWebApp
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services
-                .AddDefaultIdentity<IdentityUser>(options =>
+                .AddDefaultIdentity<User>(options =>
                 {
                     //options.SignIn.RequireConfirmedAccount = true;
                     options.Password.RequireDigit = false;
@@ -39,6 +40,7 @@ namespace RealEstateWebApp
                     options.Password.RequireUppercase = false;
                     options.Password.RequireLowercase = false;
                 })
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<RealEstateDbContext>();
 
             services

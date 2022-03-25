@@ -21,7 +21,7 @@ namespace RealEstateWebApp.Controllers
             => View();
 
         [HttpPost]
-        [Authorize(Roles = "Manager,Employee")]
+        [Authorize]
         public IActionResult CreateManager(BecomeManagerFormModel manager)
         {
             if (!ModelState.IsValid)
@@ -38,18 +38,18 @@ namespace RealEstateWebApp.Controllers
         public IActionResult SetManagerToEmployee()
             => View();
 
-        //[HttpPost]
-        //[Authorize]
-        //public IActionResult SetManagerToEmployee(SetManagerToEmployeeFormModel model)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return View(model);
-        //    }
+        [HttpPost]
+        [Authorize]
+        public IActionResult SetManagerToEmployee(SetManagerToEmployeeFormModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
 
-        //    managerService.SetManagerToEmployee(model);
+            managerService.SetManagerToEmployee(model);
 
-        //    return RedirectToAction("All", "Properties");
-        //}
+            return RedirectToAction("All", "Properties");
+        }
     }
 }

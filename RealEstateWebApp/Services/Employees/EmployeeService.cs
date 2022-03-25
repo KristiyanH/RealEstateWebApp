@@ -18,41 +18,27 @@ namespace RealEstateWebApp.Services.Employees
             userManager = _userManager;
         }
 
-        public bool IsEmployee(string userId)
-        {
-            throw new NotImplementedException();
-        }
-
         public void CreateEmployee(BecomeEmployeeFormModel employee, string userId)
         {
-            var role = data
-               .Roles
-               .FirstOrDefault(x => x.Name == "Employee");
-
-            var user = data
-                .Users
-                .FirstOrDefault(x => x.Id == userId);
-
             var isUserAlreadyEmployee = data
-           .UserRoles
-           .Any(e => e.UserId == user.Id && e.RoleId == role.Id);
+                 .Employees
+                 .Any(e => e.UserId == userId);
 
             if (isUserAlreadyEmployee)
             {
-                throw new ArgumentException("User is already a manager");
+                throw new ArgumentException("User is already an employee");
+
             }
 
-            System.Threading.Tasks.Task.Run(async () =>
+            var employeeData = new Employee
             {
-                await userManager.AddToRoleAsync(user, role.Name);
-            });
+                Name = employee.Name,
+                PhoneNumber = employee.PhoneNumber,
+                UserId = userId
+            };
 
-            var isdone = data
-                .UserRoles
-                .Any(x => x.UserId == user.Id && x.RoleId == role.Id);
-
+            data.Employees.Add(employeeData);
             data.SaveChanges();
-
         }
     }
 }

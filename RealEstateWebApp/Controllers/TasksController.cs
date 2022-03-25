@@ -26,21 +26,19 @@ namespace RealEstateWebApp.Controllers
         public IActionResult SetTask()
             => View();
 
-        //[HttpPost]
-        //[Authorize(Roles = "Manager")]
-        //public IActionResult SetTask(SetTaskFormModel task)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return View(task);
-        //    }
+        [HttpPost]
+        [Authorize(Roles = "Manager")]
+        public IActionResult SetTask(SetTaskFormModel task)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(task);
+            }
 
-        //    taskService.SetTask(task);
+            taskService.SetTask(task);
 
-        //    return RedirectToAction("All", "Properties");
+            return RedirectToAction("All", "Properties");
 
-        //}
-
-        
+        }
     }
 }

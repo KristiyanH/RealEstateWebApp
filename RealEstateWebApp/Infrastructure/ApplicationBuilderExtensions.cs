@@ -11,8 +11,7 @@ namespace RealEstateWebApp.Infrastructure
 {
     public static class ApplicationBuilderExtensions
     {
-        public static IApplicationBuilder PrepareDatabase(
-            this IApplicationBuilder app)
+        public static IApplicationBuilder PrepareDatabase(this IApplicationBuilder app)
         {
             using var serviceScope = app.ApplicationServices.CreateScope();
             var services = serviceScope.ServiceProvider;
@@ -21,7 +20,7 @@ namespace RealEstateWebApp.Infrastructure
 
             SeedPropertyTypes(services);
             SeedManager(services);
-            
+            SeedEmployee(services);
 
             return app;
         }
@@ -67,9 +66,7 @@ namespace RealEstateWebApp.Infrastructure
                 }
 
                 var managerRole = new IdentityRole { Name = ManagerRoleName };
-                var employeeRole = new IdentityRole { Name = EmployeeRoleName };
                 await roleManager.CreateAsync(managerRole);
-                await roleManager.CreateAsync(employeeRole);
 
                 var managerEmail = "kristiyan.a.hristov@gmail.com";
                 var managerFullName = "Kristiyan Hristov";
@@ -84,9 +81,29 @@ namespace RealEstateWebApp.Infrastructure
 
                 await userManager.CreateAsync(manager, managerPassword);
                 await userManager.AddToRoleAsync(manager, managerRole.Name);
+            })
+                .GetAwaiter()
+                .GetResult();
+        }
+
+        private static void SeedEmployee(IServiceProvider services)
+        {
+            var userManager = services.GetRequiredService<UserManager<User>>();
+            var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
+            System.Threading.Tasks.Task.Run(async () =>
+            {
+                if (await roleManager.RoleExistsAsync(EmployeeRoleName))
+                {
+                    return;
+                }
+
+                var employeeRole = new IdentityRole { Name = EmployeeRoleName };
+                await roleManager.CreateAsync(employeeRole);
 
                 var employeeEmail = "cahristov@gmail.com";
                 var employeeFullName = "Pesho Petrov";
+                const string employeePassword = "123456";
 
                 var employee = new User
                 {
@@ -95,14 +112,12 @@ namespace RealEstateWebApp.Infrastructure
                     FullName = employeeFullName
                 };
 
-                await userManager.CreateAsync(employee, managerPassword);
+                await userManager.CreateAsync(employee, employeePassword);
                 await userManager.AddToRoleAsync(employee, employeeRole.Name);
 
             })
                 .GetAwaiter()
                 .GetResult();
         }
-
-        
     }
 }

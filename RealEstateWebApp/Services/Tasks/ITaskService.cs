@@ -4,6 +4,6 @@ namespace RealEstateWebApp.Services.Tasks
 {
     public interface ITaskService
     {
-        //public void SetTask(SetTaskFormModel model);
+        public void SetTask(SetTaskFormModel model);
     }
 }

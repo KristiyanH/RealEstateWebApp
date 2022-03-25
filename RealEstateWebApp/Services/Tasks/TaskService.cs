@@ -15,25 +15,25 @@ namespace RealEstateWebApp.Services.Tasks
             data = _data;
         }
 
-        //public void SetTask(SetTaskFormModel task)
-        //{
-        //    var employee = data
-        //           .Employees
-        //           .FirstOrDefault(e => e.Id == task.EmployeeId);
+        public void SetTask(SetTaskFormModel task)
+        {
+            var employee = data
+                   .Employees
+                   .FirstOrDefault(e => e.Id == task.EmployeeId);
 
-        //    if (employee == null)
-        //    {
-        //        throw new ArgumentException("Employee does not exist");
-        //    }
+            if (employee == null)
+            {
+                throw new ArgumentException("Employee does not exist");
+            }
 
-        //    employee.Tasks.Add(new Task()
-        //    {
-        //        Description = task.Description,
-        //        EmployeeId = employee.Id
-        //    });
+            employee.Tasks.Add(new Task()
+            {
+                Description = task.Description,
+                EmployeeId = employee.Id
+            });
 
-        //    data.SaveChanges();
+            data.SaveChanges();
 
-        //}
+        }
     }
 }

@@ -13,6 +13,8 @@ namespace RealEstateWebApp.Data.Models
         public string Description { get; set; }
 
         [Required]
-        public string EmployeeId { get; set; }
+        public int EmployeeId { get; set; }
+
+        public Employee Employee { get; set; }
     }
 }

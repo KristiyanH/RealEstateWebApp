@@ -29,7 +29,7 @@ namespace RealEstateWebApp.Controllers
 
             roleService.CreateRole(model);
 
-            return RedirectToAction("AllRoles", "Administration");
+            return RedirectToAction("AllRoles", "Roles");
         }
 
         [Authorize(Roles = "Administrator,Manager")]
@@ -41,9 +41,23 @@ namespace RealEstateWebApp.Controllers
         [Authorize(Roles = "Administrator,Manager")]
         public async Task<IActionResult> EditRole(string id)
         {
-            var model = await roleService.EditRole(id);
+            var model = await roleService.EditRoleGet(id);
 
             return View(model);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Administrator,Manager")]
+        public async Task<IActionResult> EditRole(EditRoleViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            await roleService.EditRolePost(model);
+
+            return RedirectToAction("AllRoles", "Roles");
         }
     }
 }

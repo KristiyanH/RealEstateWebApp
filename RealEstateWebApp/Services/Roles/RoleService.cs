@@ -37,7 +37,7 @@ namespace RealEstateWebApp.Services.Roles
             await roleManager.CreateAsync(identityRole);
         }
 
-        public async Task<EditRoleViewModel> EditRole(string id)
+        public async Task<EditRoleViewModel> EditRoleGet(string id)
         {
             var role = await roleManager.FindByIdAsync(id);
 
@@ -61,6 +61,21 @@ namespace RealEstateWebApp.Services.Roles
             }
 
             return model;
+        }
+
+        public async System.Threading.Tasks.Task EditRolePost(EditRoleViewModel model)
+        {
+            var role = await roleManager.FindByIdAsync(model.Id);
+
+            if (role == null)
+            {
+                throw new ArgumentException($"View with id:{model.Id} not found!");
+            }
+            else
+            {
+                role.Name = model.RoleName;
+                await roleManager.UpdateAsync(role);
+            }
         }
     }
 }

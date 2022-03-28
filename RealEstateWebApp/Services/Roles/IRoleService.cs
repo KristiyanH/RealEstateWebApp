@@ -11,6 +11,8 @@ namespace RealEstateWebApp.Services.Roles
 
         public IQueryable<IdentityRole> AllRoles();
 
-        public Task<EditRoleViewModel> EditRole(string id);
+        public Task<EditRoleViewModel> EditRoleGet(string id);
+
+        public Task EditRolePost(EditRoleViewModel model);
     }
 }

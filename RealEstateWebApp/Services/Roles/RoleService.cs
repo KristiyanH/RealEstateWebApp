@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using RealEstateWebApp.Data.Models;
 using RealEstateWebApp.ViewModels.Roles;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace RealEstateWebApp.Services.Roles
@@ -7,23 +10,57 @@ namespace RealEstateWebApp.Services.Roles
     public class RoleService : IRoleService
     {
         private readonly RoleManager<IdentityRole> roleManager;
+        private readonly UserManager<User> userManager;
 
-        public RoleService(RoleManager<IdentityRole> _roleManager)
-            => roleManager = _roleManager;
-
-        public void CreateRole(CreateRoleViewModel model)
+        public RoleService(RoleManager<IdentityRole> _roleManager,
+            UserManager<User> _userManager)
         {
-            Task.Run(async () =>
+            roleManager = _roleManager;
+            userManager = _userManager;
+        }
+
+
+        public IQueryable<IdentityRole> AllRoles()
+        {
+            return roleManager.Roles;
+        }
+
+        public async void CreateRole(CreateRoleViewModel model)
+        {
+            if (await roleManager.RoleExistsAsync(model.RoleName))
             {
-                if (await roleManager.RoleExistsAsync(model.RoleName))
+                return;
+            }
+
+            var identityRole = new IdentityRole { Name = model.RoleName };
+
+            await roleManager.CreateAsync(identityRole);
+        }
+
+        public async Task<EditRoleViewModel> EditRole(string id)
+        {
+            var role = await roleManager.FindByIdAsync(id);
+
+            if (role == null)
+            {
+                throw new ArgumentException($"View with id:{id} not found!");
+            }
+
+            var model = new EditRoleViewModel
+            {
+                Id = role.Id,
+                RoleName = role.Name
+            };
+
+            foreach (var user in userManager.Users)
+            {
+                if (await userManager.IsInRoleAsync(user, role.Name))
                 {
-                    return;
+                    model.Users.Add(user.UserName);
                 }
-                var identityRole = new IdentityRole{Name = model.RoleName};
-                await roleManager.CreateAsync(identityRole);
-            })
-                .GetAwaiter()
-                .GetResult();
+            }
+
+            return model;
         }
     }
 }

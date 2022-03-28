@@ -34,12 +34,12 @@ namespace RealEstateWebApp.Controllers
             return RedirectToAction("All", "Properties");
         }
 
-        [Authorize(Roles = "Manager")]
+        [Authorize(Roles = "Administrator,Manager")]
         public IActionResult SetManagerToEmployee()
             => View();
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Administrator,Manager")]
         public IActionResult SetManagerToEmployee(SetManagerToEmployeeFormModel model)
         {
             if (!ModelState.IsValid)

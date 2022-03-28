@@ -18,7 +18,7 @@ namespace RealEstateWebApp.Controllers
             propertyService = _propertyService;
         }
 
-        [Authorize(Roles = "Manager,Employee")]
+        [Authorize(Roles = "Administrator,Manager,Employee")]
         public IActionResult Add()
         {
             return View(new AddPropertyFormModel
@@ -30,7 +30,7 @@ namespace RealEstateWebApp.Controllers
 
 
         [HttpPost]
-        [Authorize(Roles = "Manager,Employee")]
+        [Authorize(Roles = "Administrator,Manager,Employee")]
         public IActionResult Add(AddPropertyFormModel property)
         {
 
@@ -58,7 +58,7 @@ namespace RealEstateWebApp.Controllers
             return View(resultQuery);
         }
 
-        [Authorize(Roles = "Manager,Employee")]
+        [Authorize(Roles = "Administrator,Manager,Employee")]
         public IActionResult Remove(int Id)
         {
             if (propertyService.Remove(Id))

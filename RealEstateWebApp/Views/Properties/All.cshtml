@@ -1,5 +1,8 @@
 ﻿@model AllPropertiesQueryModel
 
+@{
+    ViewData["Title"] = "All Properties";
+}
 
 <form method="get">
     <div class="row mb-5">
@@ -29,8 +32,8 @@
                 <div class="card-body text-center">
                     <h5 class="card-title">@property.Price.ToString("f3")€</h5>
                     <p class="card-text">@property.Description</p>
-                    <a asp-controller="Properties" asp-action="Remove" asp-route-id="@property.Id" class="btn btn-primary btn-sm">Remove</a>
-                    <a asp-controller="Properties" asp-action="Details" asp-route-id="@property.Id" class="btn btn-secondary btn-sm">Details</a>
+                    <a asp-controller="Properties" asp-action="Details" asp-route-id="@property.Id" class="btn btn-primary btn-sm">Details</a>
+                    <a asp-controller="Properties" asp-action="Remove" asp-route-id="@property.Id" class="btn btn-secondary btn-sm" style="background-color:red;border-color:red">Remove</a>
                 </div>
             </div>
         </div>

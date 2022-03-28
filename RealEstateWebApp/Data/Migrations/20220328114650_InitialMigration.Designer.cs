@@ -8,7 +8,7 @@ using System;
 namespace RealEstateWebApp.Data.Migrations
 {
     [DbContext(typeof(RealEstateDbContext))]
-    [Migration("20220325175047_InitialMigration")]
+    [Migration("20220328114650_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using RealEstateWebApp.ViewModels.Roles;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,5 +15,9 @@ namespace RealEstateWebApp.Services.Roles
         public Task<EditRoleViewModel> EditRoleGet(string id);
 
         public Task EditRolePost(EditRoleViewModel model);
+
+        public Task<List<UserRoleViewModel>> EditUsersInRoleGet(string roleId);
+
+        public Task EditUsersInRolePost(List<UserRoleViewModel> model, string roleId);
     }
 }

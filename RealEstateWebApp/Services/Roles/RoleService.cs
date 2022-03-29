@@ -2,6 +2,7 @@
 using RealEstateWebApp.Data.Models;
 using RealEstateWebApp.ViewModels.Roles;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -43,7 +44,7 @@ namespace RealEstateWebApp.Services.Roles
 
             if (role == null)
             {
-                throw new ArgumentException($"View with id:{id} not found!");
+                throw new ArgumentException($"Role with id:{id} not found!");
             }
 
             var model = new EditRoleViewModel
@@ -69,12 +70,88 @@ namespace RealEstateWebApp.Services.Roles
 
             if (role == null)
             {
-                throw new ArgumentException($"View with id:{model.Id} not found!");
+                throw new ArgumentException($"Role with id:{model.Id} not found!");
             }
             else
             {
                 role.Name = model.RoleName;
                 await roleManager.UpdateAsync(role);
+            }
+        }
+
+        public async System.Threading.Tasks.Task<List<UserRoleViewModel>> EditUsersInRoleGet(string roleId)
+        {
+            var role = await roleManager.FindByIdAsync(roleId);
+
+            if (role == null)
+            {
+                throw new ArgumentException($"Role with id:{roleId} not found!");
+            }
+
+            var userRoles = new List<UserRoleViewModel>();
+
+            foreach (var user in userManager.Users)
+            {
+                var userRoleViewModel = new UserRoleViewModel
+                {
+                    UserId = user.Id,
+                    UserName = user.UserName
+                };
+
+                if (await userManager.IsInRoleAsync(user, role.Name))
+                {
+                    userRoleViewModel.IsSelected = true;
+                }
+                else
+                {
+                    userRoleViewModel.IsSelected = false;
+                }
+
+                userRoles.Add(userRoleViewModel);
+            }
+
+            return userRoles;
+        }
+
+        public async System.Threading.Tasks.Task EditUsersInRolePost(List<UserRoleViewModel> model, string roleId)
+        {
+            var role = await roleManager.FindByIdAsync(roleId);
+
+            if (role == null)
+            {
+                throw new ArgumentException($"Role with id:{roleId} not found!");
+            }
+
+            for (int i = 0; i < model.Count; i++)
+            {
+               var user = await userManager.FindByIdAsync(model[i].UserId);
+
+                IdentityResult result = null;
+
+                if (model[i].IsSelected && !(await userManager.IsInRoleAsync(user, role.Name)))
+                {
+                    result = await userManager.AddToRoleAsync(user, role.Name);
+                }
+                else if (!model[i].IsSelected && await userManager.IsInRoleAsync(user, role.Name))
+                {
+                    result = await userManager.RemoveFromRoleAsync(user, role.Name);
+                }
+                else
+                {
+                    continue;
+                }
+
+                if (result.Succeeded)
+                {
+                    if (i < (model.Count - 1))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
             }
         }
     }

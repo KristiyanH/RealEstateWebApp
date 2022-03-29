@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RealEstateWebApp.Services.Roles;
 using RealEstateWebApp.ViewModels.Roles;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace RealEstateWebApp.Controllers
@@ -58,6 +59,35 @@ namespace RealEstateWebApp.Controllers
             await roleService.EditRolePost(model);
 
             return RedirectToAction("AllRoles", "Roles");
+        }
+
+        [Authorize(Roles = "Administrator,Manager")]
+        public async Task<IActionResult> EditUsersInRole(string roleId)
+        {
+            ViewData["RoleId"] = roleId;
+
+            var model = await roleService.EditUsersInRoleGet(roleId);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Administrator,Manager")]
+        public async Task<IActionResult> EditUsersInRole(List<UserRoleViewModel> model, string roleId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            if (model.Count == 0)
+            {
+                return RedirectToAction("EditRole", new { Id = roleId });
+            }
+
+            await roleService.EditUsersInRolePost(model, roleId);
+
+            return RedirectToAction("EditRole", new { Id = roleId });
         }
     }
 }

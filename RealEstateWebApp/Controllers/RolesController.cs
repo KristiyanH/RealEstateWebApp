@@ -21,14 +21,14 @@ namespace RealEstateWebApp.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Administrator,Manager")]
-        public IActionResult CreateRole(CreateRoleViewModel model)
+        public async Task<IActionResult> CreateRole(CreateRoleViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            roleService.CreateRole(model);
+            await roleService.CreateRole(model);
 
             return RedirectToAction("AllRoles", "Roles");
         }
@@ -88,6 +88,15 @@ namespace RealEstateWebApp.Controllers
             await roleService.EditUsersInRolePost(model, roleId);
 
             return RedirectToAction("EditRole", new { Id = roleId });
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Administrator,Manager")]
+        public async Task<IActionResult> DeleteRole(string id)
+        {
+            await roleService.DeleteRole(id);
+
+            return RedirectToAction("AllRoles", "Roles");
         }
     }
 }

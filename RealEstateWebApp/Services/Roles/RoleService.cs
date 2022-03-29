@@ -26,7 +26,7 @@ namespace RealEstateWebApp.Services.Roles
             return roleManager.Roles;
         }
 
-        public async void CreateRole(CreateRoleViewModel model)
+        public async System.Threading.Tasks.Task CreateRole(CreateRoleViewModel model)
         {
             if (await roleManager.RoleExistsAsync(model.RoleName))
             {
@@ -153,6 +153,18 @@ namespace RealEstateWebApp.Services.Roles
                     }
                 }
             }
+        }
+
+        public async System.Threading.Tasks.Task DeleteRole(string id)
+        {
+            var role = await roleManager.FindByIdAsync(id);
+
+            if (role == null)
+            {
+                throw new ArgumentException($"Role with id:{id} not found!");
+            }
+
+            await roleManager.DeleteAsync(role);
         }
     }
 }

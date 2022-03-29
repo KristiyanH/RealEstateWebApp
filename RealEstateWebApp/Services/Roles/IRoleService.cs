@@ -8,7 +8,7 @@ namespace RealEstateWebApp.Services.Roles
 {
     public interface IRoleService
     {
-        public void CreateRole(CreateRoleViewModel model);
+        public Task CreateRole(CreateRoleViewModel model);
 
         public IQueryable<IdentityRole> AllRoles();
 
@@ -19,5 +19,7 @@ namespace RealEstateWebApp.Services.Roles
         public Task<List<UserRoleViewModel>> EditUsersInRoleGet(string roleId);
 
         public Task EditUsersInRolePost(List<UserRoleViewModel> model, string roleId);
+
+        public Task DeleteRole(string id);
     }
 }

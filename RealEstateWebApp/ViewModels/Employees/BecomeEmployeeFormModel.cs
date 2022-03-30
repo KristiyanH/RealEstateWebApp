@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using static RealEstateWebApp.Data.DataConstants.User;
 
-namespace RealEstateWebApp.ViewModels.Employees
+namespace RealEstateWebApp.ViewModels
 {
     public class BecomeEmployeeFormModel
     {

@@ -1,6 +1,6 @@
-﻿using RealEstateWebApp.ViewModels.Employees;
+﻿using RealEstateWebApp.ViewModels;
 
-namespace RealEstateWebApp.Services.Employees
+namespace RealEstateWebApp.Services
 {
     public interface IEmployeeService
     {

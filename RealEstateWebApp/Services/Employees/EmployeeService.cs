@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using RealEstateWebApp.Data;
 using RealEstateWebApp.Data.Models;
-using RealEstateWebApp.ViewModels.Employees;
+using RealEstateWebApp.ViewModels;
 using System;
 using System.Linq;
 
-namespace RealEstateWebApp.Services.Employees
+namespace RealEstateWebApp.Services
 {
     public class EmployeeService : IEmployeeService
     {

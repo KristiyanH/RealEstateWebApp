@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RealEstateWebApp.Infrastructure;
-using RealEstateWebApp.Services.Employees;
-using RealEstateWebApp.ViewModels.Employees;
+using RealEstateWebApp.Services;
+using RealEstateWebApp.ViewModels;
 
 namespace RealEstateWebApp.Controllers
 {

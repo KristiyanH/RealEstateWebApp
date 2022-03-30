@@ -9,7 +9,7 @@ using Microsoft.Extensions.Hosting;
 using RealEstateWebApp.Data;
 using RealEstateWebApp.Data.Models;
 using RealEstateWebApp.Infrastructure;
-using RealEstateWebApp.Services.Employees;
+using RealEstateWebApp.Services;
 using RealEstateWebApp.Services.Managers;
 using RealEstateWebApp.Services.Properties;
 using RealEstateWebApp.Services.Roles;
@@ -87,7 +87,7 @@ namespace RealEstateWebApp
                 endpoints.MapRazorPages();
             });
 
-            
+
         }
     }
 }

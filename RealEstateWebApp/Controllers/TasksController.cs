@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RealEstateWebApp.Data;
-using RealEstateWebApp.Data.Models;
-using RealEstateWebApp.Infrastructure;
 using RealEstateWebApp.Services.Tasks;
 using RealEstateWebApp.ViewModels.Tasks;
-using System.Linq;
 
 namespace RealEstateWebApp.Controllers
 {
@@ -22,12 +19,12 @@ namespace RealEstateWebApp.Controllers
             taskService = _taskService;
         }
 
-        [Authorize(Roles = "Manager")]
+        [Authorize(Roles = "Administrator,Manager")]
         public IActionResult SetTask()
             => View();
 
         [HttpPost]
-        [Authorize(Roles = "Manager")]
+        [Authorize(Roles = "Administrator,Manager")]
         public IActionResult SetTask(SetTaskFormModel task)
         {
             if (!ModelState.IsValid)

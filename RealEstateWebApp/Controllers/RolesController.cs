@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RealEstateWebApp.Services.Roles;
 using RealEstateWebApp.ViewModels.Roles;
@@ -51,6 +50,7 @@ namespace RealEstateWebApp.Controllers
         [Authorize(Roles = "Administrator,Manager")]
         public async Task<IActionResult> EditRole(EditRoleViewModel model)
         {
+
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -59,6 +59,7 @@ namespace RealEstateWebApp.Controllers
             await roleService.EditRolePost(model);
 
             return RedirectToAction("AllRoles", "Roles");
+
         }
 
         [Authorize(Roles = "Administrator,Manager")]

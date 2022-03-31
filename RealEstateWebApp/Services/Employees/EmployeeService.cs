@@ -27,7 +27,6 @@ namespace RealEstateWebApp.Services
             if (isUserAlreadyEmployee)
             {
                 throw new ArgumentException("User is already an employee");
-
             }
 
             var employeeData = new Employee

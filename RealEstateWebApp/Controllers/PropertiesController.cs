@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RealEstateWebApp.Data;
-using RealEstateWebApp.Infrastructure;
 using RealEstateWebApp.Services.Properties;
 using RealEstateWebApp.ViewModels.Properties;
 using System.Linq;
@@ -33,7 +32,6 @@ namespace RealEstateWebApp.Controllers
         [Authorize(Roles = "Administrator,Manager,Employee")]
         public IActionResult Add(AddPropertyFormModel property)
         {
-
             if (!data.PropertyTypes.Any(x => x.Id == property.PropertyTypeId))
             {
                 ModelState.AddModelError(nameof(property.PropertyTypeId), "Property type does not exist.");
@@ -75,7 +73,7 @@ namespace RealEstateWebApp.Controllers
             
             if (property == null)
             {
-                ModelState.AddModelError(nameof(property.Id), "Property type does not exist.");
+                ModelState.AddModelError(nameof(property.Id), $"Property with id: {id} does not exist.");
             }
 
             return View(property);

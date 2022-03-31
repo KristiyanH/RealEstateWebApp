@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using RealEstateWebApp.Data;
 using RealEstateWebApp.Data.Models;
 using RealEstateWebApp.ViewModels.Roles;
 using System;
@@ -12,7 +13,6 @@ namespace RealEstateWebApp.Services.Roles
     {
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly UserManager<User> userManager;
-
         public RoleService(RoleManager<IdentityRole> _roleManager,
             UserManager<User> _userManager)
         {
@@ -134,7 +134,7 @@ namespace RealEstateWebApp.Services.Roles
                 }
                 else if (!model[i].IsSelected && await userManager.IsInRoleAsync(user, role.Name))
                 {
-                    result = await userManager.RemoveFromRoleAsync(user, role.Name);
+                   result = await userManager.RemoveFromRoleAsync(user, role.Name);
                 }
                 else
                 {

@@ -19,11 +19,8 @@ namespace RealEstateWebApp.Data
 
         public DbSet<Address> Addresses { get; init; }
 
-        public DbSet<Employee> Employees { get; init; }
-
-        public DbSet<Manager> Managers { get; init; }
-
         public DbSet<Task> Tasks { get; init; }
+        
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -38,21 +35,9 @@ namespace RealEstateWebApp.Data
                 .WithOne(p => p.Address)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.Entity<Employee>()
-                .HasOne<User>()
-                .WithOne()
-                .HasForeignKey<Employee>(e => e.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Entity<Manager>()
-                .HasOne<User>()
-                .WithOne()
-                .HasForeignKey<Manager>(m => m.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
-
             builder.Entity<Task>()
-                .HasOne(t => t.Employee)
-                .WithMany(e => e.Tasks)
+                .HasOne(x => x.User)
+                .WithMany(x => x.Tasks)
                 .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(builder);

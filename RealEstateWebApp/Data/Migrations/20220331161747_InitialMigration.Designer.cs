@@ -8,7 +8,7 @@ using System;
 namespace RealEstateWebApp.Data.Migrations
 {
     [DbContext(typeof(RealEstateDbContext))]
-    [Migration("20220328114650_InitialMigration")]
+    [Migration("20220331161747_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -171,79 +171,6 @@ namespace RealEstateWebApp.Data.Migrations
                     b.ToTable("Addresses");
                 });
 
-            modelBuilder.Entity("RealEstateWebApp.Data.Models.Employee", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("ManagerId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(70)
-                        .HasColumnType("nvarchar(70)");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ManagerId");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("Employees");
-                });
-
-            modelBuilder.Entity("RealEstateWebApp.Data.Models.Manager", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("EmergencyContactNumber")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("JobDescription")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(70)
-                        .HasColumnType("nvarchar(70)");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("Managers");
-                });
-
             modelBuilder.Entity("RealEstateWebApp.Data.Models.Property", b =>
                 {
                     b.Property<int>("Id")
@@ -261,9 +188,6 @@ namespace RealEstateWebApp.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
-
-                    b.Property<int?>("EmployeeId")
-                        .HasColumnType("int");
 
                     b.Property<int>("Floor")
                         .HasColumnType("int");
@@ -284,8 +208,6 @@ namespace RealEstateWebApp.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
-
-                    b.HasIndex("EmployeeId");
 
                     b.HasIndex("PropertyTypeId");
 
@@ -321,12 +243,13 @@ namespace RealEstateWebApp.Data.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployeeId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Tasks");
                 });
@@ -451,30 +374,6 @@ namespace RealEstateWebApp.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("RealEstateWebApp.Data.Models.Employee", b =>
-                {
-                    b.HasOne("RealEstateWebApp.Data.Models.Manager", "Manager")
-                        .WithMany("Employees")
-                        .HasForeignKey("ManagerId");
-
-                    b.HasOne("RealEstateWebApp.Data.Models.User", null)
-                        .WithOne()
-                        .HasForeignKey("RealEstateWebApp.Data.Models.Employee", "UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Manager");
-                });
-
-            modelBuilder.Entity("RealEstateWebApp.Data.Models.Manager", b =>
-                {
-                    b.HasOne("RealEstateWebApp.Data.Models.User", null)
-                        .WithOne()
-                        .HasForeignKey("RealEstateWebApp.Data.Models.Manager", "UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("RealEstateWebApp.Data.Models.Property", b =>
                 {
                     b.HasOne("RealEstateWebApp.Data.Models.Address", "Address")
@@ -482,10 +381,6 @@ namespace RealEstateWebApp.Data.Migrations
                         .HasForeignKey("AddressId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.HasOne("RealEstateWebApp.Data.Models.Employee", null)
-                        .WithMany("Properties")
-                        .HasForeignKey("EmployeeId");
 
                     b.HasOne("RealEstateWebApp.Data.Models.PropertyType", "PropertyType")
                         .WithMany("Properties")
@@ -500,13 +395,13 @@ namespace RealEstateWebApp.Data.Migrations
 
             modelBuilder.Entity("RealEstateWebApp.Data.Models.Task", b =>
                 {
-                    b.HasOne("RealEstateWebApp.Data.Models.Employee", "Employee")
+                    b.HasOne("RealEstateWebApp.Data.Models.User", "User")
                         .WithMany("Tasks")
-                        .HasForeignKey("EmployeeId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Employee");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("RealEstateWebApp.Data.Models.Address", b =>
@@ -514,21 +409,14 @@ namespace RealEstateWebApp.Data.Migrations
                     b.Navigation("Properties");
                 });
 
-            modelBuilder.Entity("RealEstateWebApp.Data.Models.Employee", b =>
-                {
-                    b.Navigation("Properties");
-
-                    b.Navigation("Tasks");
-                });
-
-            modelBuilder.Entity("RealEstateWebApp.Data.Models.Manager", b =>
-                {
-                    b.Navigation("Employees");
-                });
-
             modelBuilder.Entity("RealEstateWebApp.Data.Models.PropertyType", b =>
                 {
                     b.Navigation("Properties");
+                });
+
+            modelBuilder.Entity("RealEstateWebApp.Data.Models.User", b =>
+                {
+                    b.Navigation("Tasks");
                 });
 #pragma warning restore 612, 618
         }

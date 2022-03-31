@@ -17,19 +17,19 @@ namespace RealEstateWebApp.Services.Tasks
 
         public void SetTask(SetTaskFormModel task)
         {
-            var employee = data
-                   .Employees
-                   .FirstOrDefault(e => e.Id == task.EmployeeId);
+            var user = data
+                   .Users
+                   .FirstOrDefault(x => x.Id == task.UserId);
 
-            if (employee == null)
+            if (user == null)
             {
-                throw new ArgumentException("Employee does not exist");
+                throw new ArgumentException("User does not exist");
             }
 
-            employee.Tasks.Add(new Task()
+            user.Tasks.Add(new Task()
             {
                 Description = task.Description,
-                EmployeeId = employee.Id
+                UserId = user.Id
             });
 
             data.SaveChanges();

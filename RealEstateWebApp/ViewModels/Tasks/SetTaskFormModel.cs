@@ -9,6 +9,6 @@ namespace RealEstateWebApp.ViewModels.Tasks
         public string Description { get; set; }
 
         [Required]
-        public int EmployeeId { get; set; }
+        public string UserId { get; set; }
     }
 }

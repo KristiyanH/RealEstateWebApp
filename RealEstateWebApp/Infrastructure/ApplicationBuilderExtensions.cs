@@ -71,12 +71,14 @@ namespace RealEstateWebApp.Infrastructure
                 var managerEmail = "kristiyan.a.hristov@gmail.com";
                 var managerFullName = "Kristiyan Hristov";
                 const string managerPassword = "123456";
-
+                const string managerPhoneNumber = "0876065511";
+                
                 var manager = new User
                 {
                     Email = managerEmail,
                     UserName = managerEmail,
-                    FullName = managerFullName
+                    FullName = managerFullName,
+                    PhoneNumber = managerPhoneNumber,
                 };
 
                 await userManager.CreateAsync(manager, managerPassword);
@@ -104,17 +106,18 @@ namespace RealEstateWebApp.Infrastructure
                 var employeeEmail = "cahristov@gmail.com";
                 var employeeFullName = "Pesho Petrov";
                 const string employeePassword = "123456";
+                const string employeePhoneNumber = "0876065522";
 
                 var employee = new User
                 {
                     Email = employeeEmail,
                     UserName = employeeEmail,
-                    FullName = employeeFullName
+                    FullName = employeeFullName,
+                    PhoneNumber = employeePhoneNumber,
                 };
 
                 await userManager.CreateAsync(employee, employeePassword);
                 await userManager.AddToRoleAsync(employee, employeeRole.Name);
-
             })
                 .GetAwaiter()
                 .GetResult();

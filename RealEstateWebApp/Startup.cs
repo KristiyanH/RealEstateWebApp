@@ -9,8 +9,6 @@ using Microsoft.Extensions.Hosting;
 using RealEstateWebApp.Data;
 using RealEstateWebApp.Data.Models;
 using RealEstateWebApp.Infrastructure;
-using RealEstateWebApp.Services;
-using RealEstateWebApp.Services.Managers;
 using RealEstateWebApp.Services.Properties;
 using RealEstateWebApp.Services.Roles;
 using RealEstateWebApp.Services.Tasks;
@@ -51,8 +49,6 @@ namespace RealEstateWebApp
                 });
 
             services.AddTransient<IPropertyService, PropertyService>();
-            services.AddTransient<IEmployeeService, EmployeeService>();
-            services.AddTransient<IManagerService, ManagerService>();
             services.AddTransient<ITaskService, TaskService>();
             services.AddTransient<IRoleService, RoleService>();
         }

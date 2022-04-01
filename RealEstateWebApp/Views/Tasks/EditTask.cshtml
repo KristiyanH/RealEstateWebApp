@@ -1,0 +1,21 @@
+﻿@model EditTaskFormModel
+
+@{
+    ViewData["Title"] = "Edit Task";
+}
+
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-2 col-xl-7">
+        <h2 class="heading-margin text-center">Edit Task</h2>
+
+        <form method="post">
+  <div class="form-group">
+    <label asp-for="Description"></label>
+    <input asp-for="Description" class="form-control" placeholder="What should the employee do?">
+    <span asp-validation-for="Description" class="small text-danger"></span>
+  </div>
+
+  <input class="btn btn-primary" type="submit" value="Save" />
+</form>
+    </div>
+</div>

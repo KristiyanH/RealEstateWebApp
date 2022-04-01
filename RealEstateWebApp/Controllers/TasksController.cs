@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RealEstateWebApp.Data;
+using RealEstateWebApp.Infrastructure;
 using RealEstateWebApp.Services.Tasks;
 using RealEstateWebApp.ViewModels.Tasks;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RealEstateWebApp.Controllers
 {
@@ -35,6 +38,36 @@ namespace RealEstateWebApp.Controllers
             taskService.SetTask(task);
 
             return RedirectToAction("All", "Properties");
+
+        }
+
+        [Authorize(Roles = "Administrator,Manager,Employee")]
+        public IActionResult MyTasks()
+        {
+            return View(data.Tasks.Where(x => x.UserId == User.GetId()));
+        }
+
+        public IActionResult EditTask()
+            => View();
+
+        [HttpPost]
+        public IActionResult EditTask(EditTaskFormModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            taskService.EditTask(model);
+            return RedirectToAction("MyTasks", "Tasks");
+        }
+
+        [HttpPost]
+        public IActionResult CompleteTask(int taskId)
+        {
+            taskService.CompleteTask(taskId, User.GetId());
+
+            return RedirectToAction("MyTasks", "Tasks");
 
         }
     }

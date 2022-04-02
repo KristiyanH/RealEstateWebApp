@@ -12,6 +12,7 @@ using RealEstateWebApp.Infrastructure;
 using RealEstateWebApp.Services.Properties;
 using RealEstateWebApp.Services.Roles;
 using RealEstateWebApp.Services.Tasks;
+using RealEstateWebApp.Services.Users;
 
 namespace RealEstateWebApp
 {
@@ -51,6 +52,7 @@ namespace RealEstateWebApp
             services.AddTransient<IPropertyService, PropertyService>();
             services.AddTransient<ITaskService, TaskService>();
             services.AddTransient<IRoleService, RoleService>();
+            services.AddTransient<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

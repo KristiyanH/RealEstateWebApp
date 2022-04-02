@@ -22,12 +22,12 @@ namespace RealEstateWebApp.Controllers
             taskService = _taskService;
         }
 
-        [Authorize(Roles = "Administrator,Manager")]
+        [Authorize(Roles = "Manager")]
         public IActionResult SetTask()
             => View();
 
         [HttpPost]
-        [Authorize(Roles = "Administrator,Manager")]
+        [Authorize(Roles = "Manager")]
         public IActionResult SetTask(SetTaskFormModel task)
         {
             if (!ModelState.IsValid)
@@ -37,13 +37,18 @@ namespace RealEstateWebApp.Controllers
 
             taskService.SetTask(task);
 
-            return RedirectToAction("All", "Properties");
+            return RedirectToAction("MyTasks", "Tasks");
 
         }
 
-        [Authorize(Roles = "Administrator,Manager,Employee")]
+        [Authorize(Roles = "Manager,Employee")]
         public IActionResult MyTasks()
         {
+            if (User.IsInRole("Manager"))
+            {
+                return View(data.Tasks);
+            }
+
             return View(data.Tasks.Where(x => x.UserId == User.GetId()));
         }
 

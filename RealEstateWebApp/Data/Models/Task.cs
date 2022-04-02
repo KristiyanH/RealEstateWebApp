@@ -12,7 +12,8 @@ namespace RealEstateWebApp.Data.Models
         [MaxLength(JobDescriptionMaxValue)]
         public string Description { get; set; }
 
-        [Required]
+        public bool IsCompleted { get; set; } = false;
+
         public string UserId { get; set; }
 
         public User User { get; set; }

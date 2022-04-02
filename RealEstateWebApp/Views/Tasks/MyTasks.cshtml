@@ -1,62 +1,19 @@
-﻿
+﻿@using RealEstateWebApp.Data.Models
 @model IEnumerable<RealEstateWebApp.Data.Models.Task>
 
+@inject SignInManager<User> SignInManager
+
 @{
-    ViewData["Title"] = "My Tasks";
+    ViewData["Title"] = "Tasks";
 }
 
-@if (Model.Any())
+@if (User.IsInRole("Manager"))
 {
-    <a class="btn btn-primary" style="width:auto"
-   asp-controller="Tasks" asp-action="SetTask">
-        Set Task
-    </a>
-
-    foreach(var task in Model)
-    {
-        <div class="card mb-3">
-            <div class="card-header">
-                Task Id: @task.Id
-            </div>
-            <div class="card-body">
-               <h5 class="card-title">@task.Description</h5> 
-            </div>
-            <div class="card-footer">
-                <form asp-action="CompleteTask" asp-route-taskId="@task.Id" method="post">
-                <a class="btn btn-primary" asp-action="EditTask" asp-controller="Tasks" asp-route-taskId="@task.Id">Edit</a>
-
-                <span id="confirmDeleteSpan_@task.Id" style="display:none">
-                    <span>Are you sure you want to complete the task?</span>
-                    <button type="submit" class="btn btn-primary">Yes</button>
-                    <a href="#" class="btn btn-danger"
-                    onclick="confirmDelete('@task.Id', false)">No</a>
-                </span>
-
-                <span id="deleteSpan_@task.Id">
-                    <a href="#" class="btn btn-danger"
-                    onclick="confirmDelete('@task.Id', true)">Complete</a>
-                </span>
-                </form>
-            </div>
-        </div>
-    }
+    <partial name="_ManagerTasksPartial" />
 }
-else
+else if(User.IsInRole("Employee"))
 {
-    <div class="card">
-        <div class="card-header">
-            No Tasks yet
-        </div>
-        <div class="card-body">
-            <h5 class="card-title">
-                Use the button below to set a task
-            </h5>
-        </div>
-    </div>
-    <a class="btn btn-primary" style="width:auto"
-   asp-controller="Tasks" asp-action="SetTask">
-        Set Task
-    </a>
+    <partial name="_EmployeeTasksPartial" />
 }
 
 @section Scripts{

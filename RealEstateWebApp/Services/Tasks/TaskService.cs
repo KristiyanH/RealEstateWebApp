@@ -52,11 +52,11 @@ namespace RealEstateWebApp.Services.Tasks
 
             if (user == null)
             {
-                throw new ArgumentException($"Task with id: {taskId} is not set to user with id: {userId}!");
+                throw new ArgumentException($"User with id: {userId} not found!");
             }
 
+            task.IsCompleted = true;
             user.Tasks.Remove(task);
-            data.Tasks.Remove(task);
             data.SaveChanges();
         }
 

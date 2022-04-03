@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using RealEstateWebApp.Data;
 using RealEstateWebApp.Data.Models;
 using RealEstateWebApp.ViewModels.Properties;
@@ -75,15 +76,7 @@ namespace RealEstateWebApp.Services.Properties
             var properties = propertiesQuery
                 .Skip((query.CurrentPage - 1) * AllPropertiesQueryModel.PropertiesPerPage)
                 .Take(AllPropertiesQueryModel.PropertiesPerPage)
-                .Select(x => new ListPropertyViewModel()
-                {
-                    Id = x.Id,
-                    Description = x.Description,
-                    ImageUrl = x.ImageUrl,
-                    Price = x.Price,
-                    PropertyType = data.PropertyTypes.FirstOrDefault(pt => pt.Id == x.PropertyTypeId).Name
-                })
-              .ToList();
+                .ProjectTo<ListPropertyViewModel>(mapper.ConfigurationProvider);
 
             var propertyTypes = data
                 .PropertyTypes

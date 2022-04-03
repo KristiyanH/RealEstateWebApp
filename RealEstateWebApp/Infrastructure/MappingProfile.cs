@@ -10,6 +10,7 @@ namespace RealEstateWebApp.Infrastructure
         {
             CreateMap<AddPropertyFormModel, Property>();
             CreateMap<Property, DetailsPropertyViewModel>();
+            CreateMap<Property, ListPropertyViewModel>();
         }
     }
 }

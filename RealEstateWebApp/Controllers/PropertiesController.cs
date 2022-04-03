@@ -27,7 +27,6 @@ namespace RealEstateWebApp.Controllers
             
         }
 
-
         [HttpPost]
         [Authorize(Roles = "Administrator,Manager,Employee")]
         public IActionResult Add(AddPropertyFormModel property)

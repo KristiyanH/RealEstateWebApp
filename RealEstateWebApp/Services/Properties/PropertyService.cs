@@ -1,4 +1,5 @@
-﻿using RealEstateWebApp.Data;
+﻿using AutoMapper;
+using RealEstateWebApp.Data;
 using RealEstateWebApp.Data.Models;
 using RealEstateWebApp.ViewModels.Properties;
 using System;
@@ -10,9 +11,14 @@ namespace RealEstateWebApp.Services.Properties
     public class PropertyService : IPropertyService
     {
         private readonly RealEstateDbContext data;
+        private readonly IMapper mapper;
 
-        public PropertyService(RealEstateDbContext _data)
-            => data = _data;
+        public PropertyService(RealEstateDbContext _data,
+            IMapper _mapper)
+        {
+            data = _data;
+            mapper = _mapper;
+        }
 
         public IEnumerable<PropertyTypeViewModel> GetPropertyTypes()
             => data
@@ -37,18 +43,10 @@ namespace RealEstateWebApp.Services.Properties
                 data.Addresses.Add(address);
             }
 
-            var newProperty = new Property()
-            {
-                BuildingYear = property.BuildingYear,
-                Description = property.Description,
-                Floor = property.Floor,
-                ImageUrl = property.ImageUrl,
-                Price = property.Price,
-                PropertyTypeId = property.PropertyTypeId,
-                SquareMeters = property.SquareMeters,
-                PropertyType = data.PropertyTypes.FirstOrDefault(x => x.Id == property.PropertyTypeId),
-                AddressId = address.Id
-            };
+            var newProperty = mapper.Map<Property>(property);
+            newProperty.PropertyType = data.PropertyTypes.FirstOrDefault(x => x.Id == property.PropertyTypeId);
+            newProperty.PropertyTypeId = data.PropertyTypes.FirstOrDefault(x => x.Id == property.PropertyTypeId).Id;
+            newProperty.AddressId = address.Id;
 
             data.Properties.Add(newProperty);
             address.Properties.Add(newProperty);
@@ -124,18 +122,9 @@ namespace RealEstateWebApp.Services.Properties
             var address = data.Addresses.FirstOrDefault(x => x.Id == property.AddressId);
             var propertyType = data.PropertyTypes.FirstOrDefault(x => x.Id == property.PropertyTypeId);
 
-            var detailsModel = new DetailsPropertyViewModel()
-            {
-                Id = property.Id,
-                Address = address.AddressText,
-                BuildingYear = property.BuildingYear,
-                Description = property.Description,
-                Floor = property.Floor,
-                ImageUrl = property.ImageUrl,
-                Price = property.Price,
-                PropertyType = propertyType.Name,
-                SquareMeters = property.SquareMeters
-            };
+            var detailsModel = mapper.Map<DetailsPropertyViewModel>(property);
+            detailsModel.Address = address.AddressText;
+            detailsModel.PropertyType = propertyType.Name;
 
             return detailsModel;
         }

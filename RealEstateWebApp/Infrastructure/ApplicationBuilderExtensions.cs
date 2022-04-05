@@ -47,7 +47,7 @@ namespace RealEstateWebApp.Infrastructure
                 new PropertyType{ Name = "Villa"},
                 new PropertyType{ Name = "House"},
                 new PropertyType{ Name = "Mansion"},
-                new PropertyType{ Name = "Residence"},
+                new PropertyType{ Name = "Residence"}
             });
 
             data.SaveChanges();

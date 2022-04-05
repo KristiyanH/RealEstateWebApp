@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using RealEstateWebApp.Data.Models;
+using RealEstateWebApp.ViewModels.Home;
 using RealEstateWebApp.ViewModels.Properties;
 
 namespace RealEstateWebApp.Infrastructure
@@ -11,6 +12,7 @@ namespace RealEstateWebApp.Infrastructure
             CreateMap<AddPropertyFormModel, Property>();
             CreateMap<Property, DetailsPropertyViewModel>();
             CreateMap<Property, ListPropertyViewModel>();
+            CreateMap<Property, PropertyIndexViewModel>();
         }
     }
 }

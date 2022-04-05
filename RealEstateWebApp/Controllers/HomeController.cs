@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using RealEstateWebApp.Data;
 using RealEstateWebApp.Models;
 using RealEstateWebApp.ViewModels.Home;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
@@ -12,31 +14,28 @@ namespace RealEstateWebApp.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly RealEstateDbContext data;
-
-        public HomeController(ILogger<HomeController> logger, RealEstateDbContext _data)
+        private readonly IMapper mapper;
+        public HomeController(ILogger<HomeController> logger,
+            RealEstateDbContext _data,
+            IMapper _mapper)
         {
             data = _data;
             _logger = logger;
+            mapper = _mapper;
         }
 
         public IActionResult Index()
         {
             var propertiesCount = data.Properties.Count();
 
-            var properties = data.Properties.Select(x => new PropertyIndexViewModel()
-            {
-                Id = x.Id,
-                Description = x.Description,
-                ImageUrl = x.ImageUrl,
-                Price = x.Price
-            })
-            .ToList();
+            var properties = data.Properties.ToList();
 
+            var mappedProperties = mapper.Map<List<PropertyIndexViewModel>>(properties);
 
             return View(new IndexViewModel()
             {
                 TotalProperties = propertiesCount,
-                Properties = properties
+                Properties = mappedProperties
             });
         }
 
@@ -45,10 +44,14 @@ namespace RealEstateWebApp.Controllers
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+            => View();
+
+
+        //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        // public IActionResult Error()
+        //{
+        //    return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+        //}
     }
 }

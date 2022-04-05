@@ -6,7 +6,7 @@ using Xunit;
 
 namespace RealEstateWebApp.Tests.Controllers
 {
-    public class HomeControllerTest
+    public class HomeControllerTests
     {
         [Fact]
         public void ErrorShouldReturnView()

@@ -1,11 +1,17 @@
 ﻿@model DetailsPropertyViewModel
 
- <div class="col-md-4">
-            <div class="card" style="width: 18rem;">
+ <div class="col-md-4 col-sm-2 col-xl-5">
+            <div class="card">
                 <img class="card-img-top" src="@Model.ImageUrl" alt="Card image cap">
                 <div class="card-body text-center">
-                    <h5 class="card-title">@Model.Price.ToString("f3")€</h5>
-                    <p class="card-text">@Model.Description</p>
+                    <h3 class="card-text">Property ID: @Model.Id</h3>
+                    <h2 class="card-text text-center">Price: @Model.Price.ToString("f3")€ (@Model.PricePerSquareMeter€/&#13217)</h2>
+                    <h5 class="card-text">@Model.Description</h5>
+                    <h5 class="card-text">Address: @Model.Address</h5>
+                    <h5 class="card-text">Building Year: @Model.BuildingYear</h5>
+                    <h5 class="card-text">Type: @Model.PropertyType</h5>
+                    <h5 class="card-text">Floor: @Model.Floor</h5>
+                    <h5 class="card-text">Area: @Model.SquareMeters.ToString("f2")&#13217</h5>
                 </div>
             </div>
         </div>

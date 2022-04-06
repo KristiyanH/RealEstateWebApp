@@ -64,11 +64,16 @@ namespace RealEstateWebApp.Services.Properties
                 propertiesQuery = propertiesQuery.Where(x => x.PropertyType.Name == query.Type);
             }
 
+            if (!string.IsNullOrWhiteSpace(query.Address))
+            {
+                propertiesQuery = propertiesQuery.Where(x => x.Address.AddressText == query.Address);
+            }
+
             if (!string.IsNullOrWhiteSpace(query.SearchTerm))
             {
                 propertiesQuery = propertiesQuery.Where(x =>
                 x.PropertyType.Name.ToLower().Contains(query.SearchTerm.ToLower()) ||
-                x.BuildingYear.ToString().ToLower().Contains(query.SearchTerm.ToLower()));
+                x.Address.ToString().ToLower().Contains(query.SearchTerm.ToLower()));
             }
 
             var totalProperties = propertiesQuery.Count();
@@ -85,10 +90,17 @@ namespace RealEstateWebApp.Services.Properties
                 .OrderBy(x => x)
                 .ToList();
 
+            var propertyAddresses = data
+                .Addresses
+                .Select(x => x.AddressText)
+                .Distinct()
+                .OrderBy(x => x)
+                .ToList();
+
             query.TotalProperties = totalProperties;
             query.Properties = properties;
             query.Types = propertyTypes;
-
+            query.Addresses = propertyAddresses;
             return query;
         }
 

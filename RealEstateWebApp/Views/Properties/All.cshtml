@@ -17,11 +17,22 @@
                     }
                 </select>
             </div>
-            <input class="btn btn-primary" type="submit" value="Search" />
         </div>
+        <div class="form-group col-md-4">
+            <div class="form-group">
+                <label asp-for="Address"></label>
+                <select asp-for="Address" class="form-control">
+                    <option value="">All</option>
+                    @foreach (var address in Model.Addresses)
+                    {
+                        <option value="@address">@address</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <input class="btn btn-primary" type="submit" value="Search" />
     </div>
 </form>
-
 
 <div class="row">
     @foreach (var property in Model.Properties)
@@ -46,21 +57,19 @@
 
 <div class="row">
     <div class="col-md-6">
-        <a 
-        class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" : string.Empty)"
-        asp-controller="Properties"
-        asp-action="All"
-        asp-route-currentPage="@(Model.CurrentPage - 1)"
-        asp-route-type="@Model.Type"
-        asp-route-searchTerm="@Model.SearchTerm">Previous</a>
+        <a class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" : string.Empty)"
+           asp-controller="Properties"
+           asp-action="All"
+           asp-route-currentPage="@(Model.CurrentPage - 1)"
+           asp-route-type="@Model.Type"
+           asp-route-searchTerm="@Model.SearchTerm">Previous</a>
     </div>
     <div class="col-md-6">
-        <a 
-        class="btn btn-primary float-right @(Model.CurrentPage == totalPages ? "disabled" : !Model.Properties.Any() ? "disabled" : string.Empty)"
-        asp-controller="Properties"
-        asp-action="All"
-        asp-route-currentPage="@(Model.CurrentPage + 1)"
-        asp-route-type="@Model.Type"
-        asp-route-searchTerm="@Model.SearchTerm">Next</a>
+        <a class="btn btn-primary float-right @(Model.CurrentPage == totalPages ? "disabled" : !Model.Properties.Any() ? "disabled" : string.Empty)"
+           asp-controller="Properties"
+           asp-action="All"
+           asp-route-currentPage="@(Model.CurrentPage + 1)"
+           asp-route-type="@Model.Type"
+           asp-route-searchTerm="@Model.SearchTerm">Next</a>
     </div>
 </div>

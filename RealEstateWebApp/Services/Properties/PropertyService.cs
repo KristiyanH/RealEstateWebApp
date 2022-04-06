@@ -124,6 +124,11 @@ namespace RealEstateWebApp.Services.Properties
         {
             var property = data.Properties.FirstOrDefault(x => x.Id == id);
 
+            if (property == null)
+            {
+                throw new ArgumentException($"Property with id:{id} does not exist");
+            }
+
             var address = data.Addresses.FirstOrDefault(x => x.Id == property.AddressId);
             var propertyType = data.PropertyTypes.FirstOrDefault(x => x.Id == property.PropertyTypeId);
 

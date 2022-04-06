@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RealEstateWebApp.Data;
 using RealEstateWebApp.Services.Properties;
@@ -17,7 +18,7 @@ namespace RealEstateWebApp.Controllers
             propertyService = _propertyService;
         }
 
-        [Authorize(Roles = "Administrator,Manager,Employee")]
+        [Authorize(Roles = "Manager,Employee")]
         public IActionResult Add()
         {
             return View(new AddPropertyFormModel
@@ -28,7 +29,7 @@ namespace RealEstateWebApp.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Administrator,Manager,Employee")]
+        [Authorize(Roles = "Manager,Employee")]
         public IActionResult Add(AddPropertyFormModel property)
         {
             if (!data.PropertyTypes.Any(x => x.Id == property.PropertyTypeId))
@@ -55,7 +56,7 @@ namespace RealEstateWebApp.Controllers
             return View(resultQuery);
         }
 
-        [Authorize(Roles = "Administrator,Manager,Employee")]
+        [Authorize(Roles = "Manager,Employee")]
         public IActionResult Remove(int Id)
         {
             if (propertyService.Remove(Id))
@@ -63,21 +64,25 @@ namespace RealEstateWebApp.Controllers
                 return Redirect("/Properties/All");
             }
 
-            return RedirectToAction("Index", "Home");
+            ViewData["ErrorTitle"] = "Could not execute action, look the message below for more info.";
+            ViewData["ErrorMessage"] = $"Property with id: {Id} does not exist.";
+
+            return View("Error");
         }
 
         public IActionResult Details(int id)
         {
-            var property = propertyService.Details(id);
-            
-            if (property == null)
+            try
             {
-                ModelState.AddModelError(nameof(property.Id), $"Property with id: {id} does not exist.");
+                var property = propertyService.Details(id);
+                return View(property);
             }
-
-            return View(property);
+            catch (ArgumentException aex)
+            {
+                ViewData["ErrorTitle"] = "Could not execute action, look the message below for more info";
+                ViewData["ErrorMessage"] = aex.Message;
+                return View("Error");
+            }
         }
-
-       
     }
 }

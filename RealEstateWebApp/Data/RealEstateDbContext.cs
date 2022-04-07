@@ -20,7 +20,10 @@ namespace RealEstateWebApp.Data
         public DbSet<Address> Addresses { get; init; }
 
         public DbSet<Task> Tasks { get; init; }
-        
+
+        public DbSet<Client> Clients { get; init; }
+
+        public DbSet<Booking> Bookings { get; init; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -38,6 +41,11 @@ namespace RealEstateWebApp.Data
             builder.Entity<Task>()
                 .HasOne(x => x.User)
                 .WithMany(x => x.Tasks)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Client>()
+                .HasMany(x => x.Bookings)
+                .WithOne(x => x.Client)
                 .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(builder);

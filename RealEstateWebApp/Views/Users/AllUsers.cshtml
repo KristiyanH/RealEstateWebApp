@@ -13,17 +13,16 @@
 
             foreach (var user in Model)
             {
-                <h5 class="card-title">@i. ID: @user.Id | UserName: @user.UserName</h5>
-                <div class="card-footer">
-                </div>
+                        <h5 class="card-title">@i. ID: @user.Id | UserName: @user.UserName</h5>
+                        <div class="card-footer">
+                        </div>
                 i += 1;
             }
-            <a asp-action="AllRoles" asp-controller="Roles" class="btn btn-primary" style="width:auto">Manage Roles</a>
+                <a asp-action="AllRoles" asp-controller="Roles" class="btn btn-primary" style="width:auto">Manage Roles</a>
         }
         else
         {
-            <h5 class="card-title">There are no registered users</h5>
+                <h5 class="card-title">There are no registered users</h5>
         }
     </div>
-
 </div>

@@ -1,4 +1,7 @@
-﻿@model AllPropertiesQueryModel
+﻿@using RealEstateWebApp.Data.Models
+@model AllPropertiesQueryModel
+
+@inject SignInManager<User> SignInManager
 
 @{
     ViewData["Title"] = "All Properties";
@@ -30,7 +33,7 @@
                 </select>
             </div>
         </div>
-        <input class="btn btn-primary" type="submit" value="Search" />
+        <input class="btn btn-primary btn-sm" type="submit" value="Search" />
     </div>
 </form>
 
@@ -44,8 +47,11 @@
                     <h5 class="card-title">@property.Price.ToString("f3")€</h5>
                     <p class="card-text">@property.Description</p>
                     <a asp-controller="Properties" asp-action="Details" asp-route-id="@property.Id" class="btn btn-primary btn-sm">Details</a>
-                    <a asp-controller="Properties" asp-action="Remove" asp-route-id="@property.Id" class="btn btn-secondary btn-sm" style="background-color:red;border-color:red">Remove</a>
-                    <a asp-controller="Bookings" asp-action="Book" asp-route-propertyId="@property.Id" class="btn btn-primary btn-sm">Visit</a>
+                    <a asp-controller="Bookings" asp-action="Book" asp-route-propertyId="@property.Id" class="btn btn-primary btn-sm" style="background-color:green;border-color:green">Visit</a>
+                    @if(User.IsInRole("Manager") || User.IsInRole("Employee"))
+                    {
+                         <a asp-controller="Properties" asp-action="Remove" asp-route-id="@property.Id" class="btn btn-secondary btn-sm" style="background-color:red;border-color:red">Remove</a>
+                    }
                 </div>
             </div>
         </div>

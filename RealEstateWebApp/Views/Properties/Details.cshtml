@@ -1,6 +1,7 @@
 ﻿@model DetailsPropertyViewModel
 
- <div class="col-md-4 col-sm-2 col-xl-5">
+<div class="row">
+    <div class="col-md-4 col-sm-2 col-xl-5">
             <div class="card">
                 <img class="card-img-top" src="@Model.ImageUrl" alt="Card image cap">
                 <div class="card-body text-center">
@@ -13,5 +14,13 @@
                     <h5 class="card-text">Floor: @Model.Floor</h5>
                     <h5 class="card-text">Area: @Model.SquareMeters.ToString("f2")&#13217</h5>
                 </div>
+                <a class="btn btn-primary" style="width:auto"
+   asp-route-propertyId="@Model.Id"
+   asp-controller="Bookings" 
+   asp-action="Book">
+        Book a visit
+    </a>
             </div>
         </div>
+</div>
+ 

@@ -35,12 +35,12 @@
                     <span>Are you sure you want to delete this booking?</span>
                     <button type="submit" class="btn btn-primary">Yes</button>
                     <a href="#" class="btn btn-danger"
-                    onclick="confirmDelete('@booking.BookingId', false)">No</a>
+                    onclick="confirmDelete('@booking.BookingId', false); return false;">No</a>
                 </span>
 
                 <span id="deleteSpan_@booking.BookingId">
                     <a href="#" class="btn btn-danger"
-                    onclick="confirmDelete('@booking.BookingId', true)">Delete</a>
+                    onclick="confirmDelete('@booking.BookingId', true); return false;">Delete</a>
                 </span>
                 </form>
             </div>

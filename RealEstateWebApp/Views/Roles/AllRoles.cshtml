@@ -28,12 +28,12 @@
                     <span>Are you sure you want to delete the role?</span>
                     <button type="submit" class="btn btn-primary">Yes</button>
                     <a href="#" class="btn btn-danger"
-                    onclick="confirmDelete('@role.Id', false)">No</a>
+                    onclick="confirmDelete('@role.Id', false); return false;">No</a>
                 </span>
 
                 <span id="deleteSpan_@role.Id">
                     <a href="#" class="btn btn-danger"
-                    onclick="confirmDelete('@role.Id', true)">Delete</a>
+                    onclick="confirmDelete('@role.Id', true); return false;">Delete</a>
                 </span>
                 </form>
             </div>

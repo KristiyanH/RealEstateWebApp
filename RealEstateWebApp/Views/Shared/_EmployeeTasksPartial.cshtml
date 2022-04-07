@@ -20,12 +20,12 @@
                     <span>Are you sure you want to complete the task?</span>
                     <button type="submit" class="btn btn-primary">Yes</button>
                     <a href="#" class="btn btn-danger"
-                    onclick="confirmDelete('@task.Id', false)">No</a>
+                    onclick="confirmDelete('@task.Id', false); return false;">No</a>
                 </span>
 
                 <span id="deleteSpan_@task.Id">
                     <a href="#" class="btn btn-danger"
-                    onclick="confirmDelete('@task.Id', true)">Complete</a>
+                    onclick="confirmDelete('@task.Id', true); return false;">Complete</a>
                 </span>
                 </form>
             </div>

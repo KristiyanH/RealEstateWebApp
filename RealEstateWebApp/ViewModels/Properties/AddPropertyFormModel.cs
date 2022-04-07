@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using static RealEstateWebApp.Data.DataConstants.Property;
+using static RealEstateWebApp.ErrorConstants;
 namespace RealEstateWebApp.ViewModels.Properties
 {
     using static Data.DataConstants;

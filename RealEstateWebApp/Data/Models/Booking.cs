@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-
 namespace RealEstateWebApp.Data.Models
 {
     public class Booking

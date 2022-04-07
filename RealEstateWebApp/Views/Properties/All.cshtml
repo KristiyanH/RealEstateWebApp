@@ -45,6 +45,7 @@
                     <p class="card-text">@property.Description</p>
                     <a asp-controller="Properties" asp-action="Details" asp-route-id="@property.Id" class="btn btn-primary btn-sm">Details</a>
                     <a asp-controller="Properties" asp-action="Remove" asp-route-id="@property.Id" class="btn btn-secondary btn-sm" style="background-color:red;border-color:red">Remove</a>
+                    <a asp-controller="Bookings" asp-action="Book" asp-route-propertyId="@property.Id" class="btn btn-primary btn-sm">Visit</a>
                 </div>
             </div>
         </div>

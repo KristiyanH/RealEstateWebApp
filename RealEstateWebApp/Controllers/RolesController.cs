@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using RealEstateWebApp.Services.Roles;
 using RealEstateWebApp.ViewModels.Roles;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using static RealEstateWebApp.ErrorConstants;
 
 namespace RealEstateWebApp.Controllers
 {
@@ -41,9 +43,19 @@ namespace RealEstateWebApp.Controllers
         [Authorize(Roles = "Administrator,Manager")]
         public async Task<IActionResult> EditRole(string id)
         {
-            var model = await roleService.EditRoleGet(id);
+            try
+            {
+                var model = await roleService.EditRoleGet(id);
 
-            return View(model);
+                return View(model);
+            }
+            catch (ArgumentException aex)
+            {
+                ViewData["ErrorTitle"] = ErrorTitle;
+                ViewData["ErrorMessage"] = aex.Message;
+                return View("Error");
+            }
+            
         }
 
         [HttpPost]
@@ -67,9 +79,19 @@ namespace RealEstateWebApp.Controllers
         {
             ViewData["RoleId"] = roleId;
 
-            var model = await roleService.EditUsersInRoleGet(roleId);
+            try
+            {
+                var model = await roleService.EditUsersInRoleGet(roleId);
 
-            return View(model);
+                return View(model);
+            }
+            catch (ArgumentException aex)
+            {
+                ViewData["ErrorTitle"] = ErrorTitle;
+                ViewData["ErrorMessage"] = aex.Message;
+                return View("Error");
+            }
+            
         }
 
         [HttpPost]
@@ -95,9 +117,18 @@ namespace RealEstateWebApp.Controllers
         [Authorize(Roles = "Administrator,Manager")]
         public async Task<IActionResult> DeleteRole(string id)
         {
-            await roleService.DeleteRole(id);
+            try
+            {
+                await roleService.DeleteRole(id);
 
-            return RedirectToAction("AllRoles", "Roles");
+                return RedirectToAction("AllRoles", "Roles");
+            }
+            catch (ArgumentException aex)
+            {
+                ViewData["ErrorTitle"] = ErrorTitle;
+                ViewData["ErrorMessage"] = aex.Message;
+                return View("Error");
+            }
         }
     }
 }

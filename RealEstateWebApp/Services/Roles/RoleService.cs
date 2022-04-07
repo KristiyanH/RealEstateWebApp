@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using RealEstateWebApp.Data;
 using RealEstateWebApp.Data.Models;
 using RealEstateWebApp.ViewModels.Roles;
 using System;

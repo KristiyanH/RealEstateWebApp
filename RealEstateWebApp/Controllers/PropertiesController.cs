@@ -5,6 +5,7 @@ using RealEstateWebApp.Data;
 using RealEstateWebApp.Services.Properties;
 using RealEstateWebApp.ViewModels.Properties;
 using System.Linq;
+using static RealEstateWebApp.ErrorConstants;
 namespace RealEstateWebApp.Controllers
 {
     public class PropertiesController : Controller
@@ -25,7 +26,7 @@ namespace RealEstateWebApp.Controllers
             {
                 PropertyTypes = propertyService.GetPropertyTypes()
             });
-            
+
         }
 
         [HttpPost]
@@ -59,15 +60,19 @@ namespace RealEstateWebApp.Controllers
         [Authorize(Roles = "Manager,Employee")]
         public IActionResult Remove(int Id)
         {
-            if (propertyService.Remove(Id))
+            try
             {
+                propertyService.Remove(Id);
                 return Redirect("/Properties/All");
             }
+            catch (ArgumentException aex)
+            {
+                ViewData["ErrorTitle"] = ErrorTitle;
+                ViewData["ErrorMessage"] = aex.Message;
 
-            ViewData["ErrorTitle"] = "Could not execute action, look the message below for more info.";
-            ViewData["ErrorMessage"] = $"Property with id: {Id} does not exist.";
+                return View("Error");
+            }
 
-            return View("Error");
         }
 
         public IActionResult Details(int id)

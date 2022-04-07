@@ -12,7 +12,7 @@ namespace RealEstateWebApp.Services.Properties
 
         public AllPropertiesQueryModel All([FromQuery] AllPropertiesQueryModel query);
 
-        public bool Remove(int Id);
+        public void Remove(int Id);
 
         public DetailsPropertyViewModel Details(int id);
     }

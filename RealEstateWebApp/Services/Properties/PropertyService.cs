@@ -104,20 +104,17 @@ namespace RealEstateWebApp.Services.Properties
             return query;
         }
 
-        public bool Remove(int Id)
+        public void Remove(int Id)
         {
-            bool isRemoved = false;
-
             var property = data.Properties.FirstOrDefault(x => x.Id == Id);
 
-            if (property != null)
+            if (property == null)
             {
-                data.Properties.Remove(property);
-                data.SaveChanges();
-                isRemoved = true;
+                throw new ArgumentException($"Property with id:{Id} does not exist");
             }
 
-            return isRemoved;
+            data.Properties.Remove(property);
+            data.SaveChanges();
         }
 
         public DetailsPropertyViewModel Details(int id)

@@ -4,9 +4,9 @@ using RealEstateWebApp.Data;
 using RealEstateWebApp.Infrastructure;
 using RealEstateWebApp.Services.Tasks;
 using RealEstateWebApp.ViewModels.Tasks;
-using System.Collections.Generic;
+using System;
 using System.Linq;
-
+using static RealEstateWebApp.ErrorConstants;
 namespace RealEstateWebApp.Controllers
 {
     public class TasksController : Controller
@@ -52,28 +52,50 @@ namespace RealEstateWebApp.Controllers
             return View(data.Tasks.Where(x => x.UserId == User.GetId()));
         }
 
+        [Authorize(Roles = "Manager")]
         public IActionResult EditTask()
             => View();
 
+        [Authorize(Roles = "Manager")]
         [HttpPost]
         public IActionResult EditTask(EditTaskFormModel model)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return View(model);
-            }
+                if (!ModelState.IsValid)
+                {
+                    return View(model);
+                }
 
-            taskService.EditTask(model);
-            return RedirectToAction("MyTasks", "Tasks");
+                taskService.EditTask(model);
+                return RedirectToAction("MyTasks", "Tasks");
+            }
+            catch (ArgumentException aex)
+            {
+                ViewData["ErrorTitle"] = ErrorTitle;
+                ViewData["ErrorMessage"] = aex.Message;
+
+                return View("Error");
+            }
         }
 
         [HttpPost]
+        [Authorize(Roles = "Manager, Employee")]
         public IActionResult CompleteTask(int taskId)
         {
-            taskService.CompleteTask(taskId, User.GetId());
+            try
+            {
+                taskService.CompleteTask(taskId, User.GetId());
 
-            return RedirectToAction("MyTasks", "Tasks");
+                return RedirectToAction("MyTasks", "Tasks");
+            }
+            catch (ArgumentException aex)
+            {
+                ViewData["ErrorTitle"] = ErrorTitle;
+                ViewData["ErrorMessage"] = aex.Message;
 
+                return View("Error");
+            }
         }
     }
 }

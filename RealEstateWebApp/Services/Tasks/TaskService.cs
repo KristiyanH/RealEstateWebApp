@@ -21,11 +21,6 @@ namespace RealEstateWebApp.Services.Tasks
                    .Users
                    .FirstOrDefault(x => x.Id == task.UserId);
 
-            if (user == null)
-            {
-                throw new ArgumentException("User does not exist");
-            }
-
             user.Tasks.Add(new Task()
             {
                 Description = task.Description,
@@ -33,7 +28,6 @@ namespace RealEstateWebApp.Services.Tasks
             });
 
             data.SaveChanges();
-
         }
         public void CompleteTask(int taskId, string userId)
         {

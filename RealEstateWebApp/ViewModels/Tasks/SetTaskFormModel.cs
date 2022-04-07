@@ -9,6 +9,7 @@ namespace RealEstateWebApp.ViewModels.Tasks
         public string Description { get; set; }
 
         [Required]
+        [StringLength(36, MinimumLength = 36, ErrorMessage = "Valid ID is required.")]
         public string UserId { get; set; }
     }
 }

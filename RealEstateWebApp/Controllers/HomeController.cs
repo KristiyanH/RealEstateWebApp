@@ -32,6 +32,10 @@ namespace RealEstateWebApp.Controllers
 
             var mappedProperties = mapper.Map<List<PropertyIndexViewModel>>(properties);
 
+            foreach (var prop in mappedProperties)
+            {
+                prop.Address = data.Addresses.FirstOrDefault(x => x.Id == prop.AddressId);
+            }
             return View(new IndexViewModel()
             {
                 TotalProperties = propertiesCount,

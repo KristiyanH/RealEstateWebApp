@@ -19,7 +19,7 @@ namespace RealEstateWebApp.Controllers
             propertyService = _propertyService;
         }
 
-        [Authorize(Roles = "Manager,Employee")]
+        [Authorize]
         public IActionResult Add()
         {
             return View(new AddPropertyFormModel
@@ -30,7 +30,7 @@ namespace RealEstateWebApp.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Manager,Employee")]
+        [Authorize]
         public IActionResult Add(AddPropertyFormModel property)
         {
             if (!data.PropertyTypes.Any(x => x.Id == property.PropertyTypeId))

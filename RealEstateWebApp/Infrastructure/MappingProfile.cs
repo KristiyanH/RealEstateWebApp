@@ -11,9 +11,13 @@ namespace RealEstateWebApp.Infrastructure
         public MappingProfile()
         {
             CreateMap<AddPropertyFormModel, Property>();
+
             CreateMap<Property, DetailsPropertyViewModel>();
+
             CreateMap<Property, ListPropertyViewModel>();
+
             CreateMap<Property, PropertyIndexViewModel>();
+
             CreateMap<Booking, AllBookingsViewModel>()
                 .ForMember(x => x.BookingId, cfg => cfg.MapFrom(x => x.Id));
         }

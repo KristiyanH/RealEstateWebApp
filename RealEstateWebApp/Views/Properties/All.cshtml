@@ -36,15 +36,16 @@
                         <div class="row">
                             <div class="col-md align-items-end">
                                 <div class="form-group">
-                                    <label asp-for="Address">Property Type</label>
+                                    
+                                    <label asp-for="Address"><span class="icon-my_location"></span> Address</label>
                                     <div class="form-field">
                                         <div class="select-wrap">
                                             <div class="icon"><span class="ion-ios-arrow-down"></span></div>
                                             <select asp-for="Address" class="form-control">
-                                                <option value="">All</option>
+                                                <option value="" style="color:black">All</option>
                                                 @foreach (var address in Model.Addresses)
                                                 {
-                                                    <option value="@address">@address</option>
+                                                    <option value="@address" style="color:black">@address</option>
                                                 }
 
                                             </select>
@@ -60,10 +61,10 @@
                                         <div class="select-wrap">
                                             <div class="icon"><span class="ion-ios-arrow-down"></span></div>
                                             <select asp-for="Type" class="form-control">
-                                                <option value="">Type</option>
+                                                <option value="" style="color:black">Type</option>
                                                 @foreach (var type in Model.Types)
                                                 {
-                                                    <option value="@type">@type</option>
+                                                    <option value="@type" style="color:black">@type</option>
                                                 }
 
                                             </select>

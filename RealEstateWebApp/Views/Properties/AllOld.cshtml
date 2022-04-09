@@ -1,0 +1,82 @@
+﻿@using RealEstateWebApp.Data.Models
+@model AllPropertiesQueryModel
+
+@inject SignInManager<User> SignInManager
+
+@{
+    ViewData["Title"] = "All Properties";
+}
+
+<form method="get">
+    <div class="row mb-5">
+        <div class="form-group col-md-4">
+            <div class="form-group">
+                <label asp-for="Type"></label>
+                <select asp-for="Type" class="form-control">
+                    <option value="">All</option>
+                    @foreach (var type in Model.Types)
+                    {
+                        <option value="@type">@type</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-group col-md-4">
+            <div class="form-group">
+                <label asp-for="Address"></label>
+                <select asp-for="Address" class="form-control">
+                    <option value="">All</option>
+                    @foreach (var address in Model.Addresses)
+                    {
+                        <option value="@address">@address</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <input class="btn btn-primary btn-sm" type="submit" value="Search" />
+    </div>
+</form>
+
+<div class="row">
+    @foreach (var property in Model.Properties)
+    {
+        <div class="col-md-4">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="@property.ImageUrl" alt="Card image cap" height="186">
+                <div class="card-body text-center">
+                    <h5 class="card-title">@property.Price.ToString("f3")€</h5>
+                    <p class="card-text">@property.Description</p>
+                    <a asp-controller="Properties" asp-action="Details" asp-route-id="@property.Id" class="btn btn-primary btn-sm">Details</a>
+                    <a asp-controller="Bookings" asp-action="Book" asp-route-propertyId="@property.Id" class="btn btn-primary btn-sm" style="background-color:green;border-color:green">Visit</a>
+                    @if(User.IsInRole("Manager") || User.IsInRole("Employee"))
+                    {
+                         <a asp-controller="Properties" asp-action="Remove" asp-route-id="@property.Id" class="btn btn-secondary btn-sm" style="background-color:red;border-color:red">Remove</a>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@{
+    var totalPages = Math.Ceiling((double)Model.TotalProperties / AllPropertiesQueryModel.PropertiesPerPage);
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <a class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" : string.Empty)"
+           asp-controller="Properties"
+           asp-action="All"
+           asp-route-currentPage="@(Model.CurrentPage - 1)"
+           asp-route-type="@Model.Type"
+           asp-route-searchTerm="@Model.SearchTerm">Previous</a>
+    </div>
+    <div class="col-md-6">
+        <a class="btn btn-primary float-right @(Model.CurrentPage == totalPages ? "disabled" : !Model.Properties.Any() ? "disabled" : string.Empty)"
+           asp-controller="Properties"
+           asp-action="All"
+           asp-route-currentPage="@(Model.CurrentPage + 1)"
+           asp-route-type="@Model.Type"
+           asp-route-searchTerm="@Model.SearchTerm">Next</a>
+    </div>
+</div>

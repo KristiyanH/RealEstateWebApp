@@ -49,6 +49,7 @@ namespace RealEstateWebApp.Controllers
             }
         }
 
+        [Authorize]
         public IActionResult AllBookings()
         {
             var bookings = bookingService.AllBookings();

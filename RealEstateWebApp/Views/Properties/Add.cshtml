@@ -1,68 +1,88 @@
 ﻿@model AddPropertyFormModel
 
-@{
-    ViewData["Title"] = "Add Property";
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Royal Estate - Free Bootstrap 4 Template by Colorlib</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<div class="row">
-    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-2 col-xl-7">
-        <h2 class="heading-margin text-center">Add Property</h2>
+    <partial name="_StyleSheetsPartial" />
 
-        <form method="post">
-  <div class="form-group">
-    <label asp-for="ImageUrl"></label>
-    <input asp-for="ImageUrl" class="form-control" placeholder="Link to property image">
-    <span asp-validation-for="ImageUrl" class="small text-danger"></span>
-  </div>
+</head>
+<body>
+    <partial name="_TopNavPartial" />
+    <!-- END nav -->
 
-  <div class="form-group">
-    <label asp-for="Description"></label>
-    <input asp-for="Description" class="form-control" placeholder="Property Description">
-    <span asp-validation-for="Description" class="small text-danger"></span>
-  </div>
-
-  <div class="form-group">
-    <label asp-for="BuildingYear"></label>
-    <input asp-for="BuildingYear" class="form-control" placeholder="@DateTime.UtcNow.Year">
-    <span asp-validation-for="BuildingYear" class="small text-danger"></span>
-  </div>
-
-  <div class="form-group">
-    <label asp-for="Floor"></label>
-    <input asp-for="Floor" class="form-control" placeholder="Property floor (1,2,3..)">
-    <span asp-validation-for="Floor" class="small text-danger"></span>
-  </div>
-
-  <div class="form-group">
-    <label asp-for="SquareMeters"></label>
-    <input asp-for="SquareMeters" class="form-control" placeholder="Property Floor Space">
-    <span asp-validation-for="SquareMeters" class="small text-danger"></span>
-  </div>
-
-  <div class="form-group">
-    <label asp-for="Price"></label>
-    <input asp-for="Price" class="form-control" placeholder="Property Price">
-    <span asp-validation-for="Price" class="small text-danger"></span>
-  </div>
-
-  <div class="form-group">
-    <label asp-for="AddressText"></label>
-    <input asp-for="AddressText" class="form-control" placeholder="The property address">
-    <span asp-validation-for="AddressText" class="small text-danger"></span>
-  </div>
-
-  <div class="form-group">
-    <label asp-for="PropertyTypeId"></label>
-    <select asp-for="PropertyTypeId" class="form-control" >
-        @foreach (var type in Model.PropertyTypes)
-        {
-            <option value="@type.Id">@type.Name</option>
-        }
-    </select>
-    <span asp-validation-for="BuildingYear" class="small text-danger"></span>
-  </div>
-
-  <input class="btn btn-primary" type="submit" value="Save" />
-</form>
+    <div class="hero-wrap" style="background-image: url(https://www.keyrealestateresources.com/wp-content/uploads/2020/05/Feature-104-how-to-become-a-luxury-real-estate-agent-1110x385.jpg);">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text align-items-center justify-content-center">
+                <div class="col-md-9 ftco-animate text-center">
+                    <h1 class="mb-3 bread">Sell Your Home</h1>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+
+    <section class="ftco-section contact-section bg-light">
+        <div class="container">
+            <div class="row block-9">
+                <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-2 col-xl-7">
+                    <form method="post" class="bg-white p-5 contact-form">
+                        <div class="form-group">
+                            <input asp-for="ImageUrl" class="form-control" placeholder="Link to property image">
+                            <span asp-validation-for="ImageUrl" class="small text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="Description" class="form-control" placeholder="Property Description">
+                            <span asp-validation-for="Description" class="small text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="BuildingYear" class="form-control" placeholder="Building year">
+                            <span asp-validation-for="BuildingYear" class="small text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="Floor" class="form-control" placeholder="Property floor (1,2,3..)">
+                            <span asp-validation-for="Floor" class="small text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="SquareMeters" class="form-control" placeholder="Property Floor Space">
+                            <span asp-validation-for="SquareMeters" class="small text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="Price" class="form-control" placeholder="Property Price (EUR)">
+                            <span asp-validation-for="Price" class="small text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="AddressText" class="form-control" placeholder="The property address">
+                            <span asp-validation-for="AddressText" class="small text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <select asp-for="PropertyTypeId" class="form-control">
+                                @foreach (var type in Model.PropertyTypes)
+                                {
+                                    <option value="@type.Id">@type.Name</option>
+                                }
+                            </select>
+                            <span asp-validation-for="PropertyTypes" class="small text-danger"></span>
+                        </div>
+                        <input type="submit" value="Confirm And List" class="btn btn-primary py-3 px-5">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <partial name="_FooterPartial" />
+
+
+    <!-- loader -->
+    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" /><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" /></svg></div>
+
+    @section Scripts{
+    <partial name="_TemplateScriptsPartial" />
+    }
+
+</body>
+</html>

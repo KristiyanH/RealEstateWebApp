@@ -22,18 +22,18 @@ namespace RealEstateWebApp.ViewModels.Properties
 
         [Required]
         [Range(BuildingYearMinValue, BuildingYearMaxValue, ErrorMessage = RequiredAndRangeErrorMessage)]
-        public int BuildingYear { get; init; }
+        public int? BuildingYear { get; init; }
 
         [Required]
         [Range(FloorMinValue, FloorMaxValue, ErrorMessage = FloorErrorMessage)]
-        public int Floor { get; init; }
+        public int? Floor { get; init; }
 
         [Required]
         [Range(SquareMetersMinValue, SquareMetersMaxValue, ErrorMessage = RequiredAndRangeErrorMessage)]
-        public decimal SquareMeters { get; init; }
+        public decimal? SquareMeters { get; init; }
 
         [Required]
-        public decimal Price { get; init; }
+        public decimal? Price { get; init; }
 
         [Required]
         [StringLength(AddressTextMaxLength)]

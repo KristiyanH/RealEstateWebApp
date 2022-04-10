@@ -49,9 +49,9 @@
                                     <li><span>Floor: </span> @Model.Floor</li>
                                 </ul>
                                 <ul class="ml-md-5">
-                                    <li><span>Year Build:: </span> @Model.BuildingYear</li>
+                                    <li><span>Building Year: </span> @Model.BuildingYear</li>
                                     <li><span>Price: </span> @Model.Price.ToString("f0") €</li>
-                                    <li><span>Price per &#13217: </span> @Model.PricePerSquareMeter€/&#13217</li>
+                                    <li><span>Price per &#13217: </span> @Model.PricePerSquareMeter.ToString("f0") €/&#13217</li>
                                 </ul>
                             </div>
                             <p>@Model.Description</p>

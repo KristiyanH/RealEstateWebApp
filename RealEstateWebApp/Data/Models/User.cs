@@ -15,6 +15,8 @@ namespace RealEstateWebApp.Data.Models
         [MaxLength(NameMaxValue)]
         public string FullName { get; set; }
 
+        public string ProfilePicutre { get; set; }
+
         public ICollection<Task> Tasks { get; set; }
     }
 }

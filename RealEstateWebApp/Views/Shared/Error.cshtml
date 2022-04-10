@@ -13,6 +13,10 @@ else
 {
     <h1 class="text-danger">@ViewData["ErrorTitle"]</h1>
     <h6 class="text-danger">@ViewData["ErrorMessage"]</h6>
+    <a class="btn btn-primary" style="width:auto"
+   asp-controller="Home" asp-action="Index">
+        Home Page
+    </a>
 }
 
 @*@if (Model.ShowRequestId)

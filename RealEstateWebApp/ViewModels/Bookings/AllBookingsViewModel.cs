@@ -1,4 +1,6 @@
-﻿namespace RealEstateWebApp.ViewModels.Bookings
+﻿using RealEstateWebApp.Data.Models;
+
+namespace RealEstateWebApp.ViewModels.Bookings
 {
     public class AllBookingsViewModel
     {
@@ -9,6 +11,8 @@
         public string Description { get; init; }
 
         public int PropertyId { get; init; }
+
+        public Property Property { get; set; }
 
         public string ClientFullName { get; init; }
 

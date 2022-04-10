@@ -1,70 +1,84 @@
 ﻿@using RealEstateWebApp.ViewModels.Bookings
 @model IEnumerable<AllBookingsViewModel>
 
-@{
-    ViewData["Title"] = "Bookings";
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Royal Estate - Free Bootstrap 4 Template by Colorlib</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-@if (Model.Any())
-{
-    <a class="btn btn-primary" style="width:auto"
-   asp-controller="Roles" asp-action="CreateRole">
-        Create New Role
-    </a>
+    <partial name="_StyleSheetsPartial" />
 
-    foreach(var booking in Model)
-    {
-        <div class="card mb-3">
-            <div class="card-header">
-                <h4>Booking ID: @booking.BookingId</h4>
-                <h4>Property ID: @booking.PropertyId</h4>
-                <h4>Visit Date: @booking.VisitDate</h4>
+</head>
+<body>
+
+    <partial name="_TopNavPartial" />
+
+    <!-- END nav -->
+
+    <div class="hero-wrap" style="background-image: url(https://www.keyrealestateresources.com/wp-content/uploads/2020/05/Feature-104-how-to-become-a-luxury-real-estate-agent-1110x385.jpg);">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text align-items-center justify-content-center">
+                <div class="col-md-9 ftco-animate text-center">
+                    <h1 class="mb-3 bread">Bookings</h1>
+                </div>
             </div>
-            <div class="card-body">
-               <h3>Client Details</h3>
-               <h6>Full Name: @booking.ClientFullName</h6> 
-               <h6>Email Address: @booking.ClientEmail</h6> 
-               <h6>Phone Number: @booking.ClientPhoneNumber</h6> 
-               <h6>Note: @booking.Description</h6> 
-            </div>
-            <div class="card-footer">
-                <form asp-action="DeleteBooking" asp-route-id="@booking.BookingId" method="post">
-                <a class="btn btn-primary" asp-action="EditBooking" asp-controller="Bookings" asp-route-id="@booking.BookingId">Edit</a>
-
-                <span id="confirmDeleteSpan_@booking.BookingId" style="display:none">
-                    <span>Are you sure you want to delete this booking?</span>
-                    <button type="submit" class="btn btn-primary">Yes</button>
-                    <a href="#" class="btn btn-danger"
-                    onclick="confirmDelete('@booking.BookingId', false); return false;">No</a>
-                </span>
-
-                <span id="deleteSpan_@booking.BookingId">
-                    <a href="#" class="btn btn-danger"
-                    onclick="confirmDelete('@booking.BookingId', true); return false;">Delete</a>
-                </span>
-                </form>
-            </div>
-        </div>
-    }
-}
-else
-{
-    <div class="card">
-        <div class="card-header">
-            There are no active bookings.
-        </div>
-        <div class="card-body">
-            <h5 class="card-title">
-                Choose a property and create your booking for free.
-            </h5>
         </div>
     </div>
-    <a class="btn btn-primary" style="width:auto"
-   asp-controller="Properties" asp-action="All">
-        See Properties
-    </a>
-}
 
-@section Scripts{
+    <section class="ftco-section bg-light">
+        <div class="container">
+            <div class="row d-flex">
+                @foreach (var booking in Model)
+                {
+                    <div class="col-md-3 d-flex ftco-animate">
+                        <div class="blog-entry align-self-stretch">
+                            <a class="block-20" asp-controller="Properties" asp-action="Details" asp-route-id="@booking.PropertyId" style="background-image: url(@booking.Property.ImageUrl);">
+                            </a>
+                            <div class="text mt-3 d-block">
+                                <h3 class="heading mt-3"><a href="#">Note From Client: @booking.Description</a></h3>
+                                <div class="meta mb-3">
+                                    <div>Visit Date: @booking.VisitDate</div>
+                                    <div>Client Name: @booking.ClientFullName</div>
+                                    <div>Client Phone: @booking.ClientPhoneNumber</div>
+                                    <div>Client Email: @booking.ClientEmail</div>
+                                </div>
+                            </div>
+
+                            <form asp-action="DeleteBooking" asp-route-id="@booking.BookingId" method="post">
+                                <a class="btn btn-primary" asp-action="EditBooking" asp-controller="Bookings" asp-route-id="@booking.BookingId">Edit</a>
+
+                                <span id="confirmDeleteSpan_@booking.BookingId" style="display:none">
+                                    <h5>Are you sure you want to delete this booking?</h5>
+                                    <button type="submit" class="btn btn-primary">Yes</button>
+                                    <a href="#" class="btn btn-danger"
+                                   onclick="confirmDelete('@booking.BookingId', false); return false;">No</a>
+                                </span>
+
+                                <span id="deleteSpan_@booking.BookingId">
+                                    <a href="#" class="btn btn-danger"
+                                   onclick="confirmDelete('@booking.BookingId', true); return false;">Delete</a>
+                                </span>
+                            </form>
+
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+
+    <partial name="_FooterPartial" />
+
+    <!-- loader -->
+    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" /><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" /></svg></div>
+
+    @section Scripts{
+    <partial name="_TemplateScriptsPartial" />
     <script src="~/js/customScripts/CustomScript.js"></script>
-}
+    }
+
+</body>
+</html>

@@ -1,26 +1,88 @@
 ﻿@model DetailsPropertyViewModel
 
-<div class="row">
-    <div class="col-md-4 col-sm-2 col-xl-5">
-            <div class="card">
-                <img class="card-img-top" src="@Model.ImageUrl" alt="Card image cap">
-                <div class="card-body text-center">
-                    <h3 class="card-text">Property ID: @Model.Id</h3>
-                    <h2 class="card-text text-center">Price: @Model.Price.ToString("f3")€ (@Model.PricePerSquareMeter€/&#13217)</h2>
-                    <h5 class="card-text">@Model.Description</h5>
-                    <h5 class="card-text">Address: @Model.Address</h5>
-                    <h5 class="card-text">Building Year: @Model.BuildingYear</h5>
-                    <h5 class="card-text">Type: @Model.PropertyType</h5>
-                    <h5 class="card-text">Floor: @Model.Floor</h5>
-                    <h5 class="card-text">Area: @Model.SquareMeters.ToString("f2")&#13217</h5>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Royal Estate - Free Bootstrap 4 Template by Colorlib</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <partial name="_StyleSheetsPartial" />
+
+</head>
+<body>
+    <partial name="_TopNavPartial" />
+
+    <div class="hero-wrap" style="background-image: url(https://www.keyrealestateresources.com/wp-content/uploads/2020/05/Feature-104-how-to-become-a-luxury-real-estate-agent-1110x385.jpg);">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text align-items-center justify-content-center">
+                <div class="col-md-9 ftco-animate text-center">
+                    <h1 class="mb-3 bread">Property Details</h1>
                 </div>
-                <a class="btn btn-primary" style="width:auto"
-   asp-route-propertyId="@Model.Id"
-   asp-controller="Bookings" 
-   asp-action="Book">
-        Book a visit
-    </a>
             </div>
         </div>
-</div>
- 
+    </div>
+
+
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="row">
+                        <div class="col-md-12 ftco-animate">
+                            <div class="single-slider owl-carousel">
+                                <div class="item">
+                                    <div class="properties-img" style="background-image: url(@Model.ImageUrl);"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 Properties-single mt-4 mb-5 ftco-animate">
+                            <h2>Property ID: @Model.Id</h2>
+                            <p class="rate mb-4">
+                                <span class="loc"><a asp-controller="Properties" asp-action="All" asp-route-Address="@Model.Address"><i class="icon-map"></i> @Model.Address</a></span>
+                            </p>
+                            <div class="d-md-flex mt-5 mb-5">
+                                <ul>
+                                    <li><span>Type: </span> @Model.PropertyType</li>
+                                    <li><span>Floor Area: </span> @Model.SquareMeters.ToString("f0") SQ FT</li>
+                                    <li><span>Floor: </span> @Model.Floor</li>
+                                </ul>
+                                <ul class="ml-md-5">
+                                    <li><span>Year Build:: </span> @Model.BuildingYear</li>
+                                    <li><span>Price: </span> @Model.Price.ToString("f0") €</li>
+                                    <li><span>Price per &#13217: </span> @Model.PricePerSquareMeter€/&#13217</li>
+                                </ul>
+                            </div>
+                            <p>@Model.Description</p>
+                        </div>
+
+                    </div>
+                </div> <!-- .col-md-8 -->
+                <div class="col-lg-4 sidebar ftco-animate">
+                    <div class="sidebar-box ftco-animate">
+                        <div class="categories">
+                            <h3>Categories</h3>
+                                <li><a asp-controller="Properties" asp-action="All">Properties</a></li>
+                                <li><a asp-controller="Properties" asp-action="All" asp-route-Type="House">House</a></li>
+                                <li><a asp-controller="Properties" asp-action="All" asp-route-Type="Villa">Villa</a></li>
+                                <li><a asp-controller="Properties" asp-action="All" asp-route-Type="Apartment">Apartment</a></li>
+                                <li><a asp-controller="Properties" asp-action="All" asp-route-Type="Mansion">Mansion</a></li>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> <!-- .section -->
+
+    <partial name="_FooterPartial" />
+
+    <!-- loader -->
+    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" /><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" /></svg></div>
+
+    @section Scripts{
+    <partial name="_TemplateScriptsPartial" />
+    }
+
+</body>
+</html>

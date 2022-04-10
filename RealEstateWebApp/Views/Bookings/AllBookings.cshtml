@@ -47,7 +47,9 @@
                                 </div>
                             </div>
 
-                            <form asp-action="DeleteBooking" asp-route-id="@booking.BookingId" method="post">
+                            @if(User.IsManager() || User.IsEmployee())
+                            {
+                                <form asp-action="DeleteBooking" asp-route-id="@booking.BookingId" method="post">
                                 <a class="btn btn-primary" asp-action="EditBooking" asp-controller="Bookings" asp-route-id="@booking.BookingId">Edit</a>
 
                                 <span id="confirmDeleteSpan_@booking.BookingId" style="display:none">
@@ -62,7 +64,7 @@
                                    onclick="confirmDelete('@booking.BookingId', true); return false;">Delete</a>
                                 </span>
                             </form>
-
+                            }
                         </div>
                     </div>
                 }

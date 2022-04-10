@@ -12,15 +12,12 @@ namespace RealEstateWebApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         private readonly RealEstateDbContext data;
         private readonly IMapper mapper;
-        public HomeController(ILogger<HomeController> logger,
-            RealEstateDbContext _data,
+        public HomeController(RealEstateDbContext _data,
             IMapper _mapper)
         {
             data = _data;
-            _logger = logger;
             mapper = _mapper;
         }
 
@@ -44,9 +41,7 @@ namespace RealEstateWebApp.Controllers
         }
 
         public IActionResult Privacy()
-        {
-            return View();
-        }
+            => View();
 
         public IActionResult About()
            => View();
@@ -56,11 +51,5 @@ namespace RealEstateWebApp.Controllers
 
         public IActionResult Contact()
             => View();
-
-        //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        // public IActionResult Error()
-        //{
-        //    return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
-        //}
     }
 }

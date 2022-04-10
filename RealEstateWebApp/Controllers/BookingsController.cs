@@ -5,14 +5,15 @@ using RealEstateWebApp.Infrastructure;
 using RealEstateWebApp.Services.Bookings;
 using RealEstateWebApp.ViewModels.Bookings;
 using System;
+using System.Linq;
 using static RealEstateWebApp.ErrorConstants;
 
 namespace RealEstateWebApp.Controllers
 {
     public class BookingsController : Controller
     {
-        private readonly RealEstateDbContext data;
         private readonly IBookingService bookingService;
+        private readonly RealEstateDbContext data;
 
         public BookingsController(IBookingService _bookingService,
             RealEstateDbContext _data)
@@ -54,7 +55,12 @@ namespace RealEstateWebApp.Controllers
         {
             var bookings = bookingService.AllBookings();
 
-            return View(bookings);
+            if (User.IsManager() || User.IsEmployee())
+            {
+                return View(bookings);
+            }
+
+            return View(bookings.Where(x => x.Client.UserId == User.GetId()));
         }
     }
 }

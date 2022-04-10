@@ -16,12 +16,12 @@ namespace RealEstateWebApp.Controllers
         public RolesController(IRoleService _roleService)
             => roleService = _roleService;
 
-        [Authorize(Roles = "Administrator,Manager")]
+        [Authorize(Roles = "Manager")]
         public IActionResult CreateRole()
             => View();
 
         [HttpPost]
-        [Authorize(Roles = "Administrator,Manager")]
+        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> CreateRole(CreateRoleViewModel model)
         {
             if (!ModelState.IsValid)
@@ -34,13 +34,13 @@ namespace RealEstateWebApp.Controllers
             return RedirectToAction("AllRoles", "Roles");
         }
 
-        [Authorize(Roles = "Administrator,Manager")]
+        [Authorize(Roles = "Manager")]
         public IActionResult AllRoles()
         {
             return View(roleService.AllRoles());
         }
 
-        [Authorize(Roles = "Administrator,Manager")]
+        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> EditRole(string id)
         {
             try
@@ -59,7 +59,7 @@ namespace RealEstateWebApp.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Administrator,Manager")]
+        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> EditRole(EditRoleViewModel model)
         {
 
@@ -74,7 +74,7 @@ namespace RealEstateWebApp.Controllers
 
         }
 
-        [Authorize(Roles = "Administrator,Manager")]
+        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> EditUsersInRole(string roleId)
         {
             ViewData["RoleId"] = roleId;
@@ -95,7 +95,7 @@ namespace RealEstateWebApp.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Administrator,Manager")]
+        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> EditUsersInRole(List<UserRoleViewModel> model, string roleId)
         {
             if (!ModelState.IsValid)
@@ -114,7 +114,7 @@ namespace RealEstateWebApp.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Administrator,Manager")]
+        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> DeleteRole(string id)
         {
             try

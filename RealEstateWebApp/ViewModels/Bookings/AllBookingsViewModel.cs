@@ -14,6 +14,10 @@ namespace RealEstateWebApp.ViewModels.Bookings
 
         public Property Property { get; set; }
 
+        public int ClientId { get; set; }
+
+        public Client Client { get; set; }
+
         public string ClientFullName { get; init; }
 
         public string ClientPhoneNumber { get; init; }

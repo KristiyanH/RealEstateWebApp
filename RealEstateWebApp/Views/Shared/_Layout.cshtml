@@ -39,12 +39,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 @if (SignInManager.IsSignedIn(User))
                 {
                     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                        <div class="image">
-                            <img src="~/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image"> @*user picture*@
-                        </div>
                         <div class="info">
-                            <a class="d-block" asp-area="Identity" asp-page="/Account/Manage/Index">Kristiyan Hristov</a>
-                        </div>
+                            @if (User.IsInRole("Manager"))
+                            {
+                                 <a class="d-block" asp-area="Identity" asp-page="/Account/Manage/Index">Welcome, Manager!</a>
+                            }
+                            @if (User.IsInRole("Employee"))
+                            {
+                                 <a class="d-block" asp-area="Identity" asp-page="/Account/Manage/Index">Welcome, Employee!</a>
+                            }
+                            @if (!User.IsInRole("Employee") && !User.IsInRole("Manager"))
+                            {
+                                 <a class="d-block" asp-area="Identity" asp-page="/Account/Manage/Index">Welcome, Customer!</a>
+                            }
+                            </div>
                     </div>
                 }
 

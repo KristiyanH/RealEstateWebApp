@@ -5,6 +5,7 @@ using RealEstateWebApp.Data.Models;
 using RealEstateWebApp.Services.Properties;
 using RealEstateWebApp.Tests.Mocks;
 using RealEstateWebApp.ViewModels.Properties;
+using System;
 using System.Linq;
 using Xunit;
 
@@ -40,7 +41,7 @@ namespace RealEstateWebApp.Tests.Controllers
         }
 
         [Fact]
-        public void AllShouldReturnViewWithCorrectModel()
+        public void AllShouldReturnView()
         {
             var data = DatabaseMock.Instance;
             var propertyService = PropertyServiceMock.Instance;
@@ -54,15 +55,11 @@ namespace RealEstateWebApp.Tests.Controllers
 
             Assert.NotNull(result);
 
-            var viewResult = Assert.IsType<ViewResult>(result);
-
-            var model = viewResult.Model;
-
-            Assert.Null(model);
+            Assert.IsType<ViewResult>(result);
         }
 
         [Fact]
-        public void DetailsShouldReturnViewWithCorrectModel()
+        public void DetailsShouldReturnView()
         {
             var data = DatabaseMock.Instance;
             var propertyService = PropertyServiceMock.Instance;
@@ -79,7 +76,28 @@ namespace RealEstateWebApp.Tests.Controllers
 
             Assert.NotNull(result);
 
-            var viewResult = Assert.IsType<ViewResult>(result);
+            Assert.IsType<ViewResult>(result);
+        }
+
+        [Fact]
+        public void RemoveShouldReturnRedirect()
+        {
+            var data = DatabaseMock.Instance;
+            var propertyService = PropertyServiceMock.Instance;
+
+            data.Properties.AddRange(Enumerable.Range(0, 1).Select(x => new Property()));
+            data.SaveChanges();
+
+            Assert.NotNull(data.Properties);
+            Assert.Equal(1, data.Properties.Count());
+
+            var propertiesController = new PropertiesController(data, propertyService);
+
+            var result = propertiesController.Remove(1);
+
+            Assert.NotNull(result);
+
+            Assert.IsType<RedirectResult>(result);
         }
     }
 }

@@ -2,21 +2,38 @@
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using RealEstateWebApp.Controllers;
+using RealEstateWebApp.Data;
 using RealEstateWebApp.Data.Models;
 using RealEstateWebApp.Tests.Mocks;
 using RealEstateWebApp.ViewModels.Home;
+using System;
 using System.Linq;
 using Xunit;
 
 namespace RealEstateWebApp.Tests.Controllers
 {
-    public class HomeControllerTests
+    public class HomeControllerTests : IDisposable
     {
+        private readonly RealEstateDbContext data;
+        private readonly IMapper mapper;
+        private readonly HomeController homeController;
+        public HomeControllerTests()
+        {
+            data = DatabaseMock.Instance;
+            mapper = MapperMock.Instance;
+            homeController = new HomeController(data, mapper);
+            data.Properties.AddRange(Enumerable.Range(0, 5).Select(x => new Property()));
+            data.SaveChanges();
+        }
+
+        public void Dispose()
+        {
+            data.Dispose();
+        }
+
         [Fact]
         public void ErrorShouldReturnView()
         {
-            var homeController = new HomeController(null, Mock.Of<IMapper>());
-
             var result = homeController.Error();
 
             Assert.NotNull(result);
@@ -26,8 +43,6 @@ namespace RealEstateWebApp.Tests.Controllers
         [Fact]
         public void PrivacyShouldReturnView()
         {
-            var homeController = new HomeController(null, Mock.Of<IMapper>());
-
             var result = homeController.Privacy();
 
             Assert.NotNull(result);
@@ -37,8 +52,6 @@ namespace RealEstateWebApp.Tests.Controllers
         [Fact]
         public void AboutShouldReturnView()
         {
-            var homeController = new HomeController(null, Mock.Of<IMapper>());
-
             var result = homeController.About();
 
             Assert.NotNull(result);
@@ -48,8 +61,6 @@ namespace RealEstateWebApp.Tests.Controllers
         [Fact]
         public void ContactShouldReturnView()
         {
-            var homeController = new HomeController(null, Mock.Of<IMapper>());
-
             var result = homeController.Contact();
 
             Assert.NotNull(result);
@@ -59,17 +70,6 @@ namespace RealEstateWebApp.Tests.Controllers
         [Fact]
         public void IndexShouldReturnViewWithCorrectModel()
         {
-            var data = DatabaseMock.Instance;
-            var mapper = MapperMock.Instance;
-
-            data.Properties.AddRange(Enumerable.Range(0, 10).Select(x => new Property()));
-            data.SaveChanges();
-
-            Assert.NotNull(data.Properties);
-            Assert.Equal(10, data.Properties.Count());
-
-            var homeController = new HomeController(data, mapper);
-
             var result = homeController.Index();
 
             Assert.NotNull(result);
@@ -84,8 +84,6 @@ namespace RealEstateWebApp.Tests.Controllers
         [Fact]
         public void ConstructorShouldWorkAsExpected()
         {
-            var homeController = new HomeController(null, Mock.Of<IMapper>());
-
             Assert.NotNull(homeController);
         }
     }

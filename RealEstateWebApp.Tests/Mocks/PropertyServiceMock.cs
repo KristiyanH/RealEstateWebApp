@@ -1,7 +1,6 @@
 ﻿using Moq;
 using RealEstateWebApp.Services.Properties;
 using RealEstateWebApp.ViewModels.Properties;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace RealEstateWebApp.Tests.Mocks

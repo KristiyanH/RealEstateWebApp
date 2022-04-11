@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Moq;
+using RealEstateWebApp.Infrastructure;
+
 namespace RealEstateWebApp.Tests.Mocks
 {
     public static class MapperMock
@@ -8,12 +10,12 @@ namespace RealEstateWebApp.Tests.Mocks
         {
             get
             {
-                var mapperMock = new Mock<IMapper>();
+                var mapperConfiguration = new MapperConfiguration(cfg =>
+                {
+                    cfg.AddProfile<MappingProfile>();
+                });
 
-                mapperMock.SetupGet(m => m.ConfigurationProvider)
-                    .Returns(Mock.Of<IConfigurationProvider>);
-
-                return mapperMock.Object;
+                return new Mapper(mapperConfiguration);
             }
         }
     }

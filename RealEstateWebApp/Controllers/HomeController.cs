@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using RealEstateWebApp.Data;
-using RealEstateWebApp.Models;
 using RealEstateWebApp.ViewModels.Home;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 namespace RealEstateWebApp.Controllers

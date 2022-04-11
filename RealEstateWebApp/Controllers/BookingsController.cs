@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using RealEstateWebApp.Data;
 using RealEstateWebApp.Infrastructure;
 using RealEstateWebApp.Services.Bookings;
 using RealEstateWebApp.ViewModels.Bookings;
@@ -13,13 +12,10 @@ namespace RealEstateWebApp.Controllers
     public class BookingsController : Controller
     {
         private readonly IBookingService bookingService;
-        private readonly RealEstateDbContext data;
 
-        public BookingsController(IBookingService _bookingService,
-            RealEstateDbContext _data)
+        public BookingsController(IBookingService _bookingService)
         {
             bookingService = _bookingService;
-            data = _data;
         }
 
         [Authorize]

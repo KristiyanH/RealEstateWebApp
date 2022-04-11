@@ -7,7 +7,6 @@ namespace RealEstateWebApp.Tests.Controllers
 {
     public class HomeControllerTests
     {
-
         [Fact]
         public void IndexShouldReturnViewWithCorrectModelAndData()
             => MyMvc

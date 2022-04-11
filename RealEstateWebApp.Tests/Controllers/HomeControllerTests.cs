@@ -1,90 +1,63 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using Moq;
+﻿using MyTested.AspNetCore.Mvc;
 using RealEstateWebApp.Controllers;
-using RealEstateWebApp.Data;
-using RealEstateWebApp.Data.Models;
-using RealEstateWebApp.Tests.Mocks;
 using RealEstateWebApp.ViewModels.Home;
-using System;
-using System.Linq;
 using Xunit;
-
+using static RealEstateWebApp.Tests.Data.Properties;
 namespace RealEstateWebApp.Tests.Controllers
 {
-    public class HomeControllerTests : IDisposable
+    public class HomeControllerTests
     {
-        private readonly RealEstateDbContext data;
-        private readonly IMapper mapper;
-        private readonly HomeController homeController;
-        public HomeControllerTests()
-        {
-            data = DatabaseMock.Instance;
-            mapper = MapperMock.Instance;
-            homeController = new HomeController(data, mapper);
-            data.Properties.AddRange(Enumerable.Range(0, 5).Select(x => new Property()));
-            data.SaveChanges();
-        }
-
-        public void Dispose()
-        {
-            data.Dispose();
-        }
 
         [Fact]
-        public void ErrorShouldReturnView()
-        {
-            var result = homeController.Error();
-
-            Assert.NotNull(result);
-            Assert.IsType<ViewResult>(result);
-        }
+        public void IndexShouldReturnViewWithCorrectModelAndData()
+            => MyMvc
+            .Pipeline()
+            .ShouldMap("/")
+            .To<HomeController>(c => c.Index())
+            .Which(controller => controller
+            .WithData(TenProperties())
+            .ShouldReturn()
+            .View(view => view
+            .WithModelOfType<IndexViewModel>()));
 
         [Fact]
         public void PrivacyShouldReturnView()
-        {
-            var result = homeController.Privacy();
-
-            Assert.NotNull(result);
-            Assert.IsType<ViewResult>(result);
-        }
+            => MyMvc
+            .Pipeline()
+            .ShouldMap("/Home/Privacy")
+            .To<HomeController>(c => c.Privacy())
+            .Which(c => c
+            .ShouldReturn()
+            .View());
 
         [Fact]
         public void AboutShouldReturnView()
-        {
-            var result = homeController.About();
+            => MyMvc
+            .Pipeline()
+            .ShouldMap("/Home/About")
+            .To<HomeController>(c => c.About())
+            .Which(c => c
+            .ShouldReturn()
+            .View());
 
-            Assert.NotNull(result);
-            Assert.IsType<ViewResult>(result);
-        }
+        [Fact]
+        public void ErrorShouldReturnView()
+            => MyMvc
+            .Pipeline()
+            .ShouldMap("/Home/Error")
+            .To<HomeController>(c => c.Error())
+            .Which(c => c
+            .ShouldReturn()
+            .View());
 
         [Fact]
         public void ContactShouldReturnView()
-        {
-            var result = homeController.Contact();
-
-            Assert.NotNull(result);
-            Assert.IsType<ViewResult>(result);
-        }
-
-        [Fact]
-        public void IndexShouldReturnViewWithCorrectModel()
-        {
-            var result = homeController.Index();
-
-            Assert.NotNull(result);
-            var viewResult = Assert.IsType<ViewResult>(result);
-
-            var model = viewResult.Model;
-
-            Assert.IsType<IndexViewModel>(model);
-
-        }
-
-        [Fact]
-        public void ConstructorShouldWorkAsExpected()
-        {
-            Assert.NotNull(homeController);
-        }
+            => MyMvc
+            .Pipeline()
+            .ShouldMap("/Home/Contact")
+            .To<HomeController>(c => c.Contact())
+            .Which(c => c
+            .ShouldReturn()
+            .View());
     }
 }

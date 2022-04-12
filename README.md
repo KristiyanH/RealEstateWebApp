@@ -36,11 +36,7 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
@@ -74,9 +70,9 @@ RoyalEstate is a web project designed for educational purposes only.
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
+RoyalEstate is a user friendly Web Application. It contains Manager, Employee and default user Roles. As a customer you can list properties for sale, book visits for properties, see all available listings, search properties by type or address, view your own bookings and more.
+When you are logged in as a Manager, you can manage other user's roles, add new roles, set tasks to employees and edit/remove them, view all available bookings and manage them, you can also see all registered users and do everything that an employee can.
+When you are logged in as an Employee, you can remove properties, see your tasks and complete them, see all bookings and manage them and everything that a default user can do.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

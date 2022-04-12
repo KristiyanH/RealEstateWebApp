@@ -12,14 +12,14 @@
   <p align="center">
     My first personal Web Project 
     <br />
-    <a href="https://github.com/github_username/RealEstateWebApp"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/KristiyanH/RealEstateWebApp"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/github_username/RealEstateWebApp">View Demo</a>
+    <a href="https://github.com/KristiyanH/RealEstateWebApp">View Demo</a>
     ·
-    <a href="https://github.com/github_username/RealEstateWebApp/issues">Report Bug</a>
+    <a href="https://github.com/KristiyanH/RealEstateWebApp/issues">Report Bug</a>
     ·
-    <a href="https://github.com/github_username/RealEstateWebApp/issues">Request Feature</a>
+    <a href="https://github.com/KristiyanH/RealEstateWebApp/issues">Request Feature</a>
   </p>
 </div>
 

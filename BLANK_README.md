@@ -67,7 +67,7 @@ RoyalEstate is a web project designed for educational purposes only.
 * [AutoMapper](https://automapper.org/)
 * [Moq](https://github.com/moq/moq)
 * [MyTested Asp.NetCore.Mvc](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc)
-*
+
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

@@ -1,7 +1,7 @@
-﻿using Xunit;
-using MyTested.AspNetCore.Mvc;
+﻿using MyTested.AspNetCore.Mvc;
 using RealEstateWebApp.Controllers;
 using RealEstateWebApp.ViewModels.Properties;
+using Xunit;
 
 namespace RealEstateWebApp.Tests.Pipeline
 {
@@ -9,8 +9,8 @@ namespace RealEstateWebApp.Tests.Pipeline
     {
         [Fact]
         public void GetAddShouldBeForAuthorizedUsersAndReturnViewWithCorrectModel()
-            => MyMvc
-            .Pipeline()
+            => MyPipeline
+            .Configuration()
             .ShouldMap(request => request
             .WithPath("/Properties/Add")
             .WithUser())

@@ -1,6 +1,5 @@
 ﻿using MyTested.AspNetCore.Mvc;
 using RealEstateWebApp.Controllers;
-using RealEstateWebApp.ViewModels.Home;
 using Xunit;
 
 namespace RealEstateWebApp.Tests.Routing

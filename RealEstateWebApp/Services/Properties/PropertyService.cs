@@ -127,11 +127,16 @@ namespace RealEstateWebApp.Services.Properties
             }
 
             var address = data.Addresses.FirstOrDefault(x => x.Id == property.AddressId);
+
             var propertyType = data.PropertyTypes.FirstOrDefault(x => x.Id == property.PropertyTypeId);
 
             var detailsModel = mapper.Map<DetailsPropertyViewModel>(property);
-            detailsModel.Address = address.AddressText;
-            detailsModel.PropertyType = propertyType.Name;
+
+            if (address != null && propertyType != null)
+            {
+                detailsModel.Address = address.AddressText;
+                detailsModel.PropertyType = propertyType.Name;
+            }
 
             return detailsModel;
         }

@@ -37,7 +37,7 @@
     </li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#screenshots">Screenshots</a></li>
+    <li><a href="#database">Database</a></li>
   </ol>
 </details>
 
@@ -77,16 +77,9 @@ When you are logged in as an Employee, you can remove properties, see your tasks
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-## Screenshots
+## Database
 
 <img src="https://fv9-3.failiem.lv/thumb_show.php?i=c7fgnt7hg&view" alt="Logo" width="1080" height="720">
-
-<img src="https://fv9-4.failiem.lv/thumb_show.php?i=qj9qjnfnb&view" alt="Logo" width="1080" height="720">
-
-<img src="https://fv9-5.failiem.lv/thumb_show.php?i=cwedz77yx&view" alt="Logo" width="1080" height="720">
-
-
-
 
 <!-- CONTACT -->
 ## Contact

@@ -49,8 +49,6 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
 RoyalEstate is a web project designed for educational purposes only.
 
 <p align="right">(<a href="#top">back to top</a>)</p>

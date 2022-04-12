@@ -58,8 +58,8 @@ RoyalEstate is a web project designed for educational purposes only.
 ### Built With
 
 * [ASP.NET Core 5.0 MVC](https://docs.microsoft.com/en-us/aspnet/core/mvc/overview?view=aspnetcore-5.0)
-* [C#]
-* [JavaScript]
+* [C#](https://docs.microsoft.com/en-us/dotnet/csharp/)
+* [JavaScript](https://www.javascript.com/)
 * [Bootstrap](https://themewagon.com/themes/free-bootstrap-4-html5-real-estate-website-template-royal-estate/)
 * [Razor ViewEngine](https://docs.microsoft.com/en-us/aspnet/core/mvc/views/razor?view=aspnetcore-5.0)
 * [MSSQL](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)

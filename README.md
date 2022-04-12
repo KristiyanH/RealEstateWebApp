@@ -85,7 +85,7 @@ When you are logged in as an Employee, you can remove properties, see your tasks
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/Kristia71254559) - kristiyan.a.hristov@gmail.com
+Email - kristiyan.a.hristov@gmail.com
 
 Project Link: [https://github.com/KristiyanH/RealEstateWebApp](https://github.com/KristiyanH/RealEstateWebApp)
 

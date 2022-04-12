@@ -83,6 +83,10 @@ When you are logged in as an Employee, you can remove properties, see your tasks
 
 <img src="https://fv9-4.failiem.lv/thumb_show.php?i=qj9qjnfnb&view" alt="Logo" width="1080" height="720">
 
+<img src="https://fv9-5.failiem.lv/thumb_show.php?i=cwedz77yx&view" alt="Logo" width="1080" height="720">
+
+
+
 
 <!-- CONTACT -->
 ## Contact

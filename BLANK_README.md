@@ -4,7 +4,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/github_username/repo_name">
-    <img src="https://img.freepik.com/free-vector/real-estate-logo_74869-159.jpg" alt="Logo" width="1080" height="720">
+    <img src="https://fv9-5.failiem.lv/thumb_show.php?i=j32mezuh5&view" alt="Logo" width="1080" height="720">
   </a>
 
 <h3 align="center">project_title</h3>

@@ -45,6 +45,7 @@ namespace RealEstateWebApp
                 .AddEntityFrameworkStores<RealEstateDbContext>();
 
             services.AddAutoMapper(typeof(Startup));
+            services.AddMemoryCache();
 
             services
                 .AddControllersWithViews(options =>

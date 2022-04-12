@@ -71,7 +71,7 @@ namespace RealEstateWebApp.Controllers
                 ViewData["ErrorMessage"] = aex.Message;
 
                 return View("Error");
-            }
+            } 
 
         }
 

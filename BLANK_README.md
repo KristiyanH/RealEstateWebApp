@@ -4,7 +4,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/github_username/repo_name">
-    <img src="https://fv9-5.failiem.lv/thumb_show.php?i=j32mezuh5&view" alt="Logo" width="1280" height="720">
+    <img src="https://fv9-5.failiem.lv/thumb_show.php?i=j32mezuh5&view" alt="Logo" width="1280" height="1080">
   </a>
 
 <h3 align="center">project_title</h3>

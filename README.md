@@ -37,6 +37,7 @@
     </li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#contact">Contact</a></li>
+    <li><a href="#screenshots">Screenshots</a></li>
   </ol>
 </details>
 

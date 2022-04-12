@@ -79,21 +79,6 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
-
-<!-- ROADMAP -->
-## Roadmap
-
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
-
-See the [open issues](https://github.com/github_username/repo_name/issues) for a full list of proposed features (and known issues).
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
 <!-- CONTRIBUTING -->
 ## Contributing
 
@@ -124,20 +109,9 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+Your Name - [@twitter_handle](https://twitter.com/Kristia71254559) - kristiyan.a.hristov@gmail.com
 
-Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-* []()
-* []()
-* []()
+Project Link: [https://github.com/KristiyanH/RealEstateWebApp](https://github.com/KristiyanH/RealEstateWebApp)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

@@ -4,7 +4,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/github_username/repo_name">
-    <img src="https://www.keyrealestateresources.com/wp-content/uploads/2020/05/Feature-104-how-to-become-a-luxury-real-estate-agent-1110x385.jpg" alt="Logo" width="1080" height="720">
+    <img src="https://www.keyrealestateresources.com/wp-content/uploads/2020/05/Feature-104-how-to-become-a-luxury-real-estate-agent-1110x385.jpg" alt="Logo" width="720" height="1080">
   </a>
 
 <h3 align="center">project_title</h3>

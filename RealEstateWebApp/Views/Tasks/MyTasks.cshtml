@@ -3,19 +3,32 @@
 
 @inject SignInManager<User> SignInManager
 
-@{
-    ViewData["Title"] = "Tasks";
-}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Users</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-@if (User.IsInRole("Manager"))
-{
-    <partial name="_ManagerTasksPartial" />
-}
-else if(User.IsInRole("Employee"))
-{
-    <partial name="_EmployeeTasksPartial" />
-}
+    <partial name="_StyleSheetsPartial" />
 
-@section Scripts{
+</head>
+
+<body>
+    <partial name="_TopNavPartial" />
+
+    @if (User.IsInRole("Manager"))
+    {
+        <partial name="_ManagerTasksPartial" />
+    }
+    else if (User.IsInRole("Employee"))
+    {
+        <partial name="_EmployeeTasksPartial" />
+    }
+
+    @section Scripts{
     <script src="~/js/customScripts/CustomScript.js"></script>
-}
+    }
+</body>
+</html>
+

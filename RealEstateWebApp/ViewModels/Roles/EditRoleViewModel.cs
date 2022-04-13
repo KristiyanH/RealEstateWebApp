@@ -10,9 +10,11 @@ namespace RealEstateWebApp.ViewModels.Roles
             Users = new List<string>();
         }
 
+        [Display(Name = "Role ID")]
         public string Id { get; init; }
 
         [Required]
+        [Display(Name = "Role Name")]
         public string RoleName { get; init; }
 
         public ICollection<string> Users { get; set; }

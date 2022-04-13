@@ -52,6 +52,7 @@ namespace RealEstateWebApp.Areas.Identity.Pages.Account
             [Display(Name = "Email")]
             public string Email { get; set; }
 
+            [Required(ErrorMessage = "The Full Name field is required")]
             [Display(Name = "Full Name")]
             [StringLength(NameMaxValue, MinimumLength = NameMinValue)]
             public string FullName { get; set; }
@@ -62,6 +63,7 @@ namespace RealEstateWebApp.Areas.Identity.Pages.Account
             [Display(Name = "Password")]
             public string Password { get; set; }
 
+            
             [DataType(DataType.Password)]
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]

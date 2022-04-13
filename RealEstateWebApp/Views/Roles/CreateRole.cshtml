@@ -2,23 +2,36 @@
 
 @model CreateRoleViewModel
 
-@{
-    ViewData["Title"] = "Create Role";
-}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Role</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <partial name="_StyleSheetsPartial" />
 
-<div class="row">
-    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-2 col-xl-7">
-        <h2 class="heading-margin text-center">Role Registration</h2>
+</head>
 
-        <form method="post">
-  <div class="form-group">
-    <label asp-for="RoleName"></label>
-    <input asp-for="RoleName" class="form-control" placeholder="Admin,Manager,etc..">
-    <span asp-validation-for="RoleName" class="small text-danger"></span>
-  </div>
+<body>
+     <partial name="_TopNavPartial" />
 
-  <input class="btn btn-primary" type="submit" value="Save" />
-</form>
+    <div class="row">
+        <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-2 col-xl-7">
+            <h2 class="heading-margin text-center">Role Registration</h2>
+
+            <form method="post">
+                <div class="form-group">
+                    <label asp-for="RoleName"></label>
+                    <input asp-for="RoleName" class="form-control" placeholder="Admin,Manager,etc..">
+                    <span asp-validation-for="RoleName" class="small text-danger"></span>
+                </div>
+
+                <input class="btn btn-primary" type="submit" value="Save" />
+            </form>
+        </div>
     </div>
-</div>
+</body>
+
+
+</html>

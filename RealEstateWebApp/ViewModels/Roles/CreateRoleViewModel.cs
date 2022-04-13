@@ -6,6 +6,7 @@ namespace RealEstateWebApp.ViewModels.Roles
     {
         [Required]
         [MinLength(2)]
+        [Display(Name = "Role Name")]
         public string RoleName { get; init; }
     }
 }

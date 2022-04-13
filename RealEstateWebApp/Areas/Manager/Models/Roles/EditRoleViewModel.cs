@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace RealEstateWebApp.ViewModels.Roles
+namespace RealEstateWebApp.Areas.Manager.Models.Roles
 {
     public class EditRoleViewModel
     {

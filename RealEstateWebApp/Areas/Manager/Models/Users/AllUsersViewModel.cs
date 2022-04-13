@@ -1,4 +1,4 @@
-﻿namespace RealEstateWebApp.ViewModels.Users
+﻿namespace RealEstateWebApp.Areas.Manager.Models.Users
 {
     public class AllUsersViewModel
     {

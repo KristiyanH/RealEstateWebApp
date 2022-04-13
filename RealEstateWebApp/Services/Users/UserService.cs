@@ -1,5 +1,5 @@
-﻿using RealEstateWebApp.Data;
-using RealEstateWebApp.ViewModels.Users;
+﻿using RealEstateWebApp.Areas.Manager.Models.Users;
+using RealEstateWebApp.Data;
 using System.Collections.Generic;
 using System.Linq;
 

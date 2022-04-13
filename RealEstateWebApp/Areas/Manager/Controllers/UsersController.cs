@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RealEstateWebApp.Services.Users;
+using static RealEstateWebApp.WebConstants;
 
-namespace RealEstateWebApp.Controllers
+namespace RealEstateWebApp.Areas.Manager.Controllers
 {
+    [Area(ManagerRoleName)]
+    [Authorize(Roles = ManagerRoleName)]
     public class UsersController : Controller
     {
         private readonly IUserService userService;
@@ -13,7 +16,6 @@ namespace RealEstateWebApp.Controllers
             userService = _userService;
         }
 
-        [Authorize(Roles = "Manager")]
         public IActionResult AllUsers()
         {
             return View(userService.AllUsers());

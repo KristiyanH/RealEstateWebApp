@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using RealEstateWebApp.ViewModels.Roles;
+using RealEstateWebApp.Areas.Manager.Models.Roles;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

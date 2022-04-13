@@ -1,14 +1,16 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using RealEstateWebApp.Areas.Manager.Models.Roles;
 using RealEstateWebApp.Services.Roles;
-using RealEstateWebApp.ViewModels.Roles;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using static RealEstateWebApp.ErrorConstants;
-
-namespace RealEstateWebApp.Controllers
+using static RealEstateWebApp.WebConstants;
+namespace RealEstateWebApp.Areas.Admin.Controllers
 {
+    [Area(ManagerRoleName)]
+    [Authorize(Roles = ManagerRoleName)]
     public class RolesController : Controller
     {
         private readonly IRoleService roleService;
@@ -16,12 +18,10 @@ namespace RealEstateWebApp.Controllers
         public RolesController(IRoleService _roleService)
             => roleService = _roleService;
 
-        [Authorize(Roles = "Manager")]
         public IActionResult CreateRole()
             => View();
 
         [HttpPost]
-        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> CreateRole(CreateRoleViewModel model)
         {
             if (!ModelState.IsValid)
@@ -34,13 +34,11 @@ namespace RealEstateWebApp.Controllers
             return RedirectToAction("AllRoles", "Roles");
         }
 
-        [Authorize(Roles = "Manager")]
         public IActionResult AllRoles()
         {
             return View(roleService.AllRoles());
         }
 
-        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> EditRole(string id)
         {
             try
@@ -55,11 +53,10 @@ namespace RealEstateWebApp.Controllers
                 ViewData["ErrorMessage"] = aex.Message;
                 return View("Error");
             }
-            
+
         }
 
         [HttpPost]
-        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> EditRole(EditRoleViewModel model)
         {
 
@@ -74,7 +71,6 @@ namespace RealEstateWebApp.Controllers
 
         }
 
-        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> EditUsersInRole(string roleId)
         {
             ViewData["RoleId"] = roleId;
@@ -91,11 +87,10 @@ namespace RealEstateWebApp.Controllers
                 ViewData["ErrorMessage"] = aex.Message;
                 return View("Error");
             }
-            
+
         }
 
         [HttpPost]
-        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> EditUsersInRole(List<UserRoleViewModel> model, string roleId)
         {
             if (!ModelState.IsValid)
@@ -114,7 +109,6 @@ namespace RealEstateWebApp.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> DeleteRole(string id)
         {
             try

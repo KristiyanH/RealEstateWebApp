@@ -1,4 +1,4 @@
-﻿using RealEstateWebApp.ViewModels.Users;
+﻿using RealEstateWebApp.Areas.Manager.Models.Users;
 using System.Collections.Generic;
 
 namespace RealEstateWebApp.Services.Users

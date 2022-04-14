@@ -44,6 +44,7 @@ namespace RealEstateWebApp.Services.Bookings
 
             var booking = new Booking
             {
+                Client = client,
                 ClientId = client.Id,
                 Description = model.Description,
                 PropertyId = propertyId,
@@ -62,6 +63,32 @@ namespace RealEstateWebApp.Services.Bookings
                 .ToList();
 
             return bookings;
+        }
+
+        public EditBookingFormModel EditBookingGet(int id)
+        {
+            var booking = data
+                .Bookings.Find(id);
+
+            var client = data.Clients.FirstOrDefault(x => x.Id == booking.ClientId);
+
+            if (booking == null)
+            {
+                throw new ArgumentException($"Booking with id: {id} does not exist.");
+            }
+
+
+            var bookingModel = new EditBookingFormModel()
+            {
+                BookingId = booking.Id,
+                ClientEmail = client.Email,
+                ClientFullName = client.FullName,
+                ClientPhone = client.PhoneNumber,
+                Description = booking.Description,
+                VisitDate = booking.VisitDate.ToString("dd.MM.yyyy HH: mm")
+            };
+
+            return bookingModel;
         }
     }
 }

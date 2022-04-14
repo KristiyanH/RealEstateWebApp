@@ -1,0 +1,77 @@
+﻿@using RealEstateWebApp.ViewModels.Bookings
+@model EditBookingFormModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Role</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <partial name="_StyleSheetsPartial" />
+
+</head>
+
+<body>
+    <partial name="_TopNavPartial" />
+
+    <form method="post" class="mt-3">
+        <div class="form-group row">
+            <label asp-for="BookingId" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <input asp-for="BookingId" disabled class="form-control">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label asp-for="VisitDate" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <input asp-for="VisitDate" class="form-control">
+                <span asp-validation-for="VisitDate" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label asp-for="Description" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <input asp-for="Description" class="form-control">
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label asp-for="ClientFullName" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <input asp-for="ClientFullName" class="form-control">
+                <span asp-validation-for="ClientFullName" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label asp-for="ClientPhone" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <input asp-for="ClientPhone" class="form-control">
+                <span asp-validation-for="ClientPhone" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label asp-for="ClientEmail" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <input asp-for="ClientEmail" class="form-control">
+                <span asp-validation-for="ClientEmail" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <button type="submit" class="btn btn-primary">Update</button>
+                <a asp-action="AllBookings" class="btn btn-secondary">Cancel</a>
+            </div>
+        </div>
+
+    </form>
+</body>
+</html>

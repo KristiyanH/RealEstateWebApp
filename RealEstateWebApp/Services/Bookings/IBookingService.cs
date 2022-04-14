@@ -8,5 +8,7 @@ namespace RealEstateWebApp.Services.Bookings
         public void Book(BookVisitFormModel model, int propertyId, string userId);
 
         public List<AllBookingsViewModel> AllBookings();
+
+        public EditBookingFormModel EditBookingGet(int id);
     }
 }

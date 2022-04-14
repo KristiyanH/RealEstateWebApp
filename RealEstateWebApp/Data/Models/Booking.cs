@@ -9,7 +9,7 @@ namespace RealEstateWebApp.Data.Models
         [Required]
         public DateTime VisitDate { get; set; }
 
-        public string Description { get; init; }
+        public string Description { get; set; }
 
         [Required]
         public int PropertyId { get; init; }

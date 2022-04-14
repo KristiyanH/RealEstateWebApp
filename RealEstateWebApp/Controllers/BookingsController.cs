@@ -58,5 +58,22 @@ namespace RealEstateWebApp.Controllers
 
             return View(bookings.Where(x => x.Client.UserId == User.GetId()));
         }
+
+        [Authorize(Roles = "Manager, Employee")]
+        public IActionResult EditBooking(int id)
+        {
+            try
+            {
+                var model = bookingService.EditBookingGet(id);
+                return View(model);
+            }
+            catch (ArgumentException aex)
+            {
+                ViewData["ErrorTitle"] = ErrorTitle;
+                ViewData["ErrorMessage"] = aex.Message;
+
+                return View("Error");
+            }
+        }
     }
 }

@@ -94,6 +94,21 @@ namespace RealEstateWebApp.Controllers
             }
         }
 
+        [Authorize(Roles = "Manager, Employee")]
+        public IActionResult DeleteBooking(int bookingId)
+        {
+            try
+            {
+                bookingService.DeleteBooking(bookingId);
+                return RedirectToAction("AllBookings", "Bookings");
+            }
+            catch (ArgumentException aex)
+            {
+                ViewData["ErrorTitle"] = ErrorTitle;
+                ViewData["ErrorMessage"] = aex.Message;
 
+                return View("Error");
+            }
+        }
     }
 }

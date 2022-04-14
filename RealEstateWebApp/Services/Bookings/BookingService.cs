@@ -112,5 +112,23 @@ namespace RealEstateWebApp.Services.Bookings
 
             data.SaveChanges();
         }
+
+        public void DeleteBooking(int bookingId)
+        {
+            var booking = data
+               .Bookings
+               .Find(bookingId);
+
+            if (booking == null)
+            {
+                throw new ArgumentException($"Booking with id: {bookingId} does not exist.");
+            }
+
+            data.
+                Bookings
+                .Remove(booking);
+
+            data.SaveChanges();
+        }
     }
 }

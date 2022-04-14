@@ -1,17 +1,15 @@
-﻿namespace RealEstateWebApp.ViewModels.Bookings
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace RealEstateWebApp.ViewModels.Bookings
 {
     public class EditBookingFormModel
     {
+        [Display(Name = "Booking ID")]
         public int BookingId { get; set; }
 
+        [Display(Name = "Visit Date")]
         public string VisitDate { get; set; }
 
         public string Description { get; set; }
-
-        public string ClientFullName { get; set; }
-
-        public string ClientPhone { get; set; }
-
-        public string ClientEmail { get; set; }
     }
 }

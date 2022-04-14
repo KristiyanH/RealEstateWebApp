@@ -50,7 +50,7 @@
                             @if(User.IsManager() || User.IsEmployee())
                             {
                                 <form asp-action="DeleteBooking" asp-route-id="@booking.BookingId" method="post">
-                                <a class="btn btn-primary" asp-action="EditBooking" asp-controller="Bookings" asp-route-id="@booking.BookingId">Edit</a>
+                                <a class="btn btn-primary" asp-action="EditBooking" asp-controller="Bookings" asp-route-bookingId="@booking.BookingId">Edit</a>
 
                                 <span id="confirmDeleteSpan_@booking.BookingId" style="display:none">
                                     <h5>Are you sure you want to delete this booking?</h5>

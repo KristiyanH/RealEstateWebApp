@@ -65,30 +65,52 @@ namespace RealEstateWebApp.Services.Bookings
             return bookings;
         }
 
-        public EditBookingFormModel EditBookingGet(int id)
+        public EditBookingFormModel EditBookingGet(int bookingId)
         {
             var booking = data
-                .Bookings.Find(id);
+                .Bookings.Find(bookingId);
 
             var client = data.Clients.FirstOrDefault(x => x.Id == booking.ClientId);
 
             if (booking == null)
             {
-                throw new ArgumentException($"Booking with id: {id} does not exist.");
+                throw new ArgumentException($"Booking with id: {bookingId} does not exist.");
             }
 
 
             var bookingModel = new EditBookingFormModel()
             {
                 BookingId = booking.Id,
-                ClientEmail = client.Email,
-                ClientFullName = client.FullName,
-                ClientPhone = client.PhoneNumber,
                 Description = booking.Description,
-                VisitDate = booking.VisitDate.ToString("dd.MM.yyyy HH: mm")
+                VisitDate = booking.VisitDate.ToString("dd.MM.yyyy HH:mm")
             };
 
             return bookingModel;
+        }
+
+        public void EditBookingPost(EditBookingFormModel model)
+        {
+            var booking = data
+                .Bookings
+                .Find(model.BookingId);
+
+            if (booking == null)
+            {
+                throw new ArgumentException($"Booking with id: {model.BookingId} does not exist.");
+            }
+
+            DateTime date;
+
+            DateTime.TryParseExact(
+                model.VisitDate, "dd.MM.yyyy HH:mm",
+                CultureInfo.InvariantCulture,
+                DateTimeStyles.None,
+                out date);
+
+            booking.VisitDate = date;
+            booking.Description = model.Description;
+
+            data.SaveChanges();
         }
     }
 }

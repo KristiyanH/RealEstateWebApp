@@ -15,13 +15,13 @@ namespace RealEstateWebApp.Data.Models
 
         [Required]
         [MaxLength(NameMaxValue)]
-        public string FullName { get; init; }
+        public string FullName { get; set; }
 
-        public string PhoneNumber { get; init; }
+        public string PhoneNumber { get; set; }
 
         [Required]
         [EmailAddress]
-        public string Email { get; init; }
+        public string Email { get; set; }
 
         public string UserId { get; init; }
 

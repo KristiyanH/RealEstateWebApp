@@ -60,11 +60,11 @@ namespace RealEstateWebApp.Controllers
         }
 
         [Authorize(Roles = "Manager, Employee")]
-        public IActionResult EditBooking(int id)
+        public IActionResult EditBooking(int bookingId)
         {
             try
             {
-                var model = bookingService.EditBookingGet(id);
+                var model = bookingService.EditBookingGet(bookingId);
                 return View(model);
             }
             catch (ArgumentException aex)
@@ -75,5 +75,25 @@ namespace RealEstateWebApp.Controllers
                 return View("Error");
             }
         }
+
+        [Authorize(Roles = "Manager, Employee")]
+        [HttpPost]
+        public IActionResult EditBooking(EditBookingFormModel model)
+        {
+            try
+            {
+                bookingService.EditBookingPost(model);
+                return RedirectToAction("AllBookings", "Bookings");
+            }
+            catch (ArgumentException aex)
+            {
+                ViewData["ErrorTitle"] = ErrorTitle;
+                ViewData["ErrorMessage"] = aex.Message;
+
+                return View("Error");
+            }
+        }
+
+
     }
 }

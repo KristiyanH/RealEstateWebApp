@@ -7,7 +7,9 @@
 This is a starter template page. Use this page to start your new project from
 scratch. This page gets rid of all links and provides the needed markup only.
 -->
-<html lang="en">
+@if(User.IsManager() || User.IsEmployee())
+{
+    <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -101,4 +103,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="~/plugins/toastr/toastr.min.js"></script>
     @await RenderSectionAsync("Scripts", false)
 </body>
-</html>
+    </html>
+}
+else
+{
+    <html lang="en">
+        <head>
+    @await RenderSectionAsync("Head", false)
+</head>
+<body>
+    @RenderBody();
+    @await RenderSectionAsync("Scripts", false);
+</body>
+    </html>
+}
+

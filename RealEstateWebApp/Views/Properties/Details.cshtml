@@ -56,10 +56,31 @@
                             </div>
                             <p>@Model.Description</p>
                         </div>
-                        <a asp-controller="Bookings" asp-action="Book" asp-route-propertyId="@Model.Id" class="btn btn-primary btn-sm" style="background-color:green;border-color:green">Visit</a>
+                        <div>
+                            <a asp-controller="Bookings" asp-action="Book" asp-route-propertyId="@Model.Id" class="btn btn-primary btn-sm" style="background-color:green;border-color:green">Visit</a>
+                        </div>
+                        
+                        @if (User.IsInRole("Manager") || User.IsInRole("Employee"))
+                            {
+                                <form asp-action="Remove" asp-route-id="@Model.Id" method="post">
 
+                                    <span id="confirmDeleteSpan_@Model.Id" style="display:none">
+                                        <h5>Are you sure you want to remove this Property?</h5>
+                                        <button type="submit" class="btn btn-primary btn-sm">Yes</button>
+                                        <a href="#" class="btn btn-danger btn-sm"
+                                   onclick="confirmDelete('@Model.Id', false); return false;">No</a>
+                                    </span>
+
+                                    <span id="deleteSpan_@Model.Id">
+                                        <a href="#" class="btn btn-danger btn-sm"
+                                   onclick="confirmDelete('@Model.Id', true); return false;">Delete</a>
+                                    </span>
+                                </form>
+                            }
                     </div>
+
                 </div> <!-- .col-md-8 -->
+
                 <div class="col-lg-4 sidebar ftco-animate">
                     <div class="sidebar-box ftco-animate">
                         <div class="categories">
@@ -83,6 +104,7 @@
 
     @section Scripts{
     <partial name="_TemplateScriptsPartial" />
+    <script src="~/js/customScripts/CustomScript.js"></script>
     }
 
 </body>

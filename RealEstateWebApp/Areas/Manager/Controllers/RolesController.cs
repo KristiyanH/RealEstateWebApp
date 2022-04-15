@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using static RealEstateWebApp.ErrorConstants;
 using static RealEstateWebApp.WebConstants;
-namespace RealEstateWebApp.Areas.Admin.Controllers
+namespace RealEstateWebApp.Areas.Manager.Controllers
 {
     [Area(ManagerRoleName)]
     [Authorize(Roles = ManagerRoleName)]

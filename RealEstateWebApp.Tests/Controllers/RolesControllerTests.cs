@@ -1,10 +1,10 @@
-﻿using MyTested.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using MyTested.AspNetCore.Mvc;
 using RealEstateWebApp.Areas.Manager.Controllers;
 using RealEstateWebApp.Areas.Manager.Models.Roles;
-using static RealEstateWebApp.Tests.Data.Roles;
-using Xunit;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Identity;
+using Xunit;
+using static RealEstateWebApp.Tests.Data.Roles;
 using static RealEstateWebApp.Tests.Data.Users;
 namespace RealEstateWebApp.Tests.Controllers
 {

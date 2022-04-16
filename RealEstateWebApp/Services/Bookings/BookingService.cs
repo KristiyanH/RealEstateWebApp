@@ -70,13 +70,17 @@ namespace RealEstateWebApp.Services.Bookings
             var booking = data
                 .Bookings.Find(bookingId);
 
-            var client = data.Clients.FirstOrDefault(x => x.Id == booking.ClientId);
-
             if (booking == null)
             {
                 throw new ArgumentException($"Booking with id: {bookingId} does not exist.");
             }
 
+            var client = data.Clients.FirstOrDefault(x => x.Id == booking.ClientId);
+
+            if (client == null)
+            {
+                throw new ArgumentException($"Client does not exist.");
+            }
 
             var bookingModel = new EditBookingFormModel()
             {

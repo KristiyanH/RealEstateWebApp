@@ -14,7 +14,7 @@
     <a href="https://github.com/KristiyanH/RealEstateWebApp"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/KristiyanH/RealEstateWebApp">View Demo</a>
+    <a href="https://royalestate.azurewebsites.net/">View Demo</a>
     ·
     <a href="https://github.com/KristiyanH/RealEstateWebApp/issues">Report Bug</a>
     ·
@@ -46,6 +46,10 @@
 ## About The Project
 
 RoyalEstate is a web project designed for educational purposes only.
+
+<li>Customer login : testemail@gmail.com p: 123456</li>
+<li>Manager login : kristiyan.a.hristov@gmail.com p: 123456</li>
+<li>Employee login : cahristov@gmail.com p: 123456</li>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

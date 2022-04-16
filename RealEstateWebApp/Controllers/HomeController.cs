@@ -27,29 +27,33 @@ namespace RealEstateWebApp.Controllers
 
         public IActionResult Index()
         {
-            var properties = cache.Get<List<Property>>(propertiesCacheKey);
+            var properties = data.Properties.ToList();
+
+            var addresses = data.Addresses.ToList();
+
+            //var properties = cache.Get<List<Property>>(propertiesCacheKey);
             
-            if (properties == null)
-            {
-                properties = data.Properties.ToList();
+            ////if (properties == null)
+            ////{
+            ////    properties = data.Properties.ToList();
 
-                var cacheOptions = new MemoryCacheEntryOptions()
-                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(15));
+            ////    var cacheOptions = new MemoryCacheEntryOptions()
+            ////        .SetAbsoluteExpiration(TimeSpan.FromMinutes(15));
 
-                cache.Set(propertiesCacheKey, properties);
-            }
+            ////    cache.Set(propertiesCacheKey, properties);
+            ////}
 
-            var addresses = cache.Get<List<Address>>(addressesCacheKey);
+            ////var addresses = cache.Get<List<Address>>(addressesCacheKey);
 
-            if (addresses == null)
-            {
-                addresses = data.Addresses.ToList();
+            ////if (addresses == null)
+            ////{
+            ////    addresses = data.Addresses.ToList();
 
-                var cacheOptions = new MemoryCacheEntryOptions()
-                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(15));
+            ////    var cacheOptions = new MemoryCacheEntryOptions()
+            ////        .SetAbsoluteExpiration(TimeSpan.FromMinutes(15));
 
-                cache.Set(addressesCacheKey, addresses);
-            }
+            ////    cache.Set(addressesCacheKey, addresses);
+            ////}
 
             var mappedProperties = mapper.Map<List<PropertyIndexViewModel>>(properties);
 

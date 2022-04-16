@@ -47,6 +47,9 @@
 
 RoyalEstate is a web project designed for educational purposes only.
 
+Customer login : testemail@gmail.com p: 123456
+Manager login : kristiyan.a.hristov@gmail.com p: 123456
+Employee login : cahristov@gmail.com p: 123456
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 

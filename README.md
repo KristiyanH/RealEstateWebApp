@@ -37,6 +37,8 @@
     <li><a href="#usage">Usage</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#database">Database</a></li>
+     <li><a href="#tests">Code Coverage</a></li>
+     <li><a href="#api">API</a></li>
   </ol>
 </details>
 

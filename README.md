@@ -90,7 +90,7 @@ When you are logged in as an Employee, you can remove properties, see your tasks
 
 Email - kristiyan.a.hristov@gmail.com
 
-Project Link: [https://github.com/KristiyanH/RealEstateWebApp](https://github.com/KristiyanH/RealEstateWebApp)
+Project Link: [https://royalestate.azurewebsites.net/](https://royalestate.azurewebsites.net/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

@@ -3,6 +3,7 @@ using RealEstateWebApp.Controllers;
 using RealEstateWebApp.Data.Models;
 using RealEstateWebApp.ViewModels.Bookings;
 using Xunit;
+using static RealEstateWebApp.Tests.Data.Bookings;
 using static RealEstateWebApp.Tests.Data.Properties;
 
 namespace RealEstateWebApp.Tests.Controllers
@@ -73,14 +74,7 @@ namespace RealEstateWebApp.Tests.Controllers
            => MyController<BookingsController>
             .Instance(c => c.WithData(TenProperties())
             .AndAlso()
-            .WithData(new Client
-            {
-                Email = "kristiyan.a.hristov@gmail.com",
-                FullName = "Kristiyan Hristov",
-                Id = 1,
-                PhoneNumber = "0876065511",
-                UserId = "3f165359-3f79-4fa0-aefb-c030ac5ebd87"
-            })
+            .WithData(Client())
             .AndAlso()
             .WithData(new Booking
             {

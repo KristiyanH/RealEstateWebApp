@@ -1,5 +1,4 @@
 ﻿using MyTested.AspNetCore.Mvc;
-using RealEstateWebApp.Areas.Manager.Controllers;
 using RealEstateWebApp.Controllers.Api;
 using RealEstateWebApp.Data.Models;
 using System.Collections.Generic;

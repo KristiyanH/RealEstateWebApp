@@ -37,6 +37,8 @@
     <li><a href="#usage">Usage</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#database">Database</a></li>
+     <li><a href="#tests">Code Coverage</a></li>
+     <li><a href="#api">API</a></li>
   </ol>
 </details>
 
@@ -53,7 +55,10 @@ RoyalEstate is a web project designed for educational purposes only.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
+## API
 
+<li>Properties: https://royalestate.azurewebsites.net/api/properties</li>
+<li>Property Details with example id: https://royalestate.azurewebsites.net/api/properties/2
 
 ### Built With
 
@@ -85,12 +90,16 @@ When you are logged in as an Employee, you can remove properties, see your tasks
 
 <img src="https://fv9-3.failiem.lv/thumb_show.php?i=c7fgnt7hg&view" alt="Logo" width="1080" height="720">
 
+## Tests
+
+<img src="https://fv9-6.failiem.lv/thumb_show.php?i=6c4q5w6k7&view" alt="Logo" width="1080" height="720">
+
 <!-- CONTACT -->
 ## Contact
 
 Email - kristiyan.a.hristov@gmail.com
 
-Project Link: [https://github.com/KristiyanH/RealEstateWebApp](https://github.com/KristiyanH/RealEstateWebApp)
+Project Link: [https://royalestate.azurewebsites.net/](https://royalestate.azurewebsites.net/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

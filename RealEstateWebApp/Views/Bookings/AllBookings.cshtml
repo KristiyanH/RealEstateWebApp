@@ -31,7 +31,9 @@
     <section class="ftco-section bg-light">
         <div class="container">
             <div class="row d-flex">
-                @foreach (var booking in Model)
+                @if(Model.Any())
+                {
+                    @foreach (var booking in Model)
                 {
                     <div class="col-md-3 d-flex ftco-animate">
                         <div class="blog-entry align-self-stretch">
@@ -67,7 +69,13 @@
                             }
                         </div>
                     </div>
+                    }
                 }
+                else
+                {
+                    <h3>No bookings yet.</h3>
+                }
+
             </div>
         </div>
     </section>

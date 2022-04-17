@@ -27,33 +27,33 @@ namespace RealEstateWebApp.Controllers
 
         public IActionResult Index()
         {
-            var properties = data.Properties.ToList();
+            //var properties = data.Properties.ToList();
 
-            var addresses = data.Addresses.ToList();
+            //var addresses = data.Addresses.ToList();
 
-            //var properties = cache.Get<List<Property>>(propertiesCacheKey);
-            
-            ////if (properties == null)
-            ////{
-            ////    properties = data.Properties.ToList();
+            var properties = cache.Get<List<Property>>(propertiesCacheKey);
 
-            ////    var cacheOptions = new MemoryCacheEntryOptions()
-            ////        .SetAbsoluteExpiration(TimeSpan.FromMinutes(15));
+            if (properties == null)
+            {
+                properties = data.Properties.ToList();
 
-            ////    cache.Set(propertiesCacheKey, properties);
-            ////}
+                var cacheOptions = new MemoryCacheEntryOptions()
+                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(15));
 
-            ////var addresses = cache.Get<List<Address>>(addressesCacheKey);
+                cache.Set(propertiesCacheKey, properties);
+            }
 
-            ////if (addresses == null)
-            ////{
-            ////    addresses = data.Addresses.ToList();
+            var addresses = cache.Get<List<Address>>(addressesCacheKey);
 
-            ////    var cacheOptions = new MemoryCacheEntryOptions()
-            ////        .SetAbsoluteExpiration(TimeSpan.FromMinutes(15));
+            if (addresses == null)
+            {
+                addresses = data.Addresses.ToList();
 
-            ////    cache.Set(addressesCacheKey, addresses);
-            ////}
+                var cacheOptions = new MemoryCacheEntryOptions()
+                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(15));
+
+                cache.Set(addressesCacheKey, addresses);
+            }
 
             var mappedProperties = mapper.Map<List<PropertyIndexViewModel>>(properties);
 

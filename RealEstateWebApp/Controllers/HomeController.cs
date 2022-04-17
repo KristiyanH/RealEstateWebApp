@@ -27,10 +27,6 @@ namespace RealEstateWebApp.Controllers
 
         public IActionResult Index()
         {
-            //var properties = data.Properties.ToList();
-
-            //var addresses = data.Addresses.ToList();
-
             var properties = cache.Get<List<Property>>(propertiesCacheKey);
 
             if (properties == null)

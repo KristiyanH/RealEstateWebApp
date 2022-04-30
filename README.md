@@ -4,6 +4,7 @@
 <br />
 <div align="center">
    <a href="https://github.com/github_username/repo_name">
+     ![ScreenShot](/images/about.jpg)
     <img src="https://fv9-5.failiem.lv/thumb_show.php?i=j32mezuh5&view" alt="Logo" width="1500" height="450">
 </a>
 <h3 align="center">Royal Estate</h3>

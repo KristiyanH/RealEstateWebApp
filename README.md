@@ -88,11 +88,11 @@ When you are logged in as an Employee, you can remove properties, see your tasks
 
 ## Database
 
-<img src="https://fv9-3.failiem.lv/thumb_show.php?i=c7fgnt7hg&view" alt="Logo" width="1080" height="720">
+<img src="https://raw.githubusercontent.com/KristiyanH/RealEstateWebApp/master/RealEstateWebApp/wwwroot/images/Database.png">
 
 ## Tests
 
-<img src="https://fv9-6.failiem.lv/thumb_show.php?i=6c4q5w6k7&view" alt="Logo" width="1080" height="720">
+<img src="https://raw.githubusercontent.com/KristiyanH/RealEstateWebApp/master/RealEstateWebApp/wwwroot/images/CodeCoverage.png">
 
 <!-- CONTACT -->
 ## Contact

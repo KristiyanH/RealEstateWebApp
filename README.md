@@ -80,7 +80,7 @@ RoyalEstate is a web project designed for educational purposes only.
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-RoyalEstate is a user friendly Web Application. It contains Manager, Employee and default user Roles. As a customer you can list properties for sale, book visits for properties, see all available listings, search properties by type or address, view your own bookings and more.
+RoyalEstate is a user friendly Web Application designed for real estate sales. It contains Manager, Employee and default user Roles. As a customer you can list properties for sale, book visits for properties, see all available listings, search properties by type or address, view your own bookings and more.
 When you are logged in as a Manager, you can manage other user's roles, add new roles, set tasks to employees and edit/remove them, view all available bookings and manage them, you can also see all registered users and do everything that an employee can.
 When you are logged in as an Employee, you can remove properties, see your tasks and complete them, see all bookings and manage them and everything that a default user can do.
 

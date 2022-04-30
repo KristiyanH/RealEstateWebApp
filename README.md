@@ -4,7 +4,7 @@
 <br />
 <div align="center">
    <a href="https://github.com/github_username/repo_name">
-    <img src="https://raw.githubusercontent.com/KristiyanH/RealEstateWebApp/master/RealEstateWebApp/wwwroot/images/HomeScreenshot.png" alt="Logo" width="1500" height="450">
+    <img src="https://raw.githubusercontent.com/KristiyanH/RealEstateWebApp/master/RealEstateWebApp/wwwroot/images/HomeScreenshot.png" alt="Logo">
 </a>
 <h3 align="center">Royal Estate</h3>
 

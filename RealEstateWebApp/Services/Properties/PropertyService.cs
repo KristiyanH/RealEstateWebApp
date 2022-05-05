@@ -73,7 +73,7 @@ namespace RealEstateWebApp.Services.Properties
             {
                 propertiesQuery = propertiesQuery.Where(x =>
                 x.PropertyType.Name.ToLower().Contains(query.SearchTerm.ToLower()) ||
-                x.Address.ToString().ToLower().Contains(query.SearchTerm.ToLower()));
+                x.Address.AddressText.ToLower().Contains(query.SearchTerm.ToLower()));
             }
 
             var totalProperties = propertiesQuery.Count();

@@ -16,12 +16,10 @@ namespace RealEstateWebApp.ViewModels.Properties
 
         public int CurrentPage { get; init; } = 1;
 
-        [Display(Name = "Search")]
+        [Display(Name = "Search by text")]
         public string SearchTerm { get; init; }
 
         public int TotalProperties { get; set; }
-
-        public PropertySorting Sorting { get; init; }
 
         public IEnumerable<string> Types { get; set; }
 

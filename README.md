@@ -55,7 +55,7 @@ RoyalEstate is a web project designed for educational purposes only.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-## API
+## API (Hosting expired)
 
 <li>Properties: https://royalestate.azurewebsites.net/api/properties</li>
 <li>Property Details with example id: https://royalestate.azurewebsites.net/api/properties/2

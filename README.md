@@ -14,7 +14,7 @@
     <a href="https://github.com/KristiyanH/RealEstateWebApp"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://royalestate.azurewebsites.net/">View Demo</a>
+    <a href="https://royalestate.azurewebsites.net/">View Demo (Hosting expired)</a>
     ·
     <a href="https://github.com/KristiyanH/RealEstateWebApp/issues">Report Bug</a>
     ·

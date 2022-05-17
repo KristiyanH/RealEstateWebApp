@@ -7,7 +7,6 @@
     <img src="https://raw.githubusercontent.com/KristiyanH/RealEstateWebApp/master/RealEstateWebApp/wwwroot/images/HomeScreenshot.png" alt="Logo">
 </a>
 <h3 align="center">Royal Estate</h3>
-<a href="https://rawcdn.githack.com/KristiyanH/RealEstateWebApp/d0be6ba3ce4f5199216f551f04782f932a77907a/RealEstateWebApp/Views/Home/Index.cshtml">Demo</a>
   <p align="center">
     My first personal Web Project 
     <br />

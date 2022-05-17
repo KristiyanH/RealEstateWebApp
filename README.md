@@ -55,10 +55,10 @@ RoyalEstate is a web project designed for educational purposes only.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-## API (Hosting expired)
+## API
 
-<li>Properties: https://royalestate.azurewebsites.net/api/properties</li>
-<li>Property Details with example id: https://royalestate.azurewebsites.net/api/properties/2
+<li>Properties: https://royalestate.azurewebsites.net/api/properties</li> (Hosting expired) 
+<li>Property Details with example id: https://royalestate.azurewebsites.net/api/properties/2 (Hosting expired)
 
 ### Built With
 

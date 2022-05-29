@@ -7,14 +7,13 @@
     <img src="https://raw.githubusercontent.com/KristiyanH/RealEstateWebApp/master/RealEstateWebApp/wwwroot/images/HomeScreenshot.png" alt="Logo">
 </a>
 <h3 align="center">Royal Estate</h3>
-
   <p align="center">
     My first personal Web Project 
     <br />
     <a href="https://github.com/KristiyanH/RealEstateWebApp"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://royalestate.azurewebsites.net/">View Demo</a>
+    <a href="https://royalestate.azurewebsites.net/">View Demo (Hosting expired)</a>
     ·
     <a href="https://github.com/KristiyanH/RealEstateWebApp/issues">Report Bug</a>
     ·
@@ -57,8 +56,8 @@ RoyalEstate is a web project designed for educational purposes only.
 
 ## API
 
-<li>Properties: https://royalestate.azurewebsites.net/api/properties</li>
-<li>Property Details with example id: https://royalestate.azurewebsites.net/api/properties/2
+<li>Properties: https://royalestate.azurewebsites.net/api/properties</li> (Hosting expired) 
+<li>Property Details with example id: https://royalestate.azurewebsites.net/api/properties/2 (Hosting expired)
 
 ### Built With
 

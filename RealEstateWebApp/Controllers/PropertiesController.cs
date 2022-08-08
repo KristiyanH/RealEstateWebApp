@@ -39,7 +39,7 @@ namespace RealEstateWebApp.Controllers
 
             propertyService.Add(property);
 
-            return RedirectToAction(nameof(All));
+            return RedirectToAction(nameof(All));//testcommit
         }
 
         public IActionResult All([FromQuery] AllPropertiesQueryModel query)

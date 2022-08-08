@@ -19,14 +19,6 @@ namespace RealEstateWebApp.Tests.Controllers
             .WithModelOfType<IndexViewModel>());
 
         [Fact]
-        public void PrivacyShouldReturnView()
-            => MyController<HomeController>
-            .Instance()
-            .Calling(c => c.Privacy())
-            .ShouldReturn()
-            .View();
-
-        [Fact]
         public void AboutShouldReturnView()
             => MyController<HomeController>
             .Instance()

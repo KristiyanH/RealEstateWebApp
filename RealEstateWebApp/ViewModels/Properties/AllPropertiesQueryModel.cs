@@ -25,6 +25,6 @@ namespace RealEstateWebApp.ViewModels.Properties
 
         public IEnumerable<string> Addresses { get; set; }
 
-        public IEnumerable<ListPropertyViewModel> Properties { get; set; }
+        public IEnumerable<PropertyViewModel> Properties { get; set; }
     }
 }

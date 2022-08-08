@@ -14,9 +14,7 @@ namespace RealEstateWebApp.Controllers
         private readonly IBookingService bookingService;
 
         public BookingsController(IBookingService _bookingService)
-        {
-            bookingService = _bookingService;
-        }
+            => bookingService = _bookingService;
 
         [Authorize]
         public IActionResult Book()
@@ -26,21 +24,21 @@ namespace RealEstateWebApp.Controllers
         [Authorize]
         public IActionResult Book(BookVisitFormModel model, int propertyId)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    return View(model);
-                }
-
                 bookingService.Book(model, propertyId, User.GetId());
 
                 return RedirectToAction("Index", "Home");
             }
-            catch (Exception ex)
+            catch (ArgumentException aex)
             {
                 ViewData["ErrorTitle"] = ErrorTitle;
-                ViewData["ErrorMessage"] = ex.Message;
+                ViewData["ErrorMessage"] = aex.Message;
 
                 return View("Error");
             }
@@ -64,13 +62,13 @@ namespace RealEstateWebApp.Controllers
         {
             try
             {
-                var model = bookingService.EditBookingGet(bookingId);
-                return View(model);
+                var bookingModel = bookingService.EditBookingGet(bookingId);
+                return View(bookingModel);
             }
-            catch (ArgumentException aex)
+            catch (ArgumentNullException anex)
             {
                 ViewData["ErrorTitle"] = ErrorTitle;
-                ViewData["ErrorMessage"] = aex.Message;
+                ViewData["ErrorMessage"] = anex.Message;
 
                 return View("Error");
             }
@@ -83,7 +81,14 @@ namespace RealEstateWebApp.Controllers
             try
             {
                 bookingService.EditBookingPost(model);
-                return RedirectToAction("AllBookings", "Bookings");
+                return RedirectToAction(nameof(AllBookings));
+            }
+            catch (ArgumentNullException anex)
+            {
+                ViewData["ErrorTitle"] = ErrorTitle;
+                ViewData["ErrorMessage"] = anex.Message;
+
+                return View("Error");
             }
             catch (ArgumentException aex)
             {
@@ -100,12 +105,12 @@ namespace RealEstateWebApp.Controllers
             try
             {
                 bookingService.DeleteBooking(bookingId);
-                return RedirectToAction("AllBookings", "Bookings");
+                return RedirectToAction(nameof(AllBookings));
             }
-            catch (ArgumentException aex)
+            catch (ArgumentNullException anex)
             {
                 ViewData["ErrorTitle"] = ErrorTitle;
-                ViewData["ErrorMessage"] = aex.Message;
+                ViewData["ErrorMessage"] = anex.Message;
 
                 return View("Error");
             }

@@ -20,16 +20,6 @@ namespace RealEstateWebApp.Tests.Pipeline
             .WithModelOfType<IndexViewModel>()));
 
         [Fact]
-        public void PrivacyShouldReturnView()
-            => MyMvc
-            .Pipeline()
-            .ShouldMap("/Home/Privacy")
-            .To<HomeController>(c => c.Privacy())
-            .Which()
-            .ShouldReturn()
-            .View();
-
-        [Fact]
         public void AboutShouldReturnView()
             => MyMvc
             .Pipeline()

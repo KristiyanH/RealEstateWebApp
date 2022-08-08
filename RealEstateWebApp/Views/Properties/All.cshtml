@@ -109,8 +109,8 @@
                                 <span class="status sale">Sale</span>
                                 <div class="d-flex">
                                     <div class="one">
-                                        <h3><a href="property-single.html">@property.Address.AddressText</a></h3>
-                                        <p>@property.PropertyType.Name</p>
+                                        <h3><a href="property-single.html">@property.Address</a></h3>
+                                        <p>@property.PropertyType</p>
                                     </div>
                                     <div class="two">
                                         <span class="price">@property.Price.ToString("f0")€</span>
@@ -144,7 +144,7 @@
                 }
             </div>
 
-            <!--pageing start-->
+            <!--paging start-->
             @{
                 var totalPages = Math.Ceiling((double)Model.TotalProperties / AllPropertiesQueryModel.PropertiesPerPage);
             }
@@ -173,7 +173,7 @@
                     </div>
                 </div>
             </div>
-            <!--pageing end-->
+            <!--paging end-->
         </div>
     </section>
 

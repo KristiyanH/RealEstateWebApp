@@ -14,13 +14,6 @@ namespace RealEstateWebApp.Tests.Routing
             .To<HomeController>(c => c.Index());
 
         [Fact]
-        public void PrivacyRouteShouldBeMapped()
-            => MyRouting
-            .Configuration()
-            .ShouldMap("/Home/Privacy")
-            .To<HomeController>(c => c.Privacy());
-
-        [Fact]
         public void AboutRouteShouldBeMapped()
             => MyRouting
             .Configuration()

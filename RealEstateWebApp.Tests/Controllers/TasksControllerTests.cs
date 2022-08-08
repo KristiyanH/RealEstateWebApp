@@ -44,12 +44,13 @@ namespace RealEstateWebApp.Tests.Controllers
             .RestrictingForAuthorizedRequests())
             .AndAlso()
             .ShouldReturn()
-            .RedirectToAction("MyTasks", "Tasks");
+            .RedirectToAction("MyTasks");
 
         [Fact]
         public void MyTasksShouldBeForAuthorizedUsersAndReturnViewWithCorrectModel()
             => MyController<TasksController>
             .Instance()
+            .WithUser()
             .WithData(TenTasks())
             .Calling(c => c.MyTasks())
             .ShouldHave()
@@ -114,6 +115,6 @@ namespace RealEstateWebApp.Tests.Controllers
                 Description = "New valid description"
             }))
             .ShouldReturn()
-            .RedirectToAction("MyTasks", "Tasks");
+            .RedirectToAction("MyTasks");
     }
 }

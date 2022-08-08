@@ -6,6 +6,7 @@ using RealEstateWebApp.ViewModels.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static RealEstateWebApp.ErrorConstants;
 
 namespace RealEstateWebApp.Services.Properties
 {
@@ -24,11 +25,7 @@ namespace RealEstateWebApp.Services.Properties
         public IEnumerable<PropertyTypeViewModel> GetPropertyTypes()
             => data
             .PropertyTypes
-            .Select(t => new PropertyTypeViewModel
-            {
-                Id = t.Id,
-                Name = t.Name
-            }).ToList();
+            .ProjectTo<PropertyTypeViewModel>(mapper.ConfigurationProvider);
 
         public void Add(AddPropertyFormModel property)
         {
@@ -36,26 +33,102 @@ namespace RealEstateWebApp.Services.Properties
 
             if (address == null)
             {
-                address = new Address()
+                data.Addresses.Add(new Address
                 {
                     AddressText = property.AddressText
-                };
-
-                data.Addresses.Add(address);
+                });
             }
 
             var newProperty = mapper.Map<Property>(property);
-            newProperty.PropertyType = data.PropertyTypes.FirstOrDefault(x => x.Id == property.PropertyTypeId);
-            newProperty.PropertyTypeId = data.PropertyTypes.FirstOrDefault(x => x.Id == property.PropertyTypeId).Id;
             newProperty.AddressId = address.Id;
-
             data.Properties.Add(newProperty);
+
             address.Properties.Add(newProperty);
 
             data.SaveChanges();
         }
 
         public AllPropertiesQueryModel All(AllPropertiesQueryModel query)
+        {
+            var propertiesQuery = GetPropertiesQuery(query);
+
+            var properties = propertiesQuery
+                .Skip((query.CurrentPage - 1) * AllPropertiesQueryModel.PropertiesPerPage)
+                .Take(AllPropertiesQueryModel.PropertiesPerPage)
+                .ProjectTo<PropertyViewModel>(mapper.ConfigurationProvider);
+
+            var propertyTypes = data
+                .PropertyTypes
+                .Select(x => x.Name)
+                .Distinct()
+                .OrderBy(x => x)
+                .ToList();
+
+            var propertyAddresses = data
+                .Addresses
+                .Select(x => x.AddressText)
+                .Distinct()
+                .OrderBy(x => x)
+                .ToList();
+
+            query.TotalProperties = propertiesQuery.Count();
+            query.Properties = properties;
+            query.Types = propertyTypes;
+            query.Addresses = propertyAddresses;
+            return query;
+        }
+
+        public void Remove(int Id)
+        {
+            var property = GetProperty(Id);
+
+            data.Properties.Remove(property);
+            data.SaveChanges();
+        }
+
+        public DetailsPropertyViewModel Details(int id)
+        {
+            var property = GetProperty(id);
+
+            var propertyDetailsModel = mapper.Map<DetailsPropertyViewModel>(property);
+
+            return propertyDetailsModel;
+        }
+
+        public IEnumerable<Property> GetPropertiesList()
+        {
+            return data
+                .Properties
+                .ToList();
+        }
+
+        public bool DoesPropertyTypeExists(int propertyTypeId)
+        {
+            return data.PropertyTypes.Any(x => x.Id == propertyTypeId);
+        }
+
+        private Property GetProperty(int propertyId)
+        {
+            var property = data
+                .Properties
+                .FirstOrDefault(x => x.Id == propertyId);
+
+            if (property == null)
+            {
+                throw new ArgumentNullException(string.Format(NotExistingPropertyErrorMessage, propertyId));
+            }
+
+            return property;
+        }
+
+        public IEnumerable<Address> GetAddressesList()
+        {
+            return data
+                .Addresses
+                .ToList();
+        }
+
+        private IQueryable<Property> GetPropertiesQuery(AllPropertiesQueryModel query)
         {
             var propertiesQuery = data.Properties.AsQueryable();
 
@@ -76,69 +149,7 @@ namespace RealEstateWebApp.Services.Properties
                 x.Address.AddressText.ToLower().Contains(query.SearchTerm.ToLower()));
             }
 
-            var totalProperties = propertiesQuery.Count();
-
-            var properties = propertiesQuery
-                .Skip((query.CurrentPage - 1) * AllPropertiesQueryModel.PropertiesPerPage)
-                .Take(AllPropertiesQueryModel.PropertiesPerPage)
-                .ProjectTo<ListPropertyViewModel>(mapper.ConfigurationProvider);
-
-            var propertyTypes = data
-                .PropertyTypes
-                .Select(x => x.Name)
-                .Distinct()
-                .OrderBy(x => x)
-                .ToList();
-
-            var propertyAddresses = data
-                .Addresses
-                .Select(x => x.AddressText)
-                .Distinct()
-                .OrderBy(x => x)
-                .ToList();
-
-            query.TotalProperties = totalProperties;
-            query.Properties = properties;
-            query.Types = propertyTypes;
-            query.Addresses = propertyAddresses;
-            return query;
-        }
-
-        public void Remove(int Id)
-        {
-            var property = data.Properties.FirstOrDefault(x => x.Id == Id);
-
-            if (property == null)
-            {
-                throw new ArgumentException($"Property with id:{Id} does not exist");
-            }
-
-            data.Properties.Remove(property);
-            data.SaveChanges();
-        }
-
-        public DetailsPropertyViewModel Details(int id)
-        {
-            var property = data.Properties.FirstOrDefault(x => x.Id == id);
-
-            if (property == null)
-            {
-                throw new ArgumentException($"Property with id:{id} does not exist");
-            }
-
-            var address = data.Addresses.FirstOrDefault(x => x.Id == property.AddressId);
-
-            var propertyType = data.PropertyTypes.FirstOrDefault(x => x.Id == property.PropertyTypeId);
-
-            var detailsModel = mapper.Map<DetailsPropertyViewModel>(property);
-
-            if (address != null && propertyType != null)
-            {
-                detailsModel.Address = address.AddressText;
-                detailsModel.PropertyType = propertyType.Name;
-            }
-
-            return detailsModel;
+            return propertiesQuery;
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace RealEstateWebApp.ViewModels.Properties
 {
-    public class ListPropertyViewModel
+    public class PropertyViewModel
     {
         public int Id { get; init; }
 
@@ -16,13 +16,9 @@ namespace RealEstateWebApp.ViewModels.Properties
 
         public int Floor { get; init; }
 
-        public int PropertyTypeId { get; set; }
+        public string PropertyType { get; set; }
 
-        public PropertyType PropertyType { get; set; }
-
-        public int AddressId { get; set; }
-
-        public Address Address { get; set; }
+        public string Address { get; set; }
 
         public decimal SquareMeters { get; init; }
     }

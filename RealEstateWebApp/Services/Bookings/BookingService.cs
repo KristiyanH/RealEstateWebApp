@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using static RealEstateWebApp.ErrorConstants;
 
 namespace RealEstateWebApp.Services.Bookings
 {
@@ -22,96 +23,49 @@ namespace RealEstateWebApp.Services.Bookings
             mapper = _mapper;
         }
 
-        public void Book(BookVisitFormModel model, int propertyId, string userId)
-        {
-            var client = new Client
-            {
-                UserId = userId,
-                Email = model.Email,
-                FullName = model.FullName,
-                PhoneNumber = model.PhoneNumber
-            };
-
-            data.Clients.Add(client);
-
-            DateTime date;
-
-            DateTime.TryParseExact(
-                model.VisitDate, "dd.MM.yyyy HH:mm",
-                CultureInfo.InvariantCulture,
-                DateTimeStyles.None,
-                out date);
-
-            var booking = new Booking
-            {
-                Client = client,
-                ClientId = client.Id,
-                Description = model.Description,
-                PropertyId = propertyId,
-                VisitDate = date
-            };
-
-            client.Bookings.Add(booking);
-            data.SaveChanges();
-        }
-
-        public List<AllBookingsViewModel> AllBookings()
-        {
-            var bookings = data
+        public List<AllBookingsViewModel> AllBookings() =>
+            data
                 .Bookings
                 .ProjectTo<AllBookingsViewModel>(mapper.ConfigurationProvider)
                 .ToList();
 
-            return bookings;
+        public void Book(BookVisitFormModel model, int propertyId, string userId)
+        {
+            EnsurePropertyExists(propertyId);
+
+            var client = data.Clients.FirstOrDefault(x => x.UserId == userId);
+
+            if (client == null)
+            {
+                client = new Client
+                {
+                    UserId = userId,
+                    Email = model.Email,
+                    FullName = model.FullName,
+                    PhoneNumber = model.PhoneNumber
+                };
+
+                data.Clients.Add(client);
+            }
+
+            AssignBookingToClient(client, model.VisitDate, model.Description, propertyId);
+            data.SaveChanges();
         }
 
         public EditBookingFormModel EditBookingGet(int bookingId)
         {
-            var booking = data
-                .Bookings.Find(bookingId);
+            var booking = GetBooking(bookingId);
 
-            if (booking == null)
-            {
-                throw new ArgumentException($"Booking with id: {bookingId} does not exist.");
-            }
-
-            var client = data.Clients.FirstOrDefault(x => x.Id == booking.ClientId);
-
-            if (client == null)
-            {
-                throw new ArgumentException($"Client does not exist.");
-            }
-
-            var bookingModel = new EditBookingFormModel()
-            {
-                BookingId = booking.Id,
-                Description = booking.Description,
-                VisitDate = booking.VisitDate.ToString("dd.MM.yyyy HH:mm")
-            };
+            var bookingModel = mapper.Map<EditBookingFormModel>(booking);
 
             return bookingModel;
         }
 
         public void EditBookingPost(EditBookingFormModel model)
         {
-            var booking = data
-                .Bookings
-                .Find(model.BookingId);
+            var booking = GetBooking(model.BookingId);
 
-            if (booking == null)
-            {
-                throw new ArgumentException($"Booking with id: {model.BookingId} does not exist.");
-            }
-
-            DateTime date;
-
-            DateTime.TryParseExact(
-                model.VisitDate, "dd.MM.yyyy HH:mm",
-                CultureInfo.InvariantCulture,
-                DateTimeStyles.None,
-                out date);
-
-            booking.VisitDate = date;
+            booking.VisitDate = ParseDate(model.VisitDate);
             booking.Description = model.Description;
 
             data.SaveChanges();
@@ -119,20 +73,67 @@ namespace RealEstateWebApp.Services.Bookings
 
         public void DeleteBooking(int bookingId)
         {
+            var booking = GetBooking(bookingId);
+
+            data
+             .Bookings
+             .Remove(booking);
+
+            data.SaveChanges();
+        }
+
+        private void EnsurePropertyExists(int propertyId)
+        {
+            var property = data
+                .Properties
+                .FirstOrDefault(x => x.Id == propertyId);
+
+            if (property == null)
+            {
+                throw new ArgumentNullException($"Property with id: {propertyId} does not exist");
+            }
+        }
+        private Booking GetBooking(int bookingId)
+        {
             var booking = data
-               .Bookings
-               .Find(bookingId);
+                            .Bookings
+                            .Find(bookingId);
 
             if (booking == null)
             {
-                throw new ArgumentException($"Booking with id: {bookingId} does not exist.");
+                throw new ArgumentNullException(string.Format(NotExistingBookingErrorMessage, bookingId));
             }
 
-            data.
-                Bookings
-                .Remove(booking);
+            return booking;
+        }
 
-            data.SaveChanges();
+        private void AssignBookingToClient(Client client, string visitDate, string description, int propertyId)
+        {
+            var date = ParseDate(visitDate);
+
+            var booking = new Booking
+            {
+                Client = client,
+                ClientId = client.Id,
+                Description = description,
+                PropertyId = propertyId,
+                VisitDate = date
+            };
+
+            client.Bookings.Add(booking);
+        }
+
+        private DateTime ParseDate(string date)
+        {
+            DateTime parsedDate;
+
+            DateTime.TryParseExact(
+                date, "dd.MM.yyyy HH:mm",
+                CultureInfo.InvariantCulture,
+                DateTimeStyles.None,
+                out parsedDate);
+
+            return parsedDate;
         }
     }
 }

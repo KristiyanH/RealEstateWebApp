@@ -39,6 +39,7 @@ namespace RealEstateWebApp.Tests.Controllers
             int propertyId)
             => MyController<BookingsController>
             .Instance()
+            .WithUser()
             .Calling(c => c.Book(new BookVisitFormModel()
             {
                 FullName = fullName,
@@ -58,6 +59,7 @@ namespace RealEstateWebApp.Tests.Controllers
         public void BookPostShouldBeForAuthorizedUsersAndReturnErrorViewWitIncorrectData()
              => MyController<BookingsController>
             .Instance()
+            .WithUser()
             .Calling(c => c.Book(With.Any<BookVisitFormModel>(), 50))
             .ShouldHave()
             .ActionAttributes(attributes => attributes
@@ -127,7 +129,7 @@ namespace RealEstateWebApp.Tests.Controllers
             .RestrictingForHttpMethod(HttpMethod.Post))
             .AndAlso()
             .ShouldReturn()
-            .RedirectToAction("AllBookings", "Bookings");
+            .RedirectToAction("AllBookings");
 
         [Fact]
         public void EditBookingPostShouldReturnErrorViewWithIncorrectData()
@@ -164,7 +166,7 @@ namespace RealEstateWebApp.Tests.Controllers
             .RestrictingForAuthorizedRequests())
             .AndAlso()
             .ShouldReturn()
-            .RedirectToAction("AllBookings", "Bookings");
+            .RedirectToAction("AllBookings");
 
         [Fact]
         public void DeleteBookingsShouldReturnErrorViewWithIncorrectData()

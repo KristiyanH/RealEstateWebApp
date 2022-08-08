@@ -1,4 +1,6 @@
-﻿using RealEstateWebApp.ViewModels.Tasks;
+﻿using RealEstateWebApp.Data.Models;
+using RealEstateWebApp.ViewModels.Tasks;
+using System.Collections.Generic;
 
 namespace RealEstateWebApp.Services.Tasks
 {
@@ -9,5 +11,9 @@ namespace RealEstateWebApp.Services.Tasks
         public void CompleteTask(int taskId, string userId);
 
         public void EditTask(EditTaskFormModel model);
+
+        public IEnumerable<Task> GetAllTasks();
+
+        public IEnumerable<Task> GetAllTasksForUser(string userId);
     }
 }

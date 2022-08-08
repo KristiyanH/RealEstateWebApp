@@ -1,26 +1,19 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using RealEstateWebApp.Data;
 using RealEstateWebApp.Infrastructure;
 using RealEstateWebApp.Services.Tasks;
 using RealEstateWebApp.ViewModels.Tasks;
 using System;
-using System.Linq;
 using static RealEstateWebApp.ErrorConstants;
+
 namespace RealEstateWebApp.Controllers
 {
     public class TasksController : Controller
     {
-        private readonly RealEstateDbContext data;
         private readonly ITaskService taskService;
 
-        public TasksController(
-            RealEstateDbContext _data,
-            ITaskService _taskService)
-        {
-            data = _data;
-            taskService = _taskService;
-        }
+        public TasksController(ITaskService _taskService)
+            => taskService = _taskService;
 
         [Authorize(Roles = "Manager")]
         public IActionResult SetTask()
@@ -37,7 +30,7 @@ namespace RealEstateWebApp.Controllers
 
             taskService.SetTask(task);
 
-            return RedirectToAction("MyTasks", "Tasks");
+            return RedirectToAction(nameof(MyTasks));
 
         }
 
@@ -46,10 +39,10 @@ namespace RealEstateWebApp.Controllers
         {
             if (User.IsInRole("Manager"))
             {
-                return View(data.Tasks);
+                return View(taskService.GetAllTasks());
             }
 
-            return View(data.Tasks.Where(x => x.UserId == User.GetId()));
+            return View(taskService.GetAllTasksForUser(User.GetId()));
         }
 
         [Authorize(Roles = "Manager")]
@@ -60,20 +53,20 @@ namespace RealEstateWebApp.Controllers
         [HttpPost]
         public IActionResult EditTask(EditTaskFormModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    return View(model);
-                }
-
                 taskService.EditTask(model);
-                return RedirectToAction("MyTasks", "Tasks");
+                return RedirectToAction(nameof(MyTasks));
             }
-            catch (ArgumentException aex)
+            catch (ArgumentNullException anex)
             {
                 ViewData["ErrorTitle"] = ErrorTitle;
-                ViewData["ErrorMessage"] = aex.Message;
+                ViewData["ErrorMessage"] = anex.Message;
 
                 return View("Error");
             }
@@ -87,12 +80,12 @@ namespace RealEstateWebApp.Controllers
             {
                 taskService.CompleteTask(taskId, User.GetId());
 
-                return RedirectToAction("MyTasks", "Tasks");
+                return RedirectToAction(nameof(MyTasks));
             }
-            catch (ArgumentException aex)
+            catch (ArgumentNullException anex)
             {
                 ViewData["ErrorTitle"] = ErrorTitle;
-                ViewData["ErrorMessage"] = aex.Message;
+                ViewData["ErrorMessage"] = anex.Message;
 
                 return View("Error");
             }

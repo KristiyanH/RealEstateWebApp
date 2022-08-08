@@ -4,6 +4,7 @@ using RealEstateWebApp.ViewModels.Properties;
 using Xunit;
 using static RealEstateWebApp.Tests.Data.Properties;
 using static RealEstateWebApp.Tests.Data.PropertyTypes;
+using static RealEstateWebApp.Tests.Data.Addresses;
 
 namespace RealEstateWebApp.Tests.Controllers
 {
@@ -44,7 +45,9 @@ namespace RealEstateWebApp.Tests.Controllers
             .Instance(c => c
             .WithData(TenProperties())
             .AndAlso()
-            .WithData(TenPropertyTypes()))
+            .WithData(TenPropertyTypes())
+            .AndAlso()
+            .WithData(TenAddresses()))
             .Calling(c => c.Add(new AddPropertyFormModel
             {
                 ImageUrl = ImageUrl,
@@ -107,7 +110,7 @@ namespace RealEstateWebApp.Tests.Controllers
             .ValidModelState()
             .AndAlso()
             .ShouldReturn()
-            .Redirect("/Properties/All");
+            .RedirectToAction("All");
 
 
         [Fact]

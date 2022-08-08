@@ -27,7 +27,7 @@ namespace RealEstateWebApp.Controllers
         {
             if (!propertyService.DoesPropertyTypeExists(property.PropertyTypeId))
             {
-                ModelState.AddModelError(nameof(property.PropertyTypeId), "Property type does not exist.");
+                ModelState.AddModelError(nameof(property.PropertyTypeId), string.Format(NotExistingPropertyTypeMessage, property.PropertyTypeId));
             }
 
             if (!ModelState.IsValid)

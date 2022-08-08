@@ -90,9 +90,10 @@ namespace RealEstateWebApp.Services.Bookings
 
             if (property == null)
             {
-                throw new ArgumentNullException($"Property with id: {propertyId} does not exist");
+                throw new ArgumentNullException(string.Format(NotExistingPropertyErrorMessage, propertyId));
             }
         }
+
         private Booking GetBooking(int bookingId)
         {
             var booking = data

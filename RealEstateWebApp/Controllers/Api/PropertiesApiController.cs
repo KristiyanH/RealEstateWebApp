@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RealEstateWebApp.Data;
+using RealEstateWebApp.Services.Api;
 using System.Collections;
-using System.Linq;
 
 namespace RealEstateWebApp.Controllers.Api
 {
@@ -9,22 +8,22 @@ namespace RealEstateWebApp.Controllers.Api
     [Route("api/properties")]
     public class PropertiesApiController : ControllerBase
     {
-        private readonly RealEstateDbContext data;
+        private readonly IPropertiesApiService propertiesApiService;
 
-        public PropertiesApiController(RealEstateDbContext _data)
-           => data = _data;
+        public PropertiesApiController(IPropertiesApiService _propertiesApiService)
+           => propertiesApiService = _propertiesApiService;
 
         [HttpGet]
         public IEnumerable GetProperties()
         {
-            return data.Properties.ToList();
+            return propertiesApiService.GetPropertiesList();
         }
 
         [HttpGet]
         [Route("{id}")]
         public object GetPropertyDetails(int id)
         {
-            return data.Properties.Find(id);
+            return propertiesApiService.GetPropertyById(id);
         }
     }
 }

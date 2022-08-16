@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using RealEstateWebApp.Data;
 using RealEstateWebApp.Data.Models;
 using RealEstateWebApp.Infrastructure;
+using RealEstateWebApp.Services.Api;
 using RealEstateWebApp.Services.Bookings;
 using RealEstateWebApp.Services.Properties;
 using RealEstateWebApp.Services.Roles;
@@ -58,6 +59,7 @@ namespace RealEstateWebApp
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IBookingService, BookingService>();
+            services.AddTransient<IPropertiesApiService, PropertiesApiService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
